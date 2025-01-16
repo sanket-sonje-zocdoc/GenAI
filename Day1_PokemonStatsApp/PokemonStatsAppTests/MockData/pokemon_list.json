@@ -1,0 +1,19 @@
+{
+    "count": 3,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "name": "abra",
+            "url": "https://pokeapi.co/api/v2/pokemon/63/"
+        },
+        {
+            "name": "aerodactyl", 
+            "url": "https://pokeapi.co/api/v2/pokemon/142/"
+        },
+        {
+            "name": "bulbasaur",
+            "url": "https://pokeapi.co/api/v2/pokemon/1/"
+        }
+    ]
+}

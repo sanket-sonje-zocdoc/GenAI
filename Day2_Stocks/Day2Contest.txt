@@ -1,0 +1,27 @@
+Rank	Name	Market Cap	Price	Today	Price (30 days)	Country
+1	"Apple AAPL"	$3.578 T	$237.96	2.00%		🇺🇸 USA
+2	"NVIDIA NVDA"	$3.300 T	$134.77	2.29%		🇺🇸 USA
+3	"Microsoft MSFT"	$3.160 T	$425.07	2.26%		🇺🇸 USA
+4	"Alphabet (Google) GOOG"	$2.384 T	$195.56	2.36%		🇺🇸 USA
+5	"Amazon AMZN"	$2.329 T	$221.56	1.74%		🇺🇸 USA
+6	"Meta Platforms (Facebook) META"	$1.553 T	$615.40	3.56%		🇺🇸 USA
+7	"Tesla TSLA"	$1.328 T	$413.80	4.40%		🇺🇸 USA
+8	"Broadcom AVGO"	$1.068 T	$228.01	1.47%		🇺🇸 USA
+9	"Berkshire Hathaway  BRK-B"	$986.64 B	$457.36	1.63%		🇺🇸 USA
+10	"Walmart WMT"	$730.23 B	$90.90	0.12%		🇺🇸 USA
+11	"JPMorgan Chase JPM"	$706.17 B	$250.83	1.36%		🇺🇸 USA
+12	"Eli Lilly LLY"	$673.17 B	$748.54	0.49%		🇺🇸 USA
+13	"Visa V"	$611.53 B	$315.80	2.17%		🇺🇸 USA
+14	"UnitedHealth UNH"	$498.74 B	$541.94	0.33%		🇺🇸 USA
+15	"Exxon Mobil XOM"	$487.39 B	$110.90	1.07%		🇺🇸 USA
+16	"Mastercard MA"	$475.25 B	$517.80	1.72%		🇺🇸 USA
+17	"Oracle ORCL"	$443.37 B	$158.52	1.41%		🇺🇸 USA
+						
+18	"Costco COST"	$408.04 B	$919.24	0.22%		🇺🇸 USA
+19	"Home Depot HD"	$401.59 B	$404.28	2.93%		🇺🇸 USA
+20	"Procter & Gamble PG"	$376.80 B	$160.00	0.16%		🇺🇸 USA
+21	"Bank of America BAC"	$362.12 B	$47.20	3.09%		🇺🇸 USA
+22	"Netflix NFLX"	$359.62 B	$841.30	1.56%		🇺🇸 USA
+23	"Johnson & Johnson JNJ"	$348.94 B	$144.94	0.13%		🇺🇸 USA
+24	"Salesforce CRM"	$310.24 B	$324.19	0.20%		🇺🇸 USA
+25	"AbbVie ABBV"	$303.06 B	$171.50	1.39%		🇺🇸 USA
