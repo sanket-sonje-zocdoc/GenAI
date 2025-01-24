@@ -7,37 +7,66 @@
 
 import SwiftUI
 
-/// A view that displays Pokemon RGB color analysis data in a chart format.
+/// A view that displays a list of Pokemon and provides navigation to RGB color analysis.
 ///
-/// This view serves as the main screen of the application, showing a chart that visualizes
-/// RGB color distribution across Pokemon sprites. It handles both the loading state and error
-/// presentations.
+/// This view serves as the main screen of the application with two main components:
+/// 1. A list showing all Pokemon names that start with 'A'
+/// 2. A button that navigates to a chart view showing RGB color analysis of Pokemon sprites
 ///
-/// The view uses a `PokemonStatsViewModel` to manage data fetching and state management.
+/// The view handles different states:
+/// - Loading state: Shows a progress indicator while fetching data
+/// - Error state: Displays an alert with error details if data fetching fails
+/// - Success state: Shows the Pokemon list and analysis button
+///
+/// The view uses a `PokemonStatsViewModel` to manage:
+/// - Fetching Pokemon data
+/// - Maintaining the list of Pokemon
+/// - Managing chart data
+/// - Handling error states
 struct ContentView: View {
 
     // MARK: - Properties
 
     @StateObject private var viewModel: PokemonStatsViewModel
+    @State private var showChart = false
 
-    // MARK: - Properties
+    // MARK: - Initialization
 
     init(session: URLSession) {
         _viewModel = StateObject(wrappedValue: PokemonStatsViewModel(session: session))
     }
 
-    // MARK: - Inits
+    // MARK: - Body
 
     var body: some View {
         NavigationView {
             VStack {
-                if !viewModel.chartData.isEmpty {
-                    RGBChartView(data: viewModel.chartData)
-                } else {
+                if viewModel.pokemonList.isEmpty {
                     ProgressView()
+                } else {
+                    List(viewModel.pokemonList, id: \.name) { pokemon in
+                        Text(pokemon.name.capitalized)
+                    }
+                }
+
+                if !viewModel.chartData.isEmpty {
+                    NavigationLink(destination: chartView, isActive: $showChart) {
+                        Button(action: { showChart = true }) {
+                            HStack {
+                                Image(systemName: "chart.line.uptrend.xyaxis")
+                                Text("View RGB Analysis")
+                            }
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                        }
+                        .padding()
+                    }
                 }
             }
-            .navigationTitle("Pokemon RGB Analysis")
+            .navigationTitle("Pokemon List")
         }
         .onAppear {
             viewModel.fetchPokemonList()
@@ -51,6 +80,14 @@ struct ContentView: View {
                 Text(error.localizedDescription)
             }
         }
+    }
+
+    // MARK: - Supporting Views
+
+    private var chartView: some View {
+        RGBChartView(data: viewModel.chartData)
+            .navigationTitle("RGB Analysis")
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 
