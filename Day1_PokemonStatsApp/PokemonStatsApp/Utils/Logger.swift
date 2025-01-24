@@ -29,9 +29,17 @@ class Logger {
     /// - Parameters:
     ///   - message: The message to be logged
     ///   - level: The severity level of the log message (default: .info)
-    func log(_ message: String, level: LogLevel = .info) {
+    ///   - file: The file name from where the log is called (automatically captured)
+    ///   - line: The line number from where the log is called (automatically captured)
+    func log(
+        _ message: String,
+        level: LogLevel = .info,
+        file: String = #file,
+        line: Int = #line
+    ) {
         #if DEBUG
-        print("\(level.prefix) \(message)")
+        let fileName = (file as NSString).lastPathComponent
+        print("\(level.prefix)[\(fileName):\(line)] \(message)")
         #endif
     }
 }

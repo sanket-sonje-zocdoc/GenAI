@@ -11,8 +11,9 @@ import Foundation
 ///
 /// Each log level has an associated emoji prefix for better visual distinction in the console:
 /// - `debug`: Used for detailed information during development (🔍)
-/// - `info`: Used for general information about program execution (📡)
+/// - `info`: Used for general information about program execution (ℹ️)
 /// - `error`: Used for error conditions that require attention (❌)
+/// - `warning`: Used for warning conditions that require attention (⚠️)
 enum LogLevel {
 
     /// Used for detailed debugging information
@@ -24,13 +25,17 @@ enum LogLevel {
     /// Used for error conditions and failures
     case error
 
+    /// Used for various types of warning
+    case warning
+
     /// Returns the emoji prefix associated with each log level
     /// for visual distinction in log output.
     var prefix: String {
         switch self {
-        case .debug: return "🔧"
-        case .info: return "ℹ️"
-        case .error: return "⛔️"
+            case .debug: return "🔍"
+            case .info: return "ℹ️"
+            case .error: return "❌"
+            case .warning: return "⚠️"
         }
     }
 }
