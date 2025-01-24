@@ -30,13 +30,13 @@ class ImageProcessor {
             logger.log("Failed to load or process image from URL: \(urlString)", level: .error)
             throw ImageError.invalidImage
         }
-        
+
         let width = cgImage.width
         let height = cgImage.height
         let bytesPerPixel = 4
         let bytesPerRow = width * bytesPerPixel
         let bitsPerComponent = 8
-        
+
         guard let context = CGContext(
             data: nil,
             width: width,
@@ -46,20 +46,20 @@ class ImageProcessor {
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
         ),
-        let pixelData = context.data else {
+              let pixelData = context.data else {
             logger.log("Failed to create graphics context or get pixel data", level: .error)
             throw ImageError.processingFailed
         }
-        
+
         context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
-        
+
         let pixels = pixelData.bindMemory(
             to: UInt8.self,
             capacity: width * height * bytesPerPixel
         )
-        
+
         var rgbSum = 0
-        
+
         // Simply add raw R, G, and B values for each pixel
         for y in 0..<height {
             for x in 0..<width {
@@ -69,8 +69,7 @@ class ImageProcessor {
                 rgbSum += Int(pixels[offset + 2]) // B
             }
         }
-        
-        logger.log("Successfully calculated RGB sum: \(rgbSum)", level: .debug)
+
         return rgbSum
     }
 }

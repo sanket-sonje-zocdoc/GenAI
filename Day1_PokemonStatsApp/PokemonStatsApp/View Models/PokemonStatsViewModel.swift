@@ -27,7 +27,7 @@ class PokemonStatsViewModel: ObservableObject {
 
     /// Stores any error that occurs during data fetching
     @Published var error: Error?
-    
+
     private let pokemonService: PokemonService
 
     // MARK: - Inits
@@ -47,8 +47,6 @@ class PokemonStatsViewModel: ObservableObject {
         Task {
             do {
                 pokemonList = try await pokemonService.fetchPokemonList()
-                logger.log("Successfully fetched \(pokemonList.count) Pokemon", level: .debug)
-
                 await fetchAllPokemonDetails()
                 calculateChartData()
             } catch {
@@ -75,7 +73,6 @@ class PokemonStatsViewModel: ObservableObject {
                     from: details.sprites.frontDefault
                 ) {
                     details.rgbSum = rgbSum
-                    logger.log("Calculated RGB sum for \(pokemon.name): \(rgbSum)", level: .debug)
                 }
 
                 pokemons[pokemon.name] = details
@@ -90,8 +87,6 @@ class PokemonStatsViewModel: ObservableObject {
     /// This method processes all Pokemon sprites and creates data points
     /// representing the running total of RGB values for the chart.
     private func calculateChartData() {
-        logger.log("Starting chart data calculation", level: .info)
-
         var runningTotal = 0
         chartData = pokemonList.compactMap { item in
             guard let pokemon = pokemons[item.name],
@@ -102,7 +97,5 @@ class PokemonStatsViewModel: ObservableObject {
             runningTotal += rgbSum
             return RGBChartData(pokemonName: pokemon.name, cumulativeSum: runningTotal)
         }
-
-        logger.log("Completed chart data calculation with \(chartData.count) entries", level: .debug)
     }
 }

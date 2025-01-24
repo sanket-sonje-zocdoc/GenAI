@@ -52,8 +52,6 @@ class PokemonService {
             let filteredList = list.results
                 .filter { $0.name.lowercased().hasPrefix("a") }
                 .sorted { $0.name.lowercased() < $1.name.lowercased() }
-
-            logger.log("Found \(filteredList.count) Pokemon starting with 'A'", level: .info)
             return filteredList
         } catch let decodingError as DecodingError {
             logger.log("Decoding error: \(decodingError)", level: .error)
@@ -88,7 +86,6 @@ class PokemonService {
             }
 
             let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
-            logger.log("Successfully fetched details for: \(pokemon.name)", level: .info)
             return pokemon
         } catch let decodingError as DecodingError {
             logger.log("Decoding error: \(decodingError)", level: .error)
