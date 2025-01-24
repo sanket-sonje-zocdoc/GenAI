@@ -16,8 +16,8 @@ class PokemonStatsViewModel: ObservableObject {
 
     private let logger = Logger.shared
 
-    /// Dictionary storing detailed Pokemon information, keyed by Pokemon name
-    @Published var pokemons: [String: Pokemon] = [:]
+    /// Array storing detailed Pokemon information
+    @Published var pokemons: [Pokemon] = []
 
     /// List of basic Pokemon information items
     @Published var pokemonList: [PokemonListItem] = []
@@ -62,21 +62,20 @@ class PokemonStatsViewModel: ObservableObject {
     /// For each Pokemon, this method:
     /// - Loads detailed Pokemon data
     /// - Processes the sprite image to calculate RGB values
-    /// - Stores the results in the pokemons dictionary
+    /// - Adds the results to the pokemons array
     private func fetchAllPokemonDetails() async {
-        var successCount = 0
         for pokemon in pokemonList {
             do {
-                var details = try await pokemonService.fetchPokemon(url: pokemon.url)
+                var pokemonDetails = try await pokemonService.fetchPokemon(url: pokemon.url)
 
+                // Calculate RGB Sum of each pokement
                 if let rgbSum = try? await ImageProcessor.calculateRGBSum(
-                    from: details.sprites.frontDefault
+                    from: pokemonDetails.sprites.frontDefault
                 ) {
-                    details.rgbSum = rgbSum
+                    pokemonDetails.rgbSum = rgbSum
                 }
 
-                pokemons[pokemon.name] = details
-                successCount += 1
+                pokemons.append(pokemonDetails)
             } catch {
                 logger.log("Error fetching \(pokemon.name): \(error)", level: .error)
             }
@@ -87,15 +86,15 @@ class PokemonStatsViewModel: ObservableObject {
     /// This method processes all Pokemon sprites and creates data points
     /// representing the running total of RGB values for the chart.
     private func calculateChartData() {
-        var runningTotal = 0
-        chartData = pokemonList.compactMap { item in
-            guard let pokemon = pokemons[item.name],
-                  let rgbSum = pokemon.rgbSum else {
-                logger.log("Missing RGB data for \(item.name)", level: .error)
+        var cumulativeSum = 0
+        chartData = pokemons.compactMap { pokemon in
+            guard let rgbSum = pokemon.rgbSum else {
+                logger.log("Missing RGB data for \(pokemon.name)", level: .error)
                 return nil
             }
-            runningTotal += rgbSum
-            return RGBChartData(pokemonName: pokemon.name, cumulativeSum: runningTotal)
+
+            cumulativeSum += rgbSum
+            return RGBChartData(pokemonName: pokemon.name, cumulativeSum: cumulativeSum)
         }
     }
 }
