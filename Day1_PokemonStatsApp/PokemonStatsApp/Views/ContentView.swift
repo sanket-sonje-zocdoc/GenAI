@@ -51,6 +51,17 @@ struct ContentView: View {
                 } else {
                     List(viewModel.pokemons, id: \.name) { pokemon in
                         PokemonRowView(pokemon: pokemon)
+                            .onAppear {
+                                // Load more data when reaching the last few items
+                                if pokemon == viewModel.pokemons.last {
+                                    viewModel.loadMorePokemon()
+                                }
+                            }
+                    }
+
+                    if viewModel.isLoadingMore {
+                        ProgressView()
+                            .padding()
                     }
                 }
 
@@ -74,7 +85,7 @@ struct ContentView: View {
             .navigationTitle("Pokemon List")
         }
         .onAppear {
-            viewModel.fetchPokemonList()
+            viewModel.fetchInitialPokemonList()  // Changed to fetch initial batch
         }
         .alert("Error", isPresented: .constant(viewModel.error != nil)) {
             Button("OK") {

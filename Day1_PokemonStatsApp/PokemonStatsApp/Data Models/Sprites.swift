@@ -8,7 +8,7 @@
 import Foundation
 
 /// Contains URLs for various Pokemon sprite images
-struct Sprites: Codable {
+struct Sprites: Codable, Equatable {
 
     /// URL for the default front-facing sprite
     let frontDefault: String
@@ -20,5 +20,12 @@ struct Sprites: Codable {
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
         case frontShiny = "front_shiny"
+    }
+
+    // MARK: - Equatable
+
+    static func == (lhs: Sprites, rhs: Sprites) -> Bool {
+        return lhs.frontDefault == rhs.frontDefault &&
+               lhs.frontShiny == rhs.frontShiny
     }
 }

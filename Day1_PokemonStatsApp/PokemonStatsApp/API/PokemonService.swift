@@ -23,15 +23,15 @@ class PokemonService {
 
     // MARK: - API's
 
-    /// Fetches a filtered list of Pokemon that start with the letter 'A'.
+    /// Fetches a paginated list of Pokemon that start with the letter 'A'.
     /// 
-    /// This method retrieves a list of Pokemon from the PokeAPI, filters for names
-    /// starting with 'A', and sorts them alphabetically.
-    ///
+    /// - Parameters:
+    ///   - offset: The starting position for pagination
+    ///   - limit: The number of items to fetch per page
     /// - Returns: An array of `PokemonListItem` objects, sorted alphabetically.
     /// - Throws: An error if the network request fails or if the JSON decoding fails.
-    func fetchPokemonList() async throws -> [PokemonListItem] {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=1000") else {
+    func fetchPokemonList(offset: Int, limit: Int) async throws -> [PokemonListItem] {
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=\(limit)") else {
             throw URLError(.badURL)
         }
 
@@ -50,7 +50,6 @@ class PokemonService {
 
             let list = try JSONDecoder().decode(PokemonList.self, from: data)
             let filteredList = list.results
-                .filter { $0.name.lowercased().hasPrefix("a") }
                 .sorted { $0.name.lowercased() < $1.name.lowercased() }
             return filteredList
         } catch let decodingError as DecodingError {

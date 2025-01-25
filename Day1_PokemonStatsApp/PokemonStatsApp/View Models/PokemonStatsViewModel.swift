@@ -15,6 +15,11 @@ class PokemonStatsViewModel: ObservableObject {
     // MARK: - Properties
 
     private let logger = Logger.shared
+    private let pageSize = 25
+    private var currentOffset = 0
+    private var hasMoreData = true
+
+    private let pokemonService: PokemonService
 
     /// Array storing detailed Pokemon information
     @Published var pokemons: [Pokemon] = []
@@ -28,7 +33,8 @@ class PokemonStatsViewModel: ObservableObject {
     /// Stores any error that occurs during data fetching
     @Published var error: Error?
 
-    private let pokemonService: PokemonService
+    /// Indicates if more data is being loaded
+    @Published var isLoadingMore = false
 
     // MARK: - Inits
 
@@ -38,37 +44,67 @@ class PokemonStatsViewModel: ObservableObject {
 
     // MARK: - Services
 
-    /// Fetches the list of all Pokemon and their corresponding details.
-    /// This method initiates the data loading process by:
-    /// 1. Fetching the basic Pokemon list
-    /// 2. Loading detailed information for each Pokemon
-    /// 3. Calculating chart data based on sprite colors
-    func fetchPokemonList() {
+    /// Fetches the initial batch of Pokemon
+    func fetchInitialPokemonList() {
+        currentOffset = 0
+        pokemons.removeAll()
+        pokemonList.removeAll()
+        chartData.removeAll()
+        
         Task {
-            do {
-                pokemonList = try await pokemonService.fetchPokemonList()
-                await fetchAllPokemonDetails()
-                calculateChartData()
-            } catch {
-                logger.log("Failed to fetch Pokemon list: \(error.localizedDescription)", level: .error)
-                self.error = error
-            }
+            await fetchNextBatch()
         }
     }
-
-    // MARK: - Private Helpers
-
-    /// Fetches detailed information for each Pokemon in the list.
-    /// For each Pokemon, this method:
-    /// - Loads detailed Pokemon data
-    /// - Processes the sprite image to calculate RGB values
-    /// - Adds the results to the pokemons array
-    private func fetchAllPokemonDetails() async {
+    
+    /// Loads more Pokemon when user scrolls
+    func loadMorePokemon() {
+        guard !isLoadingMore && hasMoreData else { return }
+        
+        Task {
+            await fetchNextBatch()
+        }
+    }
+    
+    /// Fetches the next batch of Pokemon data
+    private func fetchNextBatch() async {
+        isLoadingMore = true
+        
+        do {
+            let newPokemonList = try await pokemonService.fetchPokemonList(
+                offset: currentOffset,
+                limit: pageSize
+            )
+            
+            // If we received fewer items than requested, we've reached the end
+            hasMoreData = newPokemonList.count == pageSize
+            
+            // Update the offset for the next batch
+            currentOffset += newPokemonList.count
+            
+            // Append new items to the list
+            pokemonList.append(contentsOf: newPokemonList)
+            
+            // Fetch details for new Pokemon
+            await fetchPokemonDetails(for: newPokemonList)
+            
+            // Recalculate chart data with all Pokemon
+            calculateChartData()
+            
+        } catch {
+            logger.log("Failed to fetch Pokemon list: \(error.localizedDescription)", level: .error)
+            self.error = error
+        }
+        
+        isLoadingMore = false
+    }
+    
+    /// Fetches detailed information for specific Pokemon in the list
+    private func fetchPokemonDetails(for pokemonList: [PokemonListItem]) async {
         for pokemon in pokemonList {
             do {
                 var pokemonDetails = try await pokemonService.fetchPokemon(url: pokemon.url)
 
-                // Calculate RGB Sum of each pokement
+                // Calculate RGB Sum of each pokemon
                 if let rgbSum = try? await ImageProcessor.calculateRGBSum(
                     from: pokemonDetails.sprites.frontDefault
                 ) {
@@ -81,6 +117,8 @@ class PokemonStatsViewModel: ObservableObject {
             }
         }
     }
+
+    // MARK: - Private Helpers
 
     /// Calculates cumulative RGB sums for chart visualization.
     /// This method processes all Pokemon sprites and creates data points

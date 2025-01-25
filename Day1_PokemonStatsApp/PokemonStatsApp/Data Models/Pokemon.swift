@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents detailed information about a specific Pokemon
-struct Pokemon: Codable {
+struct Pokemon: Codable, Equatable {
 
     /// ID of the Pokemon
     let id: Int
@@ -32,4 +32,14 @@ struct Pokemon: Codable {
 
     /// Sum of RGB values for the Pokemon's sprite
     var rgbSum: Int?
+    
+    // MARK: - Equatable
+    
+    static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.name == rhs.name &&
+               lhs.sprites == rhs.sprites &&
+               lhs.stats == rhs.stats &&
+               lhs.rgbSum == rhs.rgbSum
+    }
 }

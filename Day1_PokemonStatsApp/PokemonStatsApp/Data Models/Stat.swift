@@ -1,5 +1,5 @@
 /// Represents a single Pokemon statistic
-struct Stat: Codable {
+struct Stat: Codable, Equatable {
 
     /// The base value of the stat
     let baseStat: Int
@@ -15,5 +15,13 @@ struct Stat: Codable {
         case baseStat = "base_stat"
         case effort
         case stat
+    }
+
+    // MARK: - Equatable
+
+    static func == (lhs: Stat, rhs: Stat) -> Bool {
+        return lhs.baseStat == rhs.baseStat &&
+               lhs.effort == rhs.effort &&
+               lhs.stat == rhs.stat
     }
 }
