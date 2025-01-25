@@ -8,7 +8,7 @@
 import Foundation
 
 /// A view model that manages Pokemon data and statistics for the Pokemon Stats app.
-/// This class handles fetching Pokemon data, processing sprite colors, and preparing chart data.
+/// This class handles fetching Pokemon data and managing the Pokemon list.
 @MainActor
 class PokemonStatsViewModel: ObservableObject {
 
@@ -26,9 +26,6 @@ class PokemonStatsViewModel: ObservableObject {
 
     /// List of basic Pokemon information items
     @Published var pokemonList: [PokemonListItem] = []
-
-    /// Processed RGB data for chart visualization
-    @Published var chartData: [RGBChartData] = []
 
     /// Stores any error that occurs during data fetching
     @Published var error: Error?
@@ -49,7 +46,6 @@ class PokemonStatsViewModel: ObservableObject {
         currentOffset = 0
         pokemons.removeAll()
         pokemonList.removeAll()
-        chartData.removeAll()
         
         Task {
             await fetchNextBatch()
@@ -87,9 +83,6 @@ class PokemonStatsViewModel: ObservableObject {
             // Fetch details for new Pokemon
             await fetchPokemonDetails(for: newPokemonList)
             
-            // Recalculate chart data with all Pokemon
-            calculateChartData()
-            
         } catch {
             logger.log("Failed to fetch Pokemon list: \(error.localizedDescription)", level: .error)
             self.error = error
@@ -102,37 +95,11 @@ class PokemonStatsViewModel: ObservableObject {
     private func fetchPokemonDetails(for pokemonList: [PokemonListItem]) async {
         for pokemon in pokemonList {
             do {
-                var pokemonDetails = try await pokemonService.fetchPokemon(url: pokemon.url)
-
-                // Calculate RGB Sum of each pokemon
-                if let rgbSum = try? await ImageProcessor.calculateRGBSum(
-                    from: pokemonDetails.sprites.frontDefault
-                ) {
-                    pokemonDetails.rgbSum = rgbSum
-                }
-
+                let pokemonDetails = try await pokemonService.fetchPokemon(url: pokemon.url)
                 pokemons.append(pokemonDetails)
             } catch {
                 logger.log("Error fetching \(pokemon.name): \(error)", level: .error)
             }
-        }
-    }
-
-    // MARK: - Private Helpers
-
-    /// Calculates cumulative RGB sums for chart visualization.
-    /// This method processes all Pokemon sprites and creates data points
-    /// representing the running total of RGB values for the chart.
-    private func calculateChartData() {
-        var cumulativeSum = 0
-        chartData = pokemons.compactMap { pokemon in
-            guard let rgbSum = pokemon.rgbSum else {
-                logger.log("Missing RGB data for \(pokemon.name)", level: .error)
-                return nil
-            }
-
-            cumulativeSum += rgbSum
-            return RGBChartData(pokemonName: pokemon.name, cumulativeSum: cumulativeSum)
         }
     }
 }

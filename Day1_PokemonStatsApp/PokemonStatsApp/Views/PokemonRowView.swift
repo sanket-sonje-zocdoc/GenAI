@@ -25,6 +25,7 @@ struct PokemonRowView: View {
 
     /// The Pokemon model containing all the details to be displayed
     let pokemon: Pokemon
+    @State private var image: UIImage?
 
     // MARK: - Body
 
@@ -32,14 +33,20 @@ struct PokemonRowView: View {
         NavigationLink(destination: PokemonDetailView(pokemon: pokemon)) {
             HStack(spacing: 12) {
                 if let url = URL(string: pokemon.sprites.frontDefault) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 75, height: 75)
-                    } placeholder: {
-                        ProgressView()
-                            .frame(width: 75, height: 75)
+                    Group {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else {
+                            ProgressView()
+                        }
+                    }
+                    .frame(width: 75, height: 75)
+                    .onAppear {
+                        ImageLoader.shared.loadImage(from: url) { loadedImage in
+                            self.image = loadedImage
+                        }
                     }
                 }
 

@@ -33,7 +33,6 @@ struct ContentView: View {
     // MARK: - Properties
 
     @StateObject private var viewModel: PokemonStatsViewModel
-    @State private var showChart = false
 
     // MARK: - Initialization
 
@@ -64,28 +63,11 @@ struct ContentView: View {
                             .padding()
                     }
                 }
-
-                if !viewModel.chartData.isEmpty {
-                    NavigationLink(destination: chartView, isActive: $showChart) {
-                        Button(action: { showChart = true }) {
-                            HStack {
-                                Image(systemName: "chart.line.uptrend.xyaxis")
-                                Text("View RGB Analysis")
-                            }
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                        }
-                        .padding()
-                    }
-                }
             }
             .navigationTitle("Pokemon List")
         }
         .onAppear {
-            viewModel.fetchInitialPokemonList()  // Changed to fetch initial batch
+            viewModel.fetchInitialPokemonList()
         }
         .alert("Error", isPresented: .constant(viewModel.error != nil)) {
             Button("OK") {
@@ -96,14 +78,6 @@ struct ContentView: View {
                 Text(error.localizedDescription)
             }
         }
-    }
-
-    // MARK: - Supporting Views
-
-    private var chartView: some View {
-        RGBChartView(data: viewModel.chartData)
-            .navigationTitle("RGB Analysis")
-            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

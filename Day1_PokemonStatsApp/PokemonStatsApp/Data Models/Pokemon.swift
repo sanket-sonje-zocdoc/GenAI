@@ -30,16 +30,12 @@ struct Pokemon: Codable, Equatable {
         case stats
     }
 
-    /// Sum of RGB values for the Pokemon's sprite
-    var rgbSum: Int?
-    
     // MARK: - Equatable
     
     static func == (lhs: Pokemon, rhs: Pokemon) -> Bool {
         return lhs.id == rhs.id &&
                lhs.name == rhs.name &&
                lhs.sprites == rhs.sprites &&
-               lhs.stats == rhs.stats &&
-               lhs.rgbSum == rhs.rgbSum
+               lhs.stats == rhs.stats
     }
 }
