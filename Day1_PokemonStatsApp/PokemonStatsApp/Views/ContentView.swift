@@ -9,14 +9,19 @@ import SwiftUI
 
 /// A view that displays a list of Pokemon and provides navigation to RGB color analysis.
 ///
-/// This view serves as the main screen of the application with two main components:
-/// 1. A list showing all Pokemon names that start with 'A'
+/// This view serves as the main screen of the application with three main components:
+/// 1. A list showing all Pokemon names that start with 'A', with each row being tappable
+///    to navigate to a detailed view of that Pokemon
 /// 2. A button that navigates to a chart view showing RGB color analysis of Pokemon sprites
 ///
 /// The view handles different states:
 /// - Loading state: Shows a progress indicator while fetching data
 /// - Error state: Displays an alert with error details if data fetching fails
-/// - Success state: Shows the Pokemon list and analysis button
+/// - Success state: Shows the interactive Pokemon list and analysis button
+///
+/// Navigation:
+/// - Tapping a Pokemon row navigates to `PokemonDetailView` showing stats and sprite
+/// - Tapping "View RGB Analysis" navigates to a chart view with color analysis
 ///
 /// The view uses a `PokemonStatsViewModel` to manage:
 /// - Fetching Pokemon data
@@ -44,8 +49,8 @@ struct ContentView: View {
                 if viewModel.pokemonList.isEmpty {
                     ProgressView()
                 } else {
-                    List(viewModel.pokemonList, id: \.name) { pokemon in
-                        Text(pokemon.name.capitalized)
+                    List(viewModel.pokemons, id: \.name) { pokemon in
+                        PokemonRowView(pokemon: pokemon)
                     }
                 }
 
