@@ -32,14 +32,14 @@ struct ContentView: View {
 
     // MARK: - Properties
 
-    @StateObject private var viewModel: PokemonStatsViewModel
+    @StateObject private var viewModel: PokemonViewModel
     @State private var searchText = ""
 
     // MARK: - Initialization
 
     init(session: URLSession) {
         _viewModel = StateObject(
-            wrappedValue: PokemonStatsViewModel(
+            wrappedValue: PokemonViewModel(
                 pokemonService: PokemonServiceAPIImpl(session: session)
             )
         )

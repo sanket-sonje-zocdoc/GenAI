@@ -19,38 +19,6 @@ class MockPokemonService: PokemonServiceAPI {
     /// An array of mock Pokemon list items to be returned by `fetchPokemonList`.
     var mockPokemonList: [PokemonListItem] = []
 
-    /// A mock Pokemon instance to be returned by `fetchPokemon`.
-    /// Defaults to a Pikachu with predefined attributes.
-    var mockPokemon = Pokemon(
-        id: 25,
-        name: "pikachu",
-        height: 4,
-        weight: 60,
-        sprites: Sprites(
-            frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
-            frontShiny: ""
-        ),
-        stats: [
-            Stat(
-                baseStat: 35,
-                effort: 0,
-                stat: StatInfo(
-                    name: "hp",
-                    url: "https://pokeapi.co/api/v2/stat/1/"
-                )
-            )
-        ],
-        types: [
-            PokemonTypeEntry(
-                slot: 1,
-                type: PokemonType(
-                    name: "electric",
-                    url: "https://pokeapi.co/api/v2/type/12/"
-                )
-            ),
-        ]
-    )
-
     /// An optional error to be thrown by the mock methods.
     /// Set this property to simulate error scenarios in tests.
     var mockError: Error?
@@ -80,6 +48,6 @@ class MockPokemonService: PokemonServiceAPI {
             throw error
         }
 
-        return mockPokemon
+        return MockPokemon.pikachu
     }
 }

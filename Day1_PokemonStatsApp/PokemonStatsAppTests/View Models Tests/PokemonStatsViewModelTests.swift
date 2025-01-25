@@ -3,11 +3,11 @@ import XCTest
 @testable import PokemonStatsApp
 
 @MainActor
-class PokemonStatsViewModelTests: XCTestCase {
+class PokemonViewModelTests: XCTestCase {
 
     // MARK: - Properties
 
-    private var mockViewModel: PokemonStatsViewModel!
+    private var mockViewModel: PokemonViewModel!
     private var mockPokemonService: MockPokemonService!
 
     // MARK: - Test Lifecycle
@@ -15,7 +15,7 @@ class PokemonStatsViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockPokemonService = MockPokemonService()
-        mockViewModel = PokemonStatsViewModel(pokemonService: mockPokemonService)
+        mockViewModel = PokemonViewModel(pokemonService: mockPokemonService)
     }
 
     override func tearDown() {
@@ -94,5 +94,80 @@ class PokemonStatsViewModelTests: XCTestCase {
 
         // Then
         XCTAssertTrue(mockViewModel.pokemonList.isEmpty)
+    }
+
+    // MARK: - Filter Pokemon Tests
+
+    func testFilterPokemons_WithEmptySearchText_ReturnsAllPokemons() {
+        // Given
+        let mockPokemons = [MockPokemon.pikachu, MockPokemon.charmander]
+        mockViewModel.pokemons = mockPokemons
+
+        // When
+        let filteredPokemons = mockViewModel.filterPokemons(for: "")
+
+        // Then
+        XCTAssertEqual(filteredPokemons.count, 2)
+        XCTAssertEqual(filteredPokemons, mockPokemons)
+    }
+
+    func testFilterPokemons_WithSearchText_ReturnsMatchingPokemons() {
+        // Given
+        mockViewModel.pokemons = [MockPokemon.pikachu, MockPokemon.charmander]
+
+        // When
+        let filteredPokemons = mockViewModel.filterPokemons(for: "char")
+
+        // Then
+        XCTAssertEqual(filteredPokemons.count, 1)
+        XCTAssertEqual(filteredPokemons.first?.name, "charmander")
+    }
+
+    func testFilterPokemons_WithCaseInsensitiveSearchText_ReturnsMatchingPokemons() {
+        // Given
+        mockViewModel.pokemons = [
+            Pokemon(
+                id: 4,
+                name: "Bulbasaur",
+                height: 6,
+                weight: 85,
+                sprites: Sprites(
+                    frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+                    frontShiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png"
+                ),
+                stats: [],
+                types: []
+            ),
+            Pokemon(
+                id: 4,
+                name: "Charmander",
+                height: 6,
+                weight: 85,
+                sprites: Sprites(
+                    frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+                    frontShiny: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png"
+                ),
+                stats: [],
+                types: []
+            )
+        ]
+
+        // When
+        let filteredPokemons = mockViewModel.filterPokemons(for: "bUlBa")
+
+        // Then
+        XCTAssertEqual(filteredPokemons.count, 1)
+        XCTAssertEqual(filteredPokemons.first?.name, "Bulbasaur")
+    }
+
+    func testFilterPokemons_WithNonMatchingSearchText_ReturnsEmptyArray() {
+        // Given
+        mockViewModel.pokemons = [MockPokemon.pikachu, MockPokemon.charmander]
+
+        // When
+        let filteredPokemons = mockViewModel.filterPokemons(for: "bulbasaur")
+
+        // Then
+        XCTAssertTrue(filteredPokemons.isEmpty)
     }
 }

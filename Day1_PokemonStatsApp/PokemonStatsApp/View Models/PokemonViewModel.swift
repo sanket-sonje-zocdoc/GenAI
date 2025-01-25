@@ -10,7 +10,7 @@ import Foundation
 /// A view model that manages Pokemon data and statistics for the Pokemon Stats app.
 /// This class handles fetching Pokemon data and managing the Pokemon list.
 @MainActor
-class PokemonStatsViewModel: ObservableObject {
+class PokemonViewModel: ObservableObject {
 
     // MARK: - Properties
 
