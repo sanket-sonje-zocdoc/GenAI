@@ -128,7 +128,16 @@ extension Pokemon {
                 frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
                 frontShiny: ""
             ),
-            stats: [],
+            stats: [
+                Stat(
+                    baseStat: 35,
+                    effort: 0,
+                    stat: StatInfo(
+                        name: "hp",
+                        url: "https://pokeapi.co/api/v2/stat/1/"
+                    )
+                )
+            ],
             types: [
                 PokemonTypeEntry(
                     slot: 1,

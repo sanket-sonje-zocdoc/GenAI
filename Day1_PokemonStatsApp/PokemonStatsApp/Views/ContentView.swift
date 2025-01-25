@@ -37,7 +37,11 @@ struct ContentView: View {
     // MARK: - Initialization
 
     init(session: URLSession) {
-        _viewModel = StateObject(wrappedValue: PokemonStatsViewModel(session: session))
+        _viewModel = StateObject(
+            wrappedValue: PokemonStatsViewModel(
+                pokemonService: PokemonServiceAPIImpl(session: session)
+            )
+        )
     }
 
     // MARK: - Body
@@ -53,7 +57,9 @@ struct ContentView: View {
                             .onAppear {
                                 // Load more data when reaching the last few items
                                 if pokemon == viewModel.pokemons.last {
-                                    viewModel.loadMorePokemon()
+                                    Task {
+                                        await viewModel.loadMorePokemon()
+                                    }
                                 }
                             }
                     }
@@ -68,7 +74,9 @@ struct ContentView: View {
             .navigationTitle("Pokemons")
         }
         .onAppear {
-            viewModel.fetchInitialPokemonList()
+            Task {
+                await viewModel.fetchInitialPokemonList()
+            }
         }
         .alert("Error", isPresented: .constant(viewModel.error != nil)) {
             Button("OK") {

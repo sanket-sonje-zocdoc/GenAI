@@ -35,62 +35,58 @@ class PokemonStatsViewModel: ObservableObject {
 
     // MARK: - Inits
 
-    init(session: URLSession = .shared) {
-        self.pokemonService = PokemonServiceAPIImpl(session: session)
+    init(pokemonService: PokemonServiceAPI) {
+        self.pokemonService = pokemonService
     }
 
     // MARK: - Services
 
     /// Fetches the initial batch of Pokemon
-    func fetchInitialPokemonList() {
+    func fetchInitialPokemonList() async {
         currentOffset = 0
         pokemons.removeAll()
         pokemonList.removeAll()
-        
-        Task {
-            await fetchNextBatch()
-        }
+        await fetchNextBatch()
     }
-    
+
     /// Loads more Pokemon when user scrolls
-    func loadMorePokemon() {
+    func loadMorePokemon() async {
         guard !isLoadingMore && hasMoreData else { return }
-        
-        Task {
-            await fetchNextBatch()
-        }
+        await fetchNextBatch()
     }
-    
+
+    // MARK: - Private Helpers
+
     /// Fetches the next batch of Pokemon data
     private func fetchNextBatch() async {
         isLoadingMore = true
-        
+
         do {
             let newPokemonList = try await pokemonService.fetchPokemonList(
                 offset: currentOffset,
                 limit: pageSize
             )
-            
+
             // If we received fewer items than requested, we've reached the end
             hasMoreData = newPokemonList.count == pageSize
-            
+
             // Update the offset for the next batch
             currentOffset += newPokemonList.count
-            
+
             // Append new items to the list
             pokemonList.append(contentsOf: newPokemonList)
-            
+
             // Fetch details for new Pokemon
             await fetchPokemonDetails(for: newPokemonList)
-            
+
         } catch {
             logger.log("Failed to fetch Pokemon list: \(error.localizedDescription)", level: .error)
             self.error = error
         }
-        
+
         isLoadingMore = false
     }
-    
+
     /// Fetches detailed information for specific Pokemon in the list
     private func fetchPokemonDetails(for pokemonList: [PokemonListItem]) async {
         for pokemon in pokemonList {
