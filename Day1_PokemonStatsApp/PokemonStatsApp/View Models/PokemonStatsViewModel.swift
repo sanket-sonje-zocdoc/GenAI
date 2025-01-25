@@ -101,5 +101,8 @@ class PokemonStatsViewModel: ObservableObject {
                 logger.log("Error fetching \(pokemon.name): \(error)", level: .error)
             }
         }
+
+        // Sort the entire collection
+        pokemons.sort { $0.name < $1.name }
     }
 }
