@@ -55,6 +55,20 @@ class PokemonStatsViewModel: ObservableObject {
         await fetchNextBatch()
     }
 
+    /// Filters the Pokemon array based on the provided search text
+    /// - Parameter searchText: The text to filter Pokemon names by
+    /// - Returns: An array of Pokemon whose names contain the search text (case-insensitive).
+    ///           If the search text is empty, returns the complete Pokemon array.
+    func filterPokemons(for searchText: String) -> [Pokemon] {
+        if searchText.isEmpty {
+            return pokemons
+        } else {
+            return pokemons.filter { pokemon in
+                pokemon.name.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
+
     // MARK: - Private Helpers
 
     /// Fetches the next batch of Pokemon data

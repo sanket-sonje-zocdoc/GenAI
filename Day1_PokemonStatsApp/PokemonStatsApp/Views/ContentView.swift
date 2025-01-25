@@ -33,6 +33,7 @@ struct ContentView: View {
     // MARK: - Properties
 
     @StateObject private var viewModel: PokemonStatsViewModel
+    @State private var searchText = ""
 
     // MARK: - Initialization
 
@@ -52,7 +53,10 @@ struct ContentView: View {
                 if viewModel.pokemonList.isEmpty {
                     ProgressView()
                 } else {
-                    List(viewModel.pokemons, id: \.name) { pokemon in
+                    SearchBar(text: $searchText)
+                        .padding(.horizontal)
+
+                    List(viewModel.filterPokemons(for: searchText), id: \.name) { pokemon in
                         PokemonRowView(pokemon: pokemon)
                             .onAppear {
                                 // Load more data when reaching the last few items
