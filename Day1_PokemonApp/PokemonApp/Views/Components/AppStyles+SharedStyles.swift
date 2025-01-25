@@ -16,7 +16,7 @@ extension AppStyle {
         /// - Returns: A view modifier that applies the card background styling
         static func cardBackground() -> some View {
             RoundedRectangle(cornerRadius: Radius.corner)
-                .fill(Colors.primaryBackground)
+                .fill(Theme.Colors.background)
                 .shadow(
                     color: Colors.shadow,
                     radius: Radius.shadow,
