@@ -6,7 +6,7 @@ final class PokemonServiceTests: XCTestCase {
 
     // MARK: - Properties
 
-    private var pokemonService: PokemonService!
+    private var pokemonService: PokemonServiceAPI!
     private var configuration: URLSessionConfiguration!
 
     // MARK: - Test Lifecycle
@@ -16,7 +16,7 @@ final class PokemonServiceTests: XCTestCase {
         configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MockURLProtocol.self]
         let session = URLSession(configuration: configuration)
-        pokemonService = PokemonService(session: session)
+        pokemonService = PokemonServiceAPIImpl(session: session)
     }
 
     override func tearDown() {

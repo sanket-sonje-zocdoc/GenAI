@@ -19,7 +19,7 @@ class PokemonStatsViewModel: ObservableObject {
     private var currentOffset = 0
     private var hasMoreData = true
 
-    private let pokemonService: PokemonService
+    private let pokemonService: PokemonServiceAPI
 
     /// Array storing detailed Pokemon information
     @Published var pokemons: [Pokemon] = []
@@ -36,7 +36,7 @@ class PokemonStatsViewModel: ObservableObject {
     // MARK: - Inits
 
     init(session: URLSession = .shared) {
-        self.pokemonService = PokemonService(session: session)
+        self.pokemonService = PokemonServiceAPIImpl(session: session)
     }
 
     // MARK: - Services

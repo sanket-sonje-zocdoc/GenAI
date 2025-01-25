@@ -1,5 +1,5 @@
 //
-//  PokemonService.swift
+//  PokemonServiceAPIImpl.swift
 //  PokemonStatsApp
 //
 //  Created by Sanket Sonje on 15/01/25.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// A service class responsible for fetching Pokemon data from the PokeAPI.
-class PokemonService {
+/// A concrete implementation of PokemonServiceAPI that fetches Pokemon data from the Pokemon API.
+class PokemonServiceAPIImpl: PokemonServiceAPI {
 
     // MARK: - Properties
 
@@ -24,7 +24,7 @@ class PokemonService {
     // MARK: - API's
 
     /// Fetches a paginated list of Pokemon that start with the letter 'A'.
-    /// 
+    ///
     /// - Parameters:
     ///   - offset: The starting position for pagination
     ///   - limit: The number of items to fetch per page
