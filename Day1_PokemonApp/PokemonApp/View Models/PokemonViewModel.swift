@@ -55,16 +55,30 @@ class PokemonViewModel: ObservableObject {
         await fetchNextBatch()
     }
 
-    /// Filters the Pokemon array based on the provided search text
-    /// - Parameter searchText: The text to filter Pokemon names by
-    /// - Returns: An array of Pokemon whose names contain the search text (case-insensitive).
-    ///           If the search text is empty, returns the complete Pokemon array.
-    func filterPokemons(for searchText: String) -> [Pokemon] {
-        if searchText.isEmpty {
+    /// Filters the Pokemon array based on the search criteria
+    /// - Parameters:
+    ///   - query: The text to filter Pokemon by
+    ///   - mode: The search mode to apply (.name for filtering by Pokemon names, .type for filtering by Pokemon types)
+    /// - Returns: An array of Pokemon that match the search criteria. If the query is empty, returns the complete Pokemon array.
+    func filterPokemons(for query: String, mode: SearchMode) -> [Pokemon] {
+        guard !query.isEmpty else {
             return pokemons
-        } else {
+        }
+
+        let lowercasedQuery = query.lowercased()
+
+        switch mode {
+
+        case .name:
+            return pokemons.filter {
+                $0.name.lowercased().contains(lowercasedQuery)
+            }
+
+        case .type:
             return pokemons.filter { pokemon in
-                pokemon.name.localizedCaseInsensitiveContains(searchText)
+                pokemon.types.contains { type in
+                    type.type.name.lowercased().contains(lowercasedQuery)
+                }
             }
         }
     }
