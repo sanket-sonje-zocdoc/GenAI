@@ -33,7 +33,7 @@ final class PokemonServiceTests: XCTestCase {
     func test_fetchPokemonList_success() async throws {
         // Given
         MockURLProtocol.mockData = JSONMocker.loadMockData(from: "pokemon_list")
-        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon"))
+        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=25"))
         MockURLProtocol.mockResponse = HTTPURLResponse(
             url: url,
             statusCode: 200,
@@ -42,12 +42,10 @@ final class PokemonServiceTests: XCTestCase {
         )
 
         // When
-        let result = try await pokemonService.fetchPokemonList()
+        let result = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
 
         // Then
-        XCTAssertEqual(result.count, 2) // Only Pokemon starting with 'a'
-        XCTAssertEqual(result[0].name, "abra")
-        XCTAssertEqual(result[1].name, "aerodactyl")
+        XCTAssertEqual(result.count, 25)
     }
 
     func test_fetchPokemonList_invalidURL() async {
@@ -56,7 +54,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList()
+            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch {
             XCTAssertTrue(error is URLError)
@@ -69,7 +67,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList()
+            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch {
             XCTAssertTrue(error is URLError)
@@ -80,7 +78,7 @@ final class PokemonServiceTests: XCTestCase {
     func test_fetchPokemonList_invalidResponse() async throws {
         // Given
         MockURLProtocol.mockData = JSONMocker.loadMockData(from: "invalid_pokemon_list")
-        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon"))
+        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=25"))
         MockURLProtocol.mockResponse = HTTPURLResponse(
             url: url,
             statusCode: 200,
@@ -90,7 +88,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList()
+            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch {
             XCTAssertTrue(error is DecodingError)
@@ -100,7 +98,7 @@ final class PokemonServiceTests: XCTestCase {
     func test_fetchPokemonList_emptyResponse() async throws {
         // Given
         MockURLProtocol.mockData = JSONMocker.loadMockData(from: "empty_pokemon_list")
-        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon"))
+        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=25"))
         MockURLProtocol.mockResponse = HTTPURLResponse(
             url: url,
             statusCode: 200,
@@ -109,7 +107,7 @@ final class PokemonServiceTests: XCTestCase {
         )
 
         // When
-        let result = try await pokemonService.fetchPokemonList()
+        let result = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
 
         // Then
         XCTAssertTrue(result.isEmpty)
@@ -118,7 +116,7 @@ final class PokemonServiceTests: XCTestCase {
     func test_fetchPokemonList_badStatusCode() async throws {
         // Given
         MockURLProtocol.mockData = Data()
-        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon"))
+        let url = try XCTUnwrap(URL(string: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=25"))
         MockURLProtocol.mockResponse = HTTPURLResponse(
             url: url,
             statusCode: 404,
@@ -128,7 +126,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList()
+            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch let error as NetworkError {
             XCTAssertEqual(error, NetworkError.invalidStatusCode(404))
@@ -145,7 +143,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList()
+            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch let error as URLError {
             XCTAssertEqual(error.code, .unknown)
@@ -160,7 +158,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList()
+            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch let error as URLError {
             XCTAssertEqual(error.code, .timedOut)
