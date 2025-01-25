@@ -12,10 +12,15 @@ import UIKit
 /// A utility class for processing image data and performing RGB calculations
 class ImageProcessor {
 
-    // MARK: - Methods
-
+    // MARK: - Properties
+    
+    /// Cache to store processed images
+    private static let imageCache = NSCache<AnyObject, AnyObject>()
+    
     /// Logger instance for image processing operations
     private static let logger = Logger.shared
+
+    // MARK: - Methods
 
     /// Calculates the sum of RGB values for all pixels in an image from a given URL
     /// - Parameter urlString: The URL string of the image to process
@@ -23,6 +28,12 @@ class ImageProcessor {
     /// - Throws: `ImageError.invalidImage` if the image cannot be loaded or is invalid
     ///          `ImageError.processingFailed` if pixel data processing fails
     static func calculateRGBSum(from urlString: String) async throws -> Int {
+        // Check if RGB sum is already cached
+        if let cachedSum = imageCache.object(forKey: urlString as AnyObject) as? Int {
+            logger.log("Returning RGB sum from cache for URL: \(urlString)", level: .info)
+            return cachedSum
+        }
+        
         guard let url = URL(string: urlString),
               let (data, _) = try? await URLSession.shared.data(from: url),
               let uiImage = UIImage(data: data),
@@ -70,6 +81,10 @@ class ImageProcessor {
             }
         }
 
+        // Cache the calculated RGB sum before returning
+        imageCache.setObject(rgbSum as AnyObject, forKey: urlString as AnyObject)
+        logger.log("Cached RGB sum for URL: \(urlString)", level: .info)
+        
         return rgbSum
     }
 }
