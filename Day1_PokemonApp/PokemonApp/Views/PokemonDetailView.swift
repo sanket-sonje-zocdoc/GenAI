@@ -35,42 +35,37 @@ struct PokemonDetailView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: 16) {
-            if let url = URL(string: pokemon.sprites.frontDefault) {
-                Group {
-                    if let image = image {
-                        Image(uiImage: image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    } else {
-                        ProgressView()
-                    }
-                }
-                .frame(width: 200, height: 200)
-                .onAppear {
-                    ImageLoader.shared.loadImage(from: url) { loadedImage in
-                        self.image = loadedImage
-                    }
-                }
+        VStack(spacing: AppStyle.Padding.normal) {
+            AppCard {
+                AppAvatar(
+                    url: URL(string: pokemon.sprites.frontDefault),
+                    size: 150
+                )
             }
 
-            Text(pokemon.name.capitalized)
-                .font(.title)
+            AppText(pokemon.name.capitalized, style: .title)
 
             ForEach(pokemon.stats, id: \.stat.name) { stat in
-                HStack {
-                    Text(stat.stat.name.capitalized)
-                        .font(.headline)
-                    Spacer()
-                    Text("\(stat.baseStat)")
-                        .font(.body)
+                AppCard {
+                    HStack {
+                        AppText(stat.stat.name.capitalized, style: .headline)
+                        Spacer()
+                        AppText("\(stat.baseStat)", style: .body)
+                    }
                 }
-                .padding(.horizontal)
             }
 
             Spacer()
         }
-        .padding()
+        .padding(AppStyle.Padding.normal)
         .navigationTitle("Pokemon Details")
     }
+}
+
+// MARK: - Preview
+
+#Preview {
+    PokemonDetailView(
+        pokemon: Pokemon.mockPokemon
+    )
 }

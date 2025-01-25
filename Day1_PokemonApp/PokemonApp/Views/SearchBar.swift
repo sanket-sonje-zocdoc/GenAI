@@ -16,7 +16,7 @@ import SwiftUI
 /// Example usage:
 /// ```
 /// @State private var searchText = ""
-/// 
+///
 /// SearchBar(text: $searchText)
 /// ```
 ///
@@ -32,31 +32,36 @@ struct SearchBar: View {
     // MARK: - Body
 
     var body: some View {
-        HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray.opacity(0.6))
-                .font(.system(size: 16, weight: .medium))
-                .padding(.leading, 8)
+        AppCard {
+            HStack {
+                AppIcon(systemName: "magnifyingglass")
+                    .padding(AppStyle.Padding.xxSmall)
 
-            TextField("Search Pokemon", text: $text)
-                .textFieldStyle(.plain)
-                .padding(.vertical, 12)
+                TextField("Search Pokemon", text: $text)
+                    .textFieldStyle(.plain)
 
-            if !text.isEmpty {
-                Button(action: {
-                    text = ""
-                }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.gray.opacity(0.6))
-                        .font(.system(size: 16, weight: .medium))
+                if !text.isEmpty {
+                    Button(action: { text = "" }) {
+                        AppIcon(systemName: "xmark.circle.fill")
+                    }
+                    .padding(.trailing, AppStyle.Padding.xSmall)
                 }
-                .padding(.trailing, 8)
             }
         }
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.white)
-                .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
-        )
     }
+}
+
+// MARK: - Preview
+
+#Preview {
+    @State var searchText = ""
+
+    return VStack {
+        SearchBar(text: .constant(""))
+            .padding()
+
+        SearchBar(text: .constant("Pikachu"))
+            .padding()
+    }
+    .preferredColorScheme(.light)
 }
