@@ -101,6 +101,7 @@ struct PokemonRowView: View {
             }
             .opacity(0)
         }
+        .listRowSeparator(.hidden, edges: .all)
     }
 }
 

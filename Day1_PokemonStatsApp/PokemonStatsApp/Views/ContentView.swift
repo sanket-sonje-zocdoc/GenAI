@@ -50,7 +50,6 @@ struct ContentView: View {
                 } else {
                     List(viewModel.pokemons, id: \.name) { pokemon in
                         PokemonRowView(pokemon: pokemon)
-                            .listRowSeparator(.hidden, edges: .all)
                             .onAppear {
                                 // Load more data when reaching the last few items
                                 if pokemon == viewModel.pokemons.last {
