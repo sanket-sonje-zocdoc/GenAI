@@ -16,18 +16,30 @@ struct Pokemon: Codable, Equatable {
     /// Name of the Pokemon
     let name: String
 
+    /// Height of the Pokemon
+    let height: Int
+
+    /// Weight of the Pokemon
+    let weight: Int
+
     /// Collection of sprite images for the Pokemon
     let sprites: Sprites
 
     /// Array of statistics for the Pokemon
     let stats: [Stat]
-    
+
+    /// Collection of Pokemon type entry of the Pokemon
+    let types: [PokemonTypeEntry]
+
     /// Coding keys for JSON decoding/encoding
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case height
+        case weight
         case sprites
         case stats
+        case types
     }
 
     // MARK: - Equatable
