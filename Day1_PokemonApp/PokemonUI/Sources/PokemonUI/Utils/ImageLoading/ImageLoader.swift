@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+import PokemonUtils
+
 /// A utility class responsible for loading and caching images from URLs.
 /// This class provides efficient image loading with an in-memory caching mechanism
 /// to prevent redundant network requests.

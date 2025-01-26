@@ -6,7 +6,9 @@
 //
 
 import Foundation
+
 import PokemonUI
+import PokemonUtils
 
 /// A concrete implementation of PokemonServiceAPI that fetches Pokemon data from the Pokemon API.
 /// This service handles network requests to the PokeAPI (pokeapi.co) and provides methods to fetch

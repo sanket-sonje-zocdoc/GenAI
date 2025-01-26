@@ -6,7 +6,9 @@
 //
 
 import Foundation
+
 import PokemonUI
+import PokemonUtils
 
 /// A view model that manages Pokemon data and statistics.
 ///

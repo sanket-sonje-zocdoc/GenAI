@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9BB2D3ED2D46A797009BA16D /* PokemonUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 9BB2D3EC2D46A797009BA16D /* PokemonUtils */; };
 		9BD2EB622D46276A00F50829 /* PokemonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9BD2EB612D46276A00F50829 /* PokemonUI */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		9B60C4362D37AD4800C31857 /* PokemonAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B60C4402D37AD4800C31857 /* PokemonAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B82166A2D461AC200960112 /* PokemonUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PokemonUI; sourceTree = "<group>"; };
+		9BB2D3EB2D46A68C009BA16D /* PokemonUtils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PokemonUtils; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BB2D3ED2D46A797009BA16D /* PokemonUtils in Frameworks */,
 				9BD2EB622D46276A00F50829 /* PokemonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +97,7 @@
 		9B60C41D2D37AD4700C31857 = {
 			isa = PBXGroup;
 			children = (
+				9BB2D3EB2D46A68C009BA16D /* PokemonUtils */,
 				9B82166A2D461AC200960112 /* PokemonUI */,
 				9B60C4282D37AD4700C31857 /* PokemonApp */,
 				9B60C4392D37AD4800C31857 /* PokemonAppTests */,
@@ -134,6 +138,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9BB2D3EF2D46A7A0009BA16D /* PBXTargetDependency */,
 				9BEAD2072D46347F001DFB92 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -142,6 +147,7 @@
 			name = PokemonApp;
 			packageProductDependencies = (
 				9BD2EB612D46276A00F50829 /* PokemonUI */,
+				9BB2D3EC2D46A797009BA16D /* PokemonUtils */,
 			);
 			productName = PokemonStatsApp;
 			productReference = 9B60C4262D37AD4700C31857 /* PokemonApp.app */;
@@ -297,6 +303,10 @@
 			isa = PBXTargetDependency;
 			target = 9B60C4252D37AD4700C31857 /* PokemonApp */;
 			targetProxy = 9B60C4412D37AD4800C31857 /* PBXContainerItemProxy */;
+		};
+		9BB2D3EF2D46A7A0009BA16D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 9BB2D3EE2D46A7A0009BA16D /* PokemonUtils */;
 		};
 		9BEAD2072D46347F001DFB92 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -596,6 +606,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9BB2D3EC2D46A797009BA16D /* PokemonUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PokemonUtils;
+		};
+		9BB2D3EE2D46A7A0009BA16D /* PokemonUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PokemonUtils;
+		};
 		9BD2EB612D46276A00F50829 /* PokemonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PokemonUI;

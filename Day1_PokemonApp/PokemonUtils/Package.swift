@@ -4,33 +4,25 @@
 import PackageDescription
 
 let package = Package(
-    name: "PokemonUI",
+    name: "PokemonUtils",
     platforms: [
         .iOS(.v18)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "PokemonUI",
-            targets: ["PokemonUI"]
-        ),
+            name: "PokemonUtils",
+            targets: ["PokemonUtils"]),
     ],
-    dependencies: [
-        .package(path: "../PokemonUtils")
-    ],
+    dependencies: [],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "PokemonUI",
-            dependencies: ["PokemonUtils"],
-            resources: [
-                .process("Resources")
-            ]
-        ),
+            name: "PokemonUtils"),
         .testTarget(
-            name: "PokemonUITests",
-            dependencies: ["PokemonUI"]
+            name: "PokemonUtilsTests",
+            dependencies: ["PokemonUtils"]
         ),
     ]
 )
