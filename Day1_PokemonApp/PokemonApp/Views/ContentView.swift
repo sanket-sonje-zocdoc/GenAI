@@ -51,7 +51,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if viewModel.pokemonList.isEmpty {
+                if viewModel.pokemonListItems.isEmpty {
                     ProgressView()
                 } else {
                     SearchBar(

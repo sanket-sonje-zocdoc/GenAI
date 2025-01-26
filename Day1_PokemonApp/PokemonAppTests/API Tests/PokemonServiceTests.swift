@@ -42,7 +42,7 @@ final class PokemonServiceTests: XCTestCase {
         )
 
         // When
-        let result = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+        let result = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
 
         // Then
         XCTAssertEqual(result.count, 25)
@@ -54,7 +54,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+            _ = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch {
             XCTAssertTrue(error is URLError)
@@ -67,7 +67,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+            _ = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch {
             XCTAssertTrue(error is URLError)
@@ -88,7 +88,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+            _ = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch {
             XCTAssertTrue(error is DecodingError)
@@ -107,7 +107,7 @@ final class PokemonServiceTests: XCTestCase {
         )
 
         // When
-        let result = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+        let result = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
 
         // Then
         XCTAssertTrue(result.isEmpty)
@@ -126,7 +126,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+            _ = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch let error as NetworkError {
             XCTAssertEqual(error, NetworkError.invalidStatusCode(404))
@@ -143,7 +143,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+            _ = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch let error as URLError {
             XCTAssertEqual(error.code, .unknown)
@@ -158,7 +158,7 @@ final class PokemonServiceTests: XCTestCase {
 
         // When/Then
         do {
-            _ = try await pokemonService.fetchPokemonList(offset: 0, limit: 25)
+            _ = try await pokemonService.fetchPokemonListItems(offset: 0, limit: 25)
             XCTFail("Expected error but got success")
         } catch let error as URLError {
             XCTAssertEqual(error.code, .timedOut)

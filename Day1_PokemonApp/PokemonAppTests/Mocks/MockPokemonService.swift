@@ -31,7 +31,7 @@ class MockPokemonService: PokemonServiceAPI {
     ///   - limit: The maximum number of items to return.
     /// - Returns: An array of `PokemonListItem` specified in `mockPokemonList`.
     /// - Throws: The error specified in `mockError` if set.
-    func fetchPokemonList(offset: Int, limit: Int) async throws -> [PokemonListItem] {
+    func fetchPokemonListItems(offset: Int, limit: Int) async throws -> [PokemonListItem] {
         if let error = mockError {
             throw error
         }

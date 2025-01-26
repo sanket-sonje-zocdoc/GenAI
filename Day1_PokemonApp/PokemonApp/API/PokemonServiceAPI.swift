@@ -16,7 +16,7 @@ protocol PokemonServiceAPI {
     ///   - limit: The number of items to fetch per page
     /// - Returns: An array of `PokemonListItem` objects, sorted alphabetically.
     /// - Throws: An error if the network request fails or if the JSON decoding fails.
-    func fetchPokemonList(offset: Int, limit: Int) async throws -> [PokemonListItem]
+    func fetchPokemonListItems(offset: Int, limit: Int) async throws -> [PokemonListItem]
 
     /// Fetches detailed information about a specific Pokemon.
     /// - Parameter url: The URL string pointing to the Pokemon's detailed information.

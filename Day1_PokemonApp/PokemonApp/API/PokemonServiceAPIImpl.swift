@@ -31,7 +31,7 @@ class PokemonServiceAPIImpl: PokemonServiceAPI {
     ///   - limit: The number of items to fetch per page
     /// - Returns: An array of `PokemonListItem` objects, sorted alphabetically.
     /// - Throws: An error if the network request fails or if the JSON decoding fails.
-    func fetchPokemonList(offset: Int, limit: Int) async throws -> [PokemonListItem] {
+    func fetchPokemonListItems(offset: Int, limit: Int) async throws -> [PokemonListItem] {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=\(limit)") else {
             throw URLError(.badURL)
         }

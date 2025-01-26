@@ -52,7 +52,7 @@ class PokemonViewModel: ObservableObject {
     @Published var pokemons: [Pokemon] = []
 
     /// List of basic Pokemon information items
-    @Published var pokemonList: [PokemonListItem] = []
+    @Published var pokemonListItems: [PokemonListItem] = []
 
     /// Stores any error that occurs during data fetching
     @Published var error: Error?
@@ -83,7 +83,7 @@ class PokemonViewModel: ObservableObject {
     func fetchInitialPokemonList() async {
         currentOffset = 0
         pokemons.removeAll()
-        pokemonList.removeAll()
+        pokemonListItems.removeAll()
         await fetchNextBatch()
     }
 
@@ -168,22 +168,22 @@ class PokemonViewModel: ObservableObject {
         isLoadingMore = true
 
         do {
-            let newPokemonList = try await pokemonService.fetchPokemonList(
+            let newPokemonListItems = try await pokemonService.fetchPokemonListItems(
                 offset: currentOffset,
                 limit: pageSize
             )
 
             // If we received fewer items than requested, we've reached the end
-            hasMoreData = newPokemonList.count == pageSize
+            hasMoreData = newPokemonListItems.count == pageSize
 
             // Update the offset for the next batch
-            currentOffset += newPokemonList.count
+            currentOffset += newPokemonListItems.count
 
             // Append new items to the list
-            pokemonList.append(contentsOf: newPokemonList)
+            pokemonListItems.append(contentsOf: newPokemonListItems)
 
             // Fetch details for new Pokemon
-            await fetchPokemonDetails(for: newPokemonList)
+            await fetchPokemonDetails(for: newPokemonListItems)
 
         } catch {
             logger.log("Failed to fetch Pokemon list: \(error.localizedDescription)", level: .error)
@@ -194,13 +194,13 @@ class PokemonViewModel: ObservableObject {
     }
 
     /// Fetches detailed information for specific Pokemon in the list
-    private func fetchPokemonDetails(for pokemonList: [PokemonListItem]) async {
-        for pokemon in pokemonList {
+    private func fetchPokemonDetails(for pokemonListItems: [PokemonListItem]) async {
+        for pokemonListItem in pokemonListItems {
             do {
-                let pokemonDetails = try await pokemonService.fetchPokemon(url: pokemon.url)
-                pokemons.append(pokemonDetails)
+                let pokemon = try await pokemonService.fetchPokemon(url: pokemonListItem.url)
+                pokemons.append(pokemon)
             } catch {
-                logger.log("Error fetching \(pokemon.name): \(error)", level: .error)
+                logger.log("Error fetching \(pokemonListItem.name): \(error)", level: .error)
             }
         }
     }
