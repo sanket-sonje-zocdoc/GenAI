@@ -42,7 +42,7 @@ class PokemonViewModel: ObservableObject {
 
     /// Current sort option
     @Published var sortOption: SortOption = .name
-    
+
     /// Current sort order (ascending/descending)
     @Published var sortAscending = true
 
@@ -116,7 +116,16 @@ class PokemonViewModel: ObservableObject {
             return pokemons.sorted { p1, p2 in
                 sortAscending ? p1.name < p2.name : p1.name > p2.name
             }
-            
+
+        case .type:
+            return pokemons.sorted { p1, p2 in
+                // Convert types arrays to strings for comparison
+                let types1 = p1.types.map { $0.type.name }.joined(separator: ",")
+                let types2 = p2.types.map { $0.type.name }.joined(separator: ",")
+                
+                return sortAscending ? types1 < types2 : types1 > types2
+            }
+
         case .hp, .attack, .defense, .specialAttack, .specialDefense, .speed:
             return pokemons.sorted { p1, p2 in
                 let stat1 = p1.stats.first { $0.stat.name == sortOption.statName }?.baseStat ?? 0
@@ -168,8 +177,5 @@ class PokemonViewModel: ObservableObject {
                 logger.log("Error fetching \(pokemon.name): \(error)", level: .error)
             }
         }
-        
-        // Sort using the current sort option and direction
-        pokemons = sortPokemons(pokemons)
     }
 }

@@ -15,7 +15,10 @@ enum SortOption: String, CaseIterable {
 
     /// Sort Pokemon by their name alphabetically
     case name = "Name"
-    
+
+    /// Sort Pokemon by their type alphabetically
+    case type = "Type"
+
     /// Sort Pokemon by their base HP (Hit Points) stat
     case hp = "HP"
     
@@ -43,6 +46,7 @@ enum SortOption: String, CaseIterable {
     var statName: String {
         switch self {
         case .name: return ""
+        case .type: return ""
         case .hp: return "hp"
         case .attack: return "attack"
         case .defense: return "defense"

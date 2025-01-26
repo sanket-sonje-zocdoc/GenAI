@@ -235,6 +235,75 @@ class PokemonViewModelTests: XCTestCase {
         XCTAssertEqual(sorted.map { $0.name }, ["Charizard", "Pikachu"])
     }
 
+    // MARK: - Sort Pokemon Tests
+
+    func test_sortPokemons_byTypeAscending() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire", "flying"])
+        let pokemon2 = createMockPokemon(name: "Pikachu", types: ["electric"])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .type
+        mockViewModel.sortAscending = true
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Pikachu", "Charizard"])
+        XCTAssertEqual(sorted.map { $0.types.first?.type.name }, ["electric", "fire"])
+    }
+    
+    func test_sortPokemons_byTypeDescending() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire", "flying"])
+        let pokemon2 = createMockPokemon(name: "Pikachu", types: ["electric"])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .type
+        mockViewModel.sortAscending = false
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Charizard", "Pikachu"])
+        XCTAssertEqual(sorted.map { $0.types.first?.type.name }, ["fire", "electric"])
+    }
+    
+    func test_sortPokemons_byType_withEmptyTypes() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire"])
+        let pokemon2 = createMockPokemon(name: "MissingNo", types: [])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .type
+        mockViewModel.sortAscending = true
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["MissingNo", "Charizard"])
+    }
+    
+    func test_sortPokemons_byType_withMultipleTypes() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire", "flying"])
+        let pokemon2 = createMockPokemon(name: "Gyarados", types: ["water", "flying"])
+        let pokemon3 = createMockPokemon(name: "Pikachu", types: ["electric"])
+        mockViewModel.pokemons = [pokemon1, pokemon2, pokemon3]
+        mockViewModel.sortOption = .type
+        mockViewModel.sortAscending = true
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Pikachu", "Charizard", "Gyarados"])
+        XCTAssertEqual(
+            sorted.map { $0.types.map { $0.type.name }.joined(separator: ",") },
+            ["electric", "fire,flying", "water,flying"]
+        )
+    }
+
     // MARK: - Helper Methods
 
     private func createMockPokemon(name: String, types: [String] = [], stats: [String: Int] = [:]) -> Pokemon {
