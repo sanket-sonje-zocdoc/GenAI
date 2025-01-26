@@ -36,30 +36,59 @@ struct PokemonDetailView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: AppStyle.Padding.normal) {
-            AppCard {
-                AppAvatar(
-                    url: URL(string: pokemon.sprites.frontDefault),
-                    size: 150
-                )
-            }
-
-            AppText(pokemon.name.capitalized, style: .title)
-
-            ForEach(pokemon.stats, id: \.stat.name) { stat in
-                AppCard {
-                    HStack {
-                        AppText(stat.stat.name.capitalized, style: .headline)
-                        Spacer()
-                        AppText("\(stat.baseStat)", style: .body)
+        ScrollView {
+            VStack(spacing: AppStyle.Padding.large) {
+                // Pokemon Image Section
+                AppCard(style: .elevated) {
+                    VStack {
+                        AppAvatar(
+                            url: URL(string: pokemon.sprites.frontDefault),
+                            size: 200
+                        )
+                        .padding(.vertical, AppStyle.Padding.normal)
+                        
+                        AppDivider()
+                        
+                        AppText(pokemon.name.capitalized, style: .title)
+                            .padding(.vertical, AppStyle.Padding.xSmall)
                     }
                 }
-            }
+                .padding(.horizontal, AppStyle.Padding.normal)
 
-            Spacer()
+                // Stats Section
+                VStack(spacing: AppStyle.Padding.xSmall) {
+                    AppText("Base Stats", style: .headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    ForEach(pokemon.stats, id: \.stat.name) { stat in
+                        AppCard(style: .flat) {
+                            HStack {
+                                AppText(stat.stat.name.capitalized, style: .headline)
+                                
+                                Spacer()
+                                
+                                // Progress bar for visual representation
+                                AppProgressBar(
+                                    value: Double(stat.baseStat),
+                                    maxValue: 100
+                                )
+                                .frame(width: 100)
+                                
+                                AppText("\(stat.baseStat)", style: .body)
+                                    .frame(width: 40, alignment: .trailing)
+                            }
+                            .padding(.vertical, AppStyle.Padding.xSmall)
+                        }
+                    }
+                }
+                .padding(.horizontal, AppStyle.Padding.normal)
+
+                Spacer()
+            }
+            .padding(.vertical, AppStyle.Padding.normal)
         }
-        .padding(AppStyle.Padding.normal)
         .navigationTitle("Pokemon Details")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

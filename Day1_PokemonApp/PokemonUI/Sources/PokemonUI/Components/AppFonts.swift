@@ -1,3 +1,10 @@
+//
+//  AppFonts.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 26/01/25.
+//
+
 import SwiftUI
 
 /// A utility enum that provides custom font management functionality for the application.
@@ -5,7 +12,7 @@ import SwiftUI
 /// making them available throughout the application's lifecycle.
 ///
 /// Usage:
-/// ```swift
+/// ```
 /// // Call this during app initialization
 /// AppFonts.register()
 /// ```

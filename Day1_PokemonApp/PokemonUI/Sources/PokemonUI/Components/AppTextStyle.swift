@@ -34,11 +34,11 @@ public enum AppTextStyle {
     var color: Color {
         switch self {
         case .title:
-            return Theme.Colors.primaryText
+            return AppTheme.Colors.primaryText
         case .headline:
-            return Theme.Colors.primaryText
+            return AppTheme.Colors.primaryText
         case .body:
-            return Theme.Colors.primaryText
+            return AppTheme.Colors.primaryText
         case .caption:
             return .white
         }

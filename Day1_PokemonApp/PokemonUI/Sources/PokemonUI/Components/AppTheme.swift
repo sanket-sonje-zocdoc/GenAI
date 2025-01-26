@@ -1,3 +1,10 @@
+//
+//  AppTheme.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 26/01/25.
+//
+
 import Foundation
 import SwiftUI
 import UIKit
@@ -7,13 +14,13 @@ import UIKit
 /// the application to maintain consistent design.
 ///
 /// Usage:
-/// ```swift
+/// ```
 /// Text("Hello")
 ///     .foregroundColor(Theme.Colors.primaryText)
 ///     .background(Theme.Colors.background)
 /// ```
 @available(iOS 15.0, *)
-public enum Theme {
+public enum AppTheme {
 
     /// Defines the color palette used throughout the application.
     /// All colors are loaded from the asset catalog and are compatible with
