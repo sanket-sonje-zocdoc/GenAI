@@ -168,7 +168,7 @@ class PokemonViewModel: ObservableObject {
         isLoadingMore = true
 
         do {
-            let newPokemonListItems = try await pokemonService.fetchPokemonListItems(
+            let newPokemonListItems: [PokemonListItem] = try await pokemonService.fetchList(
                 offset: currentOffset,
                 limit: pageSize
             )
@@ -197,7 +197,9 @@ class PokemonViewModel: ObservableObject {
     private func fetchPokemonDetails(for pokemonListItems: [PokemonListItem]) async {
         for pokemonListItem in pokemonListItems {
             do {
-                let pokemon = try await pokemonService.fetchPokemon(url: pokemonListItem.url)
+                let pokemon: Pokemon = try await pokemonService.fetchItem(
+                    url: pokemonListItem.url
+                )
                 pokemons.append(pokemon)
             } catch {
                 logger.log("Error fetching \(pokemonListItem.name): \(error)", level: .error)

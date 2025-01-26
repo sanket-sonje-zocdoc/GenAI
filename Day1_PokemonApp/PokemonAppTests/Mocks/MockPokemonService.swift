@@ -13,41 +13,67 @@ import Foundation
 /// This class provides controllable responses for Pokemon-related network requests
 /// without making actual API calls.
 class MockPokemonService: PokemonServiceAPI {
-
-    // MARK: - properties
-
-    /// An array of mock Pokemon list items to be returned by `fetchPokemonList`.
-    var mockPokemonList: [PokemonListItem] = []
-
-    /// An optional error to be thrown by the mock methods.
-    /// Set this property to simulate error scenarios in tests.
+    
+    // MARK: - Properties
+    
+    /// Dictionary to store mock responses for different types
+    private var mockResponses: [String: Any] = [:]
+    
+    /// An optional error to be thrown by the mock methods
     var mockError: Error?
-
-    // MARK: - Services
-
-    /// Simulates fetching a list of Pokemon.
-    /// - Parameters:
-    ///   - offset: The starting position in the Pokemon list.
-    ///   - limit: The maximum number of items to return.
-    /// - Returns: An array of `PokemonListItem` specified in `mockPokemonList`.
-    /// - Throws: The error specified in `mockError` if set.
-    func fetchPokemonListItems(offset: Int, limit: Int) async throws -> [PokemonListItem] {
-        if let error = mockError {
-            throw error
+    
+    // MARK: - Setup Methods
+    
+    /// Sets up a mock response for a specific type
+    /// - Parameter response: The mock response to return
+    /// - Parameter type: The type of the response, used as a key for storage
+    func setMockResponse<T>(_ response: T, for type: T.Type) {
+        let key = String(describing: type)
+        mockResponses[key] = response
+        
+        // If it's an array type, also store it with the element type as key
+        if let arrayResponse = response as? [Any],
+           let elementType = type as? [Any].Type {
+            let elementTypeString = String(describing: elementType).replacingOccurrences(of: "Array<", with: "").dropLast()
+            mockResponses[String(elementTypeString)] = arrayResponse
         }
-
-        return mockPokemonList
     }
-
-    /// Simulates fetching a single Pokemon's details.
-    /// - Parameter url: The URL for the Pokemon details (unused in mock).
-    /// - Returns: The `Pokemon` instance specified in `mockPokemon`.
-    /// - Throws: The error specified in `mockError` if set.
-    func fetchPokemon(url: String) async throws -> Pokemon {
+    
+    // MARK: - API Implementation
+    
+    /// Simulates fetching a paginated list of items
+    /// - Parameters:
+    ///   - offset: The starting position in the list
+    ///   - limit: The maximum number of items to return
+    /// - Returns: An array of type T from the mock responses
+    /// - Throws: MockError.responseNotFound if no mock is set, or mockError if specified
+    func fetchList<T>(offset: Int, limit: Int) async throws -> [T] where T : Decodable {
         if let error = mockError {
             throw error
         }
-
-        return MockPokemon.pikachu
+        
+        let key = String(describing: [T].self)
+        guard let response = mockResponses[key] as? [T] else {
+            throw MockError.responseNotFound(type: T.self)
+        }
+        
+        return response
+    }
+    
+    /// Simulates fetching a single item
+    /// - Parameter url: The URL for the item (unused in mock)
+    /// - Returns: An item of type T from the mock responses
+    /// - Throws: MockError.responseNotFound if no mock is set, or mockError if specified
+    func fetchItem<T>(url urlString: String) async throws -> T where T : Decodable {
+        if let error = mockError {
+            throw error
+        }
+        
+        let key = String(describing: T.self)
+        guard let response = mockResponses[key] as? T else {
+            throw MockError.responseNotFound(type: T.self)
+        }
+        
+        return response
     }
 }
