@@ -10,15 +10,16 @@ import SwiftUI
 /// AppText("Hello World", style: .title)
 /// AppText("Description", style: .body)
 /// ```
-struct AppText: View {
+@available(iOS 18.0, *)
+public struct AppText: View {
 
     // MARK: - Properties
 
     /// The text content to be displayed
-    let text: String
-    
+    public let text: String
+
     /// The style configuration for the text
-    let style: AppTextStyle
+    public let style: AppTextStyle
 
     // MARK: - Initialization
 
@@ -26,14 +27,14 @@ struct AppText: View {
     /// - Parameters:
     ///   - text: The string content to be displayed
     ///   - style: The text style to apply (defaults to .body if not specified)
-    init(_ text: String, style: AppTextStyle = .body) {
+    public init(_ text: String, style: AppTextStyle = .body) {
         self.text = text
         self.style = style
     }
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         Text(text)
             .font(style.font)
             .foregroundColor(style.color)
@@ -42,6 +43,7 @@ struct AppText: View {
 
 // MARK: - Preview
 
+@available(iOS 18.0, *)
 #Preview {
     VStack(spacing: 16) {
         AppText("Title Style", style: .title)

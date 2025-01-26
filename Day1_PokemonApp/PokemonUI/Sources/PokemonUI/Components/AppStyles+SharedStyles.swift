@@ -7,14 +7,15 @@
 
 import SwiftUI
 
+@available(iOS 18.0, *)
 extension AppStyle {
 
     /// Shared styles used across different components
-    enum SharedStyles {
+    public enum SharedStyles {
 
         /// Creates a consistent card background style
         /// - Returns: A view modifier that applies the card background styling
-        static func cardBackground() -> some View {
+        public static func cardBackground() -> some View {
             RoundedRectangle(cornerRadius: Radius.corner)
                 .fill(Theme.Colors.background)
                 .shadow(
@@ -25,7 +26,7 @@ extension AppStyle {
                 )
         }
 
-        static func typeTag(color: Color) -> some View {
+        public static func typeTag(color: Color) -> some View {
             Capsule()
                 .fill(color)
                 .overlay(
@@ -34,5 +35,4 @@ extension AppStyle {
                 )
         }
     }
-
 }

@@ -26,15 +26,16 @@ import SwiftUI
 ///
 /// - Note: The component automatically handles text styling and contrast,
 ///         so you only need to provide the text content and background color.
-struct AppTag: View {
+@available(iOS 18.0, *)
+public struct AppTag: View {
 
     // MARK: - Properties
 
     /// The text content to be displayed in the tag
-    let text: String
+    public let text: String
 
     /// The background color of the tag
-    let color: Color
+    public let color: Color
 
     // MARK: - Initialization
 
@@ -42,14 +43,14 @@ struct AppTag: View {
     /// - Parameters:
     ///   - text: The string to be displayed inside the tag
     ///   - color: The background color of the tag (uses SwiftUI Color)
-    init(text: String, color: Color) {
+    public init(text: String, color: Color) {
         self.text = text
         self.color = color
     }
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         AppText(text, style: .caption)
             .padding(.horizontal, AppStyle.Padding.xSmall)
             .padding(.vertical, AppStyle.Padding.xxSmall)
@@ -61,6 +62,7 @@ struct AppTag: View {
 
 // MARK: - Previews
 
+@available(iOS 18.0, *)
 #Preview {
     VStack(spacing: 16) {
         AppTag(text: "Fire", color: .red)

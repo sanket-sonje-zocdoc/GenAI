@@ -7,18 +7,19 @@
 
 import SwiftUI
 
+@available(iOS 18.0, *)
 extension AppStyle {
 
     /// Constants for common dimensions used throughout the app
-    enum Dimensions {
+    public enum Dimensions {
 
         /// Standard size for icons in the app
         /// Used for small decorative icons and system images
-        static let iconSize: CGFloat = 16
+        public static let iconSize: CGFloat = 16
 
         /// Standard size for avatar images
         /// Used for profile pictures and Pokemon thumbnails
-        static let avatarSize: CGFloat = 75
+        public static let avatarSize: CGFloat = 75
 
     }
 }

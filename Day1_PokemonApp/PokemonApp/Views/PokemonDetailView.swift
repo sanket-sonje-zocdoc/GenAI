@@ -5,6 +5,7 @@
 //  Created by Sanket Sonje on 25/01/25.
 //
 
+import PokemonUI
 import SwiftUI
 
 /// A view that displays detailed information about a specific Pokemon.

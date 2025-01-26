@@ -7,13 +7,5 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Calibri.ttf</string>
-		<string>Calibri-Bold.ttf</string>
-		<string>Calibri-Light.ttf</string>
-		<string>Calibri-Italic.ttf</string>
-		<string>Calibri-BoldItalic.ttf</string>
-	</array>
 </dict>
 </plist>

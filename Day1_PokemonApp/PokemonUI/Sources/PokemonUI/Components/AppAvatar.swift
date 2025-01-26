@@ -1,5 +1,5 @@
 import SwiftUI
-import UIKit // Add UIKit for UIImage
+import UIKit
 
 /// A reusable circular avatar component that displays images with a loading state.
 ///
@@ -32,29 +32,30 @@ import UIKit // Add UIKit for UIImage
 ///
 /// - Note: When no image URL is provided or while the image is loading, the component
 ///         displays a progress indicator centered in the frame.
-struct AppAvatar: View {
+@available(iOS 18.0, *)
+public struct AppAvatar: View {
 
     // MARK: - Properties
 
     /// The URL of the image to be loaded and displayed.
     /// If nil, the avatar will show a loading indicator indefinitely.
-    let url: URL?
+    public let url: URL?
 
     /// The width and height of the avatar in points.
     /// Defaults to the standard avatar size defined in `AppStyle.Dimensions.avatarSize`
-    let size: CGFloat
+    public let size: CGFloat
 
     /// The width of the border stroke around the avatar.
     /// Defaults to 1 point.
-    let lineWidth: CGFloat
+    public let lineWidth: CGFloat
 
     /// The color of the border stroke around the avatar.
     /// Defaults to `AppStyle.Colors.shadowColor`.
-    let strokeColor: Color
+    public let strokeColor: Color
 
     /// The background color shown behind the image or loading indicator.
     /// Defaults to `AppStyle.Colors.surfaceBackground`.
-    let backgroundColor: Color
+    public let backgroundColor: Color
 
     /// The loaded image to be displayed.
     /// This is managed internally and updated when the image loads successfully.
@@ -80,7 +81,7 @@ struct AppAvatar: View {
     ///   - backgroundColor:
     ///     - The background color shown behind the image or loading indicator.
     ///     - Defaults to `AppStyle.Colors.surfaceBackground`.
-    init(
+    public init(
         url: URL? = nil,
         size: CGFloat = AppStyle.Dimensions.avatarSize,
         lineWidth: CGFloat = 1,
@@ -96,7 +97,7 @@ struct AppAvatar: View {
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         Group {
             if let image {
                 Image(uiImage: image)
@@ -122,7 +123,9 @@ struct AppAvatar: View {
         .onAppear {
             if let url = url {
                 ImageLoader.shared.loadImage(from: url) { image in
-                    self.image = image
+                    DispatchQueue.main.async {
+                        self.image = image
+                    }
                 }
             }
         }
@@ -131,6 +134,7 @@ struct AppAvatar: View {
 
 // MARK: - Preview
 
+@available(iOS 18.0, *)
 #Preview {
     VStack(spacing: 20) {
         AppAvatar()

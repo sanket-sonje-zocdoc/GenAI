@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PokemonUI
 
 /// A concrete implementation of PokemonServiceAPI that fetches Pokemon data from the Pokemon API.
 class PokemonServiceAPIImpl: PokemonServiceAPI {

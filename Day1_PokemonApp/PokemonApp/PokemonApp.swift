@@ -5,6 +5,7 @@
 //  Created by Sanket Sonje on 15/01/25.
 //
 
+import PokemonUI
 import SwiftUI
 
 /// The main entry point for the Pokemon Stats application.
@@ -26,6 +27,7 @@ struct PokemonApp: App {
 
     init() {
         self.session = .shared
+        AppFonts.register()
     }
 
     /// The body property required by the `App` protocol.

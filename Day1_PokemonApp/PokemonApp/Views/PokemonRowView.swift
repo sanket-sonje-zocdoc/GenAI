@@ -5,6 +5,7 @@
 //  Created by Sanket Sonje on 25/01/25.
 //
 
+import PokemonUI
 import SwiftUI
 import UIKit
 
@@ -42,7 +43,7 @@ struct PokemonRowView: View {
                             ForEach(pokemon.types, id: \.slot) { pokemonTypeEntry in
                                 AppTag(
                                     text: pokemonTypeEntry.type.name.capitalized,
-                                    color: Color.getColor(for: pokemonTypeEntry.type)
+                                    color: Color.getColor(for: pokemonTypeEntry.type.name)
                                 )
                             }
                         }

@@ -17,21 +17,22 @@ import SwiftUI
 /// // Custom sized icon
 /// AppIcon(systemName: "bell.fill", size: 24)
 /// ```
-struct AppIcon: View {
+@available(iOS 18.0, *)
+public struct AppIcon: View {
 
     // MARK: - Properties
 
     /// The SF Symbols name for the icon
-    let systemName: String
-    
+    public let systemName: String
+
     /// The color of the icon. Defaults to the secondary text color from AppStyle
-    var color: Color
-    
+    public let color: Color
+
     /// The size of the icon in points. Defaults to the standard icon size from AppStyle
-    var size: CGFloat
-    
+    public let size: CGFloat
+
     /// The font weight of the icon. Defaults to .medium
-    var fontWeight: Font.Weight
+    public let fontWeight: Font.Weight
 
     // MARK: - Initialization
 
@@ -41,7 +42,7 @@ struct AppIcon: View {
     ///   - color: The color of the icon. Defaults to AppStyle.Colors.textSecondary
     ///   - size: The size of the icon in points. Defaults to AppStyle.Dimensions.iconSize
     ///   - fontWeight: The font weight of the icon. Defaults to .medium
-    init(
+    public init(
         systemName: String,
         color: Color = .secondary,
         size: CGFloat = 20,
@@ -55,7 +56,7 @@ struct AppIcon: View {
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         Image(systemName: systemName)
             .foregroundColor(color)
             .font(.system(size: size, weight: fontWeight))
@@ -64,6 +65,7 @@ struct AppIcon: View {
 
 // MARK: - Preview
 
+@available(iOS 18.0, *)
 #Preview {
     VStack(spacing: 20) {
         HStack(spacing: 20) {

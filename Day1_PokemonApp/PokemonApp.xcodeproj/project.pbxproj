@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9B82166D2D461ADB00960112 /* PokemonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9B82166C2D461ADB00960112 /* PokemonUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		9B60C4372D37AD4800C31857 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		9B60C4262D37AD4700C31857 /* PokemonApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B60C4362D37AD4800C31857 /* PokemonAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B60C4402D37AD4800C31857 /* PokemonAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokemonAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B82166A2D461AC200960112 /* PokemonUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PokemonUI; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -65,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B82166D2D461ADB00960112 /* PokemonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,9 +94,11 @@
 		9B60C41D2D37AD4700C31857 = {
 			isa = PBXGroup;
 			children = (
+				9B82166A2D461AC200960112 /* PokemonUI */,
 				9B60C4282D37AD4700C31857 /* PokemonApp */,
 				9B60C4392D37AD4800C31857 /* PokemonAppTests */,
 				9B60C4432D37AD4800C31857 /* PokemonAppUITests */,
+				9B82166B2D461ADB00960112 /* Frameworks */,
 				9B60C4272D37AD4700C31857 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +111,13 @@
 				9B60C4402D37AD4800C31857 /* PokemonAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9B82166B2D461ADB00960112 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +140,7 @@
 			);
 			name = PokemonApp;
 			packageProductDependencies = (
+				9B82166C2D461ADB00960112 /* PokemonUI */,
 			);
 			productName = PokemonStatsApp;
 			productReference = 9B60C4262D37AD4700C31857 /* PokemonApp.app */;
@@ -208,6 +224,8 @@
 			);
 			mainGroup = 9B60C41D2D37AD4700C31857;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9B60C4272D37AD4700C31857 /* Products */;
 			projectDirPath = "";
@@ -569,6 +587,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9B82166C2D461ADB00960112 /* PokemonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PokemonUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9B60C41E2D37AD4700C31857 /* Project object */;
 }

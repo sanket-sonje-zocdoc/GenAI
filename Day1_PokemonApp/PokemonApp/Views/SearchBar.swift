@@ -5,6 +5,7 @@
 //  Created by Sanket Sonje on 25/01/25.
 //
 
+import PokemonUI
 import SwiftUI
 
 /// A reusable search bar component that provides a search interface with multiple search modes.

@@ -8,19 +8,32 @@
 import Foundation
 import UIKit
 
-/// A utility class for loading and caching images
-class ImageLoader {
+/// A utility class responsible for loading and caching images from URLs.
+/// This class provides efficient image loading with an in-memory caching mechanism
+/// to prevent redundant network requests.
+///
+/// Usage Example:
+/// ```
+/// let imageLoader = ImageLoader.shared
+/// imageLoader.loadImage(from: imageURL) { image in
+///     if let image = image {
+///         // Use the loaded image
+///     }
+/// }
+/// ```
+@MainActor
+public class ImageLoader {
 
     // MARK: - Properties
 
     /// Shared instance for the image loader
-    static let shared = ImageLoader()
-
-    /// Cache to store loaded images
-    private let imageCache = NSCache<AnyObject, AnyObject>()
+    public static let shared = ImageLoader()
 
     /// Logger instance for logging operations
     private let logger = Logger.shared
+
+    /// Cache to store loaded images
+    @MainActor var imageCache = NSCache<AnyObject, AnyObject>()
 
     // MARK: - Initialization
 
@@ -28,11 +41,18 @@ class ImageLoader {
 
     // MARK: - Methods
 
-    /// Loads an image from a URL, using cached version if available
+    /// Loads an image from a URL, using cached version if available.
+    /// This method first checks the in-memory cache for the image. If not found,
+    /// it downloads the image from the provided URL in a background thread.
+    ///
     /// - Parameters:
     ///   - url: The URL of the image to load
-    ///   - completion: Closure called with the loaded UIImage or nil if loading fails
-    func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+    ///   - completion: A closure that will be called on the main thread with the loaded image
+    ///                 The closure receives a UIImage if successful, or nil if loading fails
+    ///
+    /// - Note: The completion handler is always called on the main thread
+    /// - Important: This method uses a background queue for network operations to avoid blocking the main thread
+    public func loadImage(from url: URL, completion: @escaping @Sendable (UIImage?) -> Void) {
         let urlString = url.absoluteString
 
         // Check if image is already cached
@@ -57,11 +77,9 @@ class ImageLoader {
                     return
                 }
 
-                // Cache the loaded image
-                self.imageCache.setObject(image, forKey: urlString as AnyObject)
-
-                // Return the image on main thread
+                // Cache the loaded image on main thread
                 DispatchQueue.main.async {
+                    self.imageCache.setObject(image, forKey: urlString as AnyObject)
                     completion(image)
                 }
             } catch {
