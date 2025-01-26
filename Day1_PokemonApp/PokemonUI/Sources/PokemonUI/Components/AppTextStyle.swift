@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Defines the available text styles in the application
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 public enum AppTextStyle {
 
     case title

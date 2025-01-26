@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 extension AppStyle {
 
     /// Shared styles used across different components

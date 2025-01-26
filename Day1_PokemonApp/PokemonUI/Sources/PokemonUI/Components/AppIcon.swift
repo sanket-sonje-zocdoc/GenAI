@@ -17,7 +17,7 @@ import SwiftUI
 /// // Custom sized icon
 /// AppIcon(systemName: "bell.fill", size: 24)
 /// ```
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 public struct AppIcon: View {
 
     // MARK: - Properties
@@ -65,7 +65,7 @@ public struct AppIcon: View {
 
 // MARK: - Preview
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 #Preview {
     VStack(spacing: 20) {
         HStack(spacing: 20) {

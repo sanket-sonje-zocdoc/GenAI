@@ -26,7 +26,7 @@ import SwiftUI
 ///
 /// - Note: The component automatically handles text styling and contrast,
 ///         so you only need to provide the text content and background color.
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 public struct AppTag: View {
 
     // MARK: - Properties
@@ -62,7 +62,7 @@ public struct AppTag: View {
 
 // MARK: - Previews
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 #Preview {
     VStack(spacing: 16) {
         AppTag(text: "Fire", color: .red)

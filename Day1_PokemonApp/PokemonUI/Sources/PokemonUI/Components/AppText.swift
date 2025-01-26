@@ -10,7 +10,7 @@ import SwiftUI
 /// AppText("Hello World", style: .title)
 /// AppText("Description", style: .body)
 /// ```
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 public struct AppText: View {
 
     // MARK: - Properties
@@ -43,7 +43,7 @@ public struct AppText: View {
 
 // MARK: - Preview
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 #Preview {
     VStack(spacing: 16) {
         AppText("Title Style", style: .title)

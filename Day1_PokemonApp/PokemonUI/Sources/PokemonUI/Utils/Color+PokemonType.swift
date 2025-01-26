@@ -13,7 +13,7 @@ import SwiftUI
 /// Pokemon type-specific colors. It provides a consistent color scheme
 /// that matches the traditional color representations of Pokemon types
 /// across various Pokemon games and media.
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 extension Color {
 
     /// Maps a Pokemon type name to its corresponding visual representation color

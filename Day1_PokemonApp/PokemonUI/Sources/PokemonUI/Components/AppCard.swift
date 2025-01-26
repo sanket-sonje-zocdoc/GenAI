@@ -11,7 +11,7 @@ import SwiftUI
 ///         .padding()
 /// }
 /// ```
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 public struct AppCard<Content: View>: View {
 
     // MARK: - Properties
@@ -47,7 +47,7 @@ public struct AppCard<Content: View>: View {
 
 // MARK: - Preview
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 #Preview {
     VStack(spacing: AppStyle.Padding.medium) {
         AppCard {

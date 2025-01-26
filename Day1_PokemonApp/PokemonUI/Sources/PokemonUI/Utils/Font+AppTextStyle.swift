@@ -9,7 +9,7 @@ import SwiftUI
 
 ///  Extension providing convenient access to Calibri font variants
 ///  for use within the Pokemon app's UI components.
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 extension Font {
 
     /// Returns a Calibri font with regular weight

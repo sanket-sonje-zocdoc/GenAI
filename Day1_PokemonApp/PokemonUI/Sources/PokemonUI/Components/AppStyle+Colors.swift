@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 extension AppStyle {
 
     /// Colors defines the app's color palette and provides consistent color usage across the application.

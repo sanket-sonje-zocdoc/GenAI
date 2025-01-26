@@ -16,20 +16,16 @@ public enum AppFonts {
     ///
     /// - Note: If registration fails for any font, an error message will be printed to the console
     public static func register() {
-        // Get the bundle that contains the font files
-        guard let bundleURL = Bundle.module.url(forResource: "Resources", withExtension: nil) else {
-            print("Could not find Resources folder")
-            return
+        let bundle = Bundle.module
+        let fontExtensions = ["ttf", "otf"]
+        
+        // Get all font files directly from the bundle
+        let foundFonts = fontExtensions.flatMap { ext in
+            bundle.urls(forResourcesWithExtension: ext, subdirectory: nil) ?? []
         }
-
-        // Get all font files (adjust the extension based on your font files - .ttf, .otf etc)
-        let fontURLs = try? FileManager.default.contentsOfDirectory(
-            at: bundleURL.appendingPathComponent("Fonts"),
-            includingPropertiesForKeys: nil,
-            options: .skipsHiddenFiles
-        )
-
-        fontURLs?.forEach { url in
+        
+        // Register each font
+        foundFonts.forEach { url in
             guard let fontDataProvider = CGDataProvider(url: url as CFURL),
                   let font = CGFont(fontDataProvider) else {
                 return
@@ -37,7 +33,7 @@ public enum AppFonts {
 
             var error: Unmanaged<CFError>?
             if !CTFontManagerRegisterGraphicsFont(font, &error) {
-                print("Error registering font: \(error.debugDescription)")
+                print("Error registering font: \(url.lastPathComponent)")
             }
         }
     }

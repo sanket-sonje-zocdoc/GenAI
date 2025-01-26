@@ -32,7 +32,7 @@ import UIKit
 ///
 /// - Note: When no image URL is provided or while the image is loading, the component
 ///         displays a progress indicator centered in the frame.
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 public struct AppAvatar: View {
 
     // MARK: - Properties
@@ -134,7 +134,7 @@ public struct AppAvatar: View {
 
 // MARK: - Preview
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 #Preview {
     VStack(spacing: 20) {
         AppAvatar()

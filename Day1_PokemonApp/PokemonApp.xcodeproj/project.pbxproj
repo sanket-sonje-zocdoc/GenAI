@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9B82166D2D461ADB00960112 /* PokemonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9B82166C2D461ADB00960112 /* PokemonUI */; };
+		9BD2EB622D46276A00F50829 /* PokemonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9BD2EB612D46276A00F50829 /* PokemonUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B82166D2D461ADB00960112 /* PokemonUI in Frameworks */,
+				9BD2EB622D46276A00F50829 /* PokemonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,13 +134,14 @@
 			buildRules = (
 			);
 			dependencies = (
+				9BEAD2072D46347F001DFB92 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				9B60C4282D37AD4700C31857 /* PokemonApp */,
 			);
 			name = PokemonApp;
 			packageProductDependencies = (
-				9B82166C2D461ADB00960112 /* PokemonUI */,
+				9BD2EB612D46276A00F50829 /* PokemonUI */,
 			);
 			productName = PokemonStatsApp;
 			productReference = 9B60C4262D37AD4700C31857 /* PokemonApp.app */;
@@ -297,6 +298,10 @@
 			target = 9B60C4252D37AD4700C31857 /* PokemonApp */;
 			targetProxy = 9B60C4412D37AD4800C31857 /* PBXContainerItemProxy */;
 		};
+		9BEAD2072D46347F001DFB92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 9BEAD2062D46347F001DFB92 /* PokemonUI */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -436,6 +441,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,6 +472,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -589,7 +596,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9B82166C2D461ADB00960112 /* PokemonUI */ = {
+		9BD2EB612D46276A00F50829 /* PokemonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PokemonUI;
+		};
+		9BEAD2062D46347F001DFB92 /* PokemonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PokemonUI;
 		};

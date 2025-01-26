@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 18.0, *)
+@available(iOS 15.0, *)
 extension AppStyle {
 
     /// `Radius` namespace contains all corner radius and shadow radius constants used throughout the app.
