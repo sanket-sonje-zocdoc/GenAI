@@ -29,8 +29,7 @@ struct SearchInputView: View {
     /// Controls the visibility of sort controls
     @Binding var showSortControls: Bool
 
-    @Binding var sortOption: SortOption
-    @Binding var sortAscending: Bool
+    @Binding var sortCriteria: [SortCriteria]
 
     // MARK: - Body
 
@@ -59,25 +58,34 @@ struct SearchInputView: View {
                         .padding(.trailing, AppStyle.Padding.xxSmall)
                 }
 
-                // Sorting Button
+                // Sorting Button with Badge
                 Button {
                     showSortControls.toggle()
                 } label: {
                     AppIcon(systemName: "arrow.up.arrow.down")
                         .padding(.trailing, AppStyle.Padding.xxSmall)
+                        .overlay(alignment: .topTrailing) {
+                            if !sortCriteria.isEmpty {
+                                Text("\(sortCriteria.count)")
+                                    .font(.caption2)
+                                    .padding(4)
+                                    .background(Color.accentColor)
+                                    .foregroundColor(.white)
+                                    .clipShape(Circle())
+                                    .offset(x: 7.5, y: -10)
+                            }
+                        }
                 }
 
                 // Clear Button
-                if !text.isEmpty {
+                if !text.isEmpty || !sortCriteria.isEmpty {
                     Button(
                         action: {
-                            if !text.isEmpty {
-                                text = ""
-                            }
-
-                            // Reset sorting to name ascending
-                            sortOption = .name
-                            sortAscending = true
+                            // Clear search text
+                            text = ""
+                            
+                            // Clear all sort criteria
+                            sortCriteria.removeAll()
 
                             // If the Sort Control View is visible, hide it
                             if showSortControls {
@@ -102,16 +110,17 @@ struct SearchInputView: View {
             text: .constant(""),
             searchMode: .constant(.name),
             showSortControls: .constant(false),
-            sortOption: .constant(.name),
-            sortAscending: .constant(true)
+            sortCriteria: .constant([])
         )
 
         SearchInputView(
             text: .constant("Pikachu"),
             searchMode: .constant(.type),
             showSortControls: .constant(true),
-            sortOption: .constant(.name),
-            sortAscending: .constant(true)
+            sortCriteria: .constant([
+                SortCriteria(option: .name, ascending: true),
+                SortCriteria(option: .type, ascending: true)
+            ])
         )
     }
     .padding()

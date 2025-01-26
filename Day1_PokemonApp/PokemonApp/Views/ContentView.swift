@@ -57,7 +57,7 @@ struct ContentView: View {
                     SearchBar(
                         text: $searchText,
                         searchMode: $searchMode,
-                        sortOption: $viewModel.sortOption,
+                        sortCriteria: $viewModel.sortCriteria,
                         sortAscending: $viewModel.sortAscending
                     )
                     .padding(.horizontal)

@@ -8,14 +8,34 @@
 import Foundation
 import PokemonUI
 
-/// A view model that manages Pokemon data and statistics for the Pokemon Stats app.
-/// This class handles fetching, filtering, sorting and pagination of Pokemon data.
+/// A view model that manages Pokemon data and statistics.
 ///
-/// The view model supports:
-/// - Paginated loading of Pokemon data
+/// This class provides functionality for:
+/// - Loading and paginating Pokemon data
 /// - Filtering Pokemon by name or type
-/// - Sorting Pokemon by various attributes (name, HP, attack, etc.)
-/// - Error handling and loading state management
+/// - Multi-criteria sorting with customizable order
+/// - Error and loading state management
+///
+/// # Key Features
+/// - Paginated loading: Loads Pokemon in batches of 25 to optimize performance
+/// - Search functionality: Supports filtering by Pokemon name or type
+/// - Advanced sorting: Allows multiple sort criteria with customizable order
+/// - Error handling: Provides error state management and logging
+///
+/// # Usage Example
+/// ```swift
+/// let viewModel = PokemonViewModel(pokemonService: PokemonService())
+///
+/// // Load initial data
+/// await viewModel.fetchInitialPokemonList()
+///
+/// // Add sort criteria
+/// viewModel.addSortCriteria(option: .name, ascending: true)
+/// viewModel.addSortCriteria(option: .hp, ascending: false)
+///
+/// // Filter Pokemon
+/// let filtered = viewModel.filterPokemons(for: "fire", mode: .type)
+/// ```
 @MainActor
 class PokemonViewModel: ObservableObject {
 
@@ -45,6 +65,9 @@ class PokemonViewModel: ObservableObject {
 
     /// Current sort order (ascending/descending)
     @Published var sortAscending = true
+
+    /// Array of active sort criteria in order of priority
+    @Published var sortCriteria: [SortCriteria] = []
 
     // MARK: - Inits
 
@@ -104,35 +127,38 @@ class PokemonViewModel: ObservableObject {
         }
     }
 
-    /// Sorts the Pokemon array based on the current `sortOption` and `sortAscending` values.
+    /// Sorts the Pokemon array based on multiple sort criteria
     /// - Parameter pokemons: The array of Pokemon to sort
-    /// - Returns: A new array containing the sorted Pokemon based on:
-    ///   - Name (alphabetically)
-    ///   - Stats (HP, Attack, Defense, Special Attack, Special Defense, Speed)
-    ///   The sort direction is determined by the `sortAscending` property
+    /// - Returns: A new array containing the sorted Pokemon
     func sortPokemons(_ pokemons: [Pokemon]) -> [Pokemon] {
-        switch sortOption {
-        case .name:
-            return pokemons.sorted { p1, p2 in
-                sortAscending ? p1.name < p2.name : p1.name > p2.name
+        return pokemons.sorted { p1, p2 in
+            for criteria in sortCriteria {
+                let comparison = comparePokemon(p1, p2, by: criteria)
+                if comparison != .orderedSame {
+                    return criteria.ascending ? comparison == .orderedAscending : comparison == .orderedDescending
+                }
             }
 
-        case .type:
-            return pokemons.sorted { p1, p2 in
-                // Convert types arrays to strings for comparison
-                let types1 = p1.types.map { $0.type.name }.joined(separator: ",")
-                let types2 = p2.types.map { $0.type.name }.joined(separator: ",")
-                
-                return sortAscending ? types1 < types2 : types1 > types2
-            }
-
-        case .hp, .attack, .defense, .specialAttack, .specialDefense, .speed:
-            return pokemons.sorted { p1, p2 in
-                let stat1 = p1.stats.first { $0.stat.name == sortOption.statName }?.baseStat ?? 0
-                let stat2 = p2.stats.first { $0.stat.name == sortOption.statName }?.baseStat ?? 0
-                return sortAscending ? stat1 < stat2 : stat1 > stat2
-            }
+            // Keep original order if all criteria are equal
+            return false
         }
+    }
+
+    /// Adds a new sort criteria or updates existing one
+    /// - Parameters:
+    ///   - option: The sort option to add/update
+    ///   - ascending: The sort direction
+    func addSortCriteria(option: SortOption, ascending: Bool) {
+        if let index = sortCriteria.firstIndex(where: { $0.option == option }) {
+            sortCriteria.remove(at: index)
+        }
+        sortCriteria.append(SortCriteria(option: option, ascending: ascending))
+    }
+
+    /// Removes a sort criteria
+    /// - Parameter option: The sort option to remove
+    func removeSortCriteria(option: SortOption) {
+        sortCriteria.removeAll { $0.option == option }
     }
 
     // MARK: - Private Helpers
@@ -178,4 +204,39 @@ class PokemonViewModel: ObservableObject {
             }
         }
     }
+
+    /// Compares two Pokemon based on a specified sort criteria
+    /// - Parameters:
+    ///   - p1: First Pokemon to compare
+    ///   - p2: Second Pokemon to compare
+    ///   - criteria: The sort criteria to use for comparison, including:
+    ///     - `.name`: Compares Pokemon names alphabetically
+    ///     - `.type`: Compares concatenated type strings alphabetically
+    ///     - Stats (`.hp`, `.attack`, etc.): Compares base stat values numerically
+    /// - Returns: A `ComparisonResult` indicating the relative order:
+    ///   - `.orderedAscending`: if p1 should come before p2
+    ///   - `.orderedDescending`: if p1 should come after p2
+    ///   - `.orderedSame`: if p1 and p2 are equal for the given criteria
+    private func comparePokemon(_ p1: Pokemon, _ p2: Pokemon, by criteria: SortCriteria) -> ComparisonResult {
+        switch criteria.option {
+        case .name:
+            return p1.name.compare(p2.name)
+
+        case .type:
+            let types1 = p1.types.map { $0.type.name }.joined(separator: ",")
+            let types2 = p2.types.map { $0.type.name }.joined(separator: ",")
+            return types1.compare(types2)
+
+        case .hp, .attack, .defense, .specialAttack, .specialDefense, .speed:
+            let stat1 = p1.stats.first { $0.stat.name == criteria.option.statName }?.baseStat ?? 0
+            let stat2 = p2.stats.first { $0.stat.name == criteria.option.statName }?.baseStat ?? 0
+            return stat1 == stat2 ? .orderedSame : (stat1 < stat2 ? .orderedAscending : .orderedDescending)
+        }
+    }
+}
+
+/// Represents a sort criteria with option and direction
+struct SortCriteria {
+    let option: SortOption
+    let ascending: Bool
 }

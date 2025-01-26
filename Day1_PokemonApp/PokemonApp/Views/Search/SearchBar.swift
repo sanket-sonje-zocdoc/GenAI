@@ -36,8 +36,8 @@ struct SearchBar: View {
     /// This binding allows the parent view to react to search mode changes.
     @Binding var searchMode: SearchMode
 
-    /// The current sort option that determines how Pokemon will be sorted
-    @Binding var sortOption: SortOption
+    /// The current sort criteria that determines how Pokemon will be sorted
+    @Binding var sortCriteria: [SortCriteria]
 
     /// Whether the sort order is ascending
     @Binding var sortAscending: Bool
@@ -53,12 +53,11 @@ struct SearchBar: View {
                 text: $text,
                 searchMode: $searchMode,
                 showSortControls: $showSortControls,
-                sortOption: $sortOption,
-                sortAscending: $sortAscending
+                sortCriteria: $sortCriteria
             )
 
             if showSortControls {
-                SearchSortingView(sortOption: $sortOption, sortAscending: $sortAscending)
+                SearchSortingView(sortCriteria: $sortCriteria)
             }
         }
     }
@@ -69,14 +68,14 @@ struct SearchBar: View {
 #Preview {
     @Previewable @State var searchText = ""
     @Previewable @State var searchMode = SearchMode.name
-    @Previewable @State var sortOption = SortOption.name
+    @Previewable @State var sortCriteria = [SortCriteria(option: .name, ascending: true)]
     @Previewable @State var sortAscending = true
 
     VStack {
         SearchBar(
             text: .constant(""),
             searchMode: .constant(.name),
-            sortOption: .constant(.name),
+            sortCriteria: .constant([SortCriteria(option: .name, ascending: true)]),
             sortAscending: .constant(true)
         )
         .padding()
@@ -84,7 +83,7 @@ struct SearchBar: View {
         SearchBar(
             text: .constant("Pikachu"),
             searchMode: .constant(.name),
-            sortOption: .constant(.attack),
+            sortCriteria: .constant([SortCriteria(option: .attack, ascending: false)]),
             sortAscending: .constant(false)
         )
         .padding()

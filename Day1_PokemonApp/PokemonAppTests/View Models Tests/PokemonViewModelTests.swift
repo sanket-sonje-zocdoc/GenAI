@@ -165,8 +165,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Pikachu", stats: [:])
         let pokemon2 = createMockPokemon(name: "Charizard", stats: [:])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .name
-        mockViewModel.sortAscending = true
+        mockViewModel.sortCriteria = [SortCriteria(option: .name, ascending: true)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -180,8 +179,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Pikachu", stats: [:])
         let pokemon2 = createMockPokemon(name: "Charizard", stats: [:])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .name
-        mockViewModel.sortAscending = false
+        mockViewModel.sortCriteria = [SortCriteria(option: .name, ascending: false)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -195,8 +193,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Pikachu", stats: ["hp": 35])
         let pokemon2 = createMockPokemon(name: "Charizard", stats: ["hp": 78])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .hp
-        mockViewModel.sortAscending = true
+        mockViewModel.sortCriteria = [SortCriteria(option: .hp, ascending: true)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -210,8 +207,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Pikachu", stats: ["hp": 35])
         let pokemon2 = createMockPokemon(name: "Charizard", stats: ["hp": 78])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .hp
-        mockViewModel.sortAscending = false
+        mockViewModel.sortCriteria = [SortCriteria(option: .hp, ascending: false)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -225,8 +221,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Pikachu", stats: ["hp": 35])
         let pokemon2 = createMockPokemon(name: "Charizard", stats: [:])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .hp
-        mockViewModel.sortAscending = true
+        mockViewModel.sortCriteria = [SortCriteria(option: .hp, ascending: true)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -242,8 +237,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire", "flying"])
         let pokemon2 = createMockPokemon(name: "Pikachu", types: ["electric"])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .type
-        mockViewModel.sortAscending = true
+        mockViewModel.sortCriteria = [SortCriteria(option: .type, ascending: true)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -258,8 +252,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire", "flying"])
         let pokemon2 = createMockPokemon(name: "Pikachu", types: ["electric"])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .type
-        mockViewModel.sortAscending = false
+        mockViewModel.sortCriteria = [SortCriteria(option: .type, ascending: false)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -274,8 +267,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire"])
         let pokemon2 = createMockPokemon(name: "MissingNo", types: [])
         mockViewModel.pokemons = [pokemon1, pokemon2]
-        mockViewModel.sortOption = .type
-        mockViewModel.sortAscending = true
+        mockViewModel.sortCriteria = [SortCriteria(option: .type, ascending: true)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -290,8 +282,7 @@ class PokemonViewModelTests: XCTestCase {
         let pokemon2 = createMockPokemon(name: "Gyarados", types: ["water", "flying"])
         let pokemon3 = createMockPokemon(name: "Pikachu", types: ["electric"])
         mockViewModel.pokemons = [pokemon1, pokemon2, pokemon3]
-        mockViewModel.sortOption = .type
-        mockViewModel.sortAscending = true
+        mockViewModel.sortCriteria = [SortCriteria(option: .type, ascending: true)]
         
         // When
         let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
@@ -302,6 +293,69 @@ class PokemonViewModelTests: XCTestCase {
             sorted.map { $0.types.map { $0.type.name }.joined(separator: ",") },
             ["electric", "fire,flying", "water,flying"]
         )
+    }
+
+    // MARK: - Multiple Sort Criteria Tests
+    
+    func test_sortPokemons_withMultipleCriteria() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire"], stats: ["hp": 78])
+        let pokemon2 = createMockPokemon(name: "Blastoise", types: ["water"], stats: ["hp": 78])
+        let pokemon3 = createMockPokemon(name: "Venusaur", types: ["grass"], stats: ["hp": 80])
+        mockViewModel.pokemons = [pokemon1, pokemon2, pokemon3]
+        
+        // When - Sort by HP descending, then by name ascending
+        mockViewModel.sortCriteria = [
+            SortCriteria(option: .hp, ascending: false),
+            SortCriteria(option: .name, ascending: true)
+        ]
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Venusaur", "Blastoise", "Charizard"])
+    }
+    
+    func test_sortPokemons_withMultipleCriteria_sameValues() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Charizard", types: ["fire"], stats: ["hp": 78])
+        let pokemon2 = createMockPokemon(name: "Blastoise", types: ["water"], stats: ["hp": 78])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        
+        // When - Sort by HP descending (same values), then by name ascending
+        mockViewModel.sortCriteria = [
+            SortCriteria(option: .hp, ascending: false),
+            SortCriteria(option: .name, ascending: true)
+        ]
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Blastoise", "Charizard"])
+    }
+    
+    func test_addSortCriteria_replacesExistingOption() {
+        // Given
+        mockViewModel.addSortCriteria(option: .name, ascending: true)
+        
+        // When
+        mockViewModel.addSortCriteria(option: .name, ascending: false)
+        
+        // Then
+        XCTAssertEqual(mockViewModel.sortCriteria.count, 1)
+        XCTAssertEqual(mockViewModel.sortCriteria.first?.option, .name)
+        XCTAssertFalse(mockViewModel.sortCriteria.first?.ascending ?? true)
+    }
+    
+    func test_removeSortCriteria() {
+        // Given
+        mockViewModel.addSortCriteria(option: .name, ascending: true)
+        mockViewModel.addSortCriteria(option: .hp, ascending: false)
+        
+        // When
+        mockViewModel.removeSortCriteria(option: .name)
+        
+        // Then
+        XCTAssertEqual(mockViewModel.sortCriteria.count, 1)
+        XCTAssertEqual(mockViewModel.sortCriteria.first?.option, .hp)
     }
 
     // MARK: - Helper Methods
