@@ -1,20 +1,30 @@
 import SwiftUI
 
-/// A utility enum that handles custom font registration for the application.
-/// This component manages the registration of custom fonts from the app's bundle
-/// to make them available for use throughout the application.
+/// A utility enum that provides custom font management functionality for the application.
+/// This component is responsible for registering custom fonts from the bundle's resources,
+/// making them available throughout the application's lifecycle.
+///
+/// Usage:
+/// ```swift
+/// // Call this during app initialization
+/// AppFonts.register()
+/// ```
 public enum AppFonts {
 
-    /// Registers all custom fonts found in the application bundle's Resources/Fonts directory.
-    /// This method should be called early in the application lifecycle, typically at launch,
-    /// to ensure all custom fonts are available for use.
+    /// Registers all custom fonts found in the application bundle.
+    /// This method should be called early in the application lifecycle, typically in the
+    /// `App.init()` or `AppDelegate.didFinishLaunching`.
     ///
-    /// The method performs the following steps:
-    /// 1. Locates the Resources folder in the module bundle
-    /// 2. Finds all font files in the Fonts subdirectory
-    /// 3. Registers each font with the system using Core Text
+    /// The method automatically handles:
+    /// - Scanning for font files with .ttf and .otf extensions
+    /// - Registering each found font with the system
+    /// - Error handling for failed registrations
     ///
-    /// - Note: If registration fails for any font, an error message will be printed to the console
+    /// - Important: Font registration is a one-time operation that must occur before
+    ///             any attempts to use the custom fonts in the UI.
+    ///
+    /// - Note: Registration failures for individual fonts will be logged to the console
+    ///         but will not interrupt the registration of other fonts.
     public static func register() {
         let bundle = Bundle.module
         let fontExtensions = ["ttf", "otf"]
