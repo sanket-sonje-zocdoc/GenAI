@@ -31,7 +31,7 @@ public struct AppProgressBar: View {
 
     /// The color of the progress bar, determined by the current percentage.
     /// Changes dynamically as the value changes relative to maxValue.
-    private var foregroundColor: Color {
+    var foregroundColor: Color {
         let percentage = (value / maxValue) * 100
         switch percentage {
         case 0...20:

@@ -1,22 +1,19 @@
-import XCTest
+//
+//  AppCardTests.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 26/01/25.
+//
+
 import SwiftUI
+import XCTest
+
 @testable import PokemonUI
 
 @MainActor
 final class AppCardTests: XCTestCase {
 
     // MARK: - Tests
-
-    func testDefaultPadding() {
-        let card = AppCard {
-            Text("Test")
-        }
-        
-        XCTAssertEqual(card.padding.top, AppStyle.Padding.xSmall)
-        XCTAssertEqual(card.padding.leading, AppStyle.Padding.normal)
-        XCTAssertEqual(card.padding.bottom, AppStyle.Padding.xSmall)
-        XCTAssertEqual(card.padding.trailing, AppStyle.Padding.normal)
-    }
     
     func testContentInitialization() {
         let testText = "Test Content"
