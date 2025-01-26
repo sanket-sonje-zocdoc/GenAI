@@ -157,4 +157,117 @@ class PokemonViewModelTests: XCTestCase {
         // Then
         XCTAssertTrue(filteredPokemons.isEmpty)
     }
+
+    // MARK: - Sort Pokemon Tests
+
+    func test_sortPokemons_byNameAscending() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Pikachu", stats: [:])
+        let pokemon2 = createMockPokemon(name: "Charizard", stats: [:])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .name
+        mockViewModel.sortAscending = true
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Charizard", "Pikachu"])
+    }
+    
+    func test_sortPokemons_byNameDescending() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Pikachu", stats: [:])
+        let pokemon2 = createMockPokemon(name: "Charizard", stats: [:])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .name
+        mockViewModel.sortAscending = false
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Pikachu", "Charizard"])
+    }
+    
+    func test_sortPokemons_byStatAscending() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Pikachu", stats: ["hp": 35])
+        let pokemon2 = createMockPokemon(name: "Charizard", stats: ["hp": 78])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .hp
+        mockViewModel.sortAscending = true
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Pikachu", "Charizard"])
+    }
+    
+    func test_sortPokemons_byStatDescending() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Pikachu", stats: ["hp": 35])
+        let pokemon2 = createMockPokemon(name: "Charizard", stats: ["hp": 78])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .hp
+        mockViewModel.sortAscending = false
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Charizard", "Pikachu"])
+    }
+    
+    func test_sortPokemons_withMissingStats() {
+        // Given
+        let pokemon1 = createMockPokemon(name: "Pikachu", stats: ["hp": 35])
+        let pokemon2 = createMockPokemon(name: "Charizard", stats: [:])
+        mockViewModel.pokemons = [pokemon1, pokemon2]
+        mockViewModel.sortOption = .hp
+        mockViewModel.sortAscending = true
+        
+        // When
+        let sorted = mockViewModel.sortPokemons(mockViewModel.pokemons)
+        
+        // Then
+        XCTAssertEqual(sorted.map { $0.name }, ["Charizard", "Pikachu"])
+    }
+
+    // MARK: - Helper Methods
+
+    private func createMockPokemon(name: String, types: [String] = [], stats: [String: Int] = [:]) -> Pokemon {
+        let pokemonTypesEntry = types.map {
+            PokemonTypeEntry(
+                slot: 1,
+                type: PokemonType(name: $0, url: "")
+            )
+
+        }
+        
+        let pokemonStats = stats.map {
+            Stat(
+                baseStat: $0.value,
+                effort: 0,
+                stat: StatInfo(
+                    name: $0.key,
+                    url: ""
+                )
+            )
+        }
+
+        return Pokemon(
+            id: 1,
+            name: name,
+            height: 0,
+            weight: 0,
+            sprites: Sprites(
+                frontDefault: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+                frontShiny: ""
+            ),
+            stats: pokemonStats,
+            types: pokemonTypesEntry
+        )
+    }
 }

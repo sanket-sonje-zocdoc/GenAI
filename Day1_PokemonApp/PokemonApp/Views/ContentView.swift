@@ -54,10 +54,23 @@ struct ContentView: View {
                 if viewModel.pokemonList.isEmpty {
                     ProgressView()
                 } else {
-                    SearchBar(text: $searchText, searchMode: $searchMode)
-                        .padding(.horizontal)
-
-                    List(viewModel.filterPokemons(for: searchText, mode: searchMode), id: \.name) { pokemon in
+                    SearchBar(
+                        text: $searchText,
+                        searchMode: $searchMode,
+                        sortOption: $viewModel.sortOption,
+                        sortAscending: $viewModel.sortAscending
+                    )
+                    .padding(.horizontal)
+                    
+                    List(
+                        viewModel.sortPokemons(
+                            viewModel.filterPokemons(
+                                for: searchText,
+                                mode: searchMode
+                            )
+                        ),
+                        id: \.name
+                    ) { pokemon in
                         PokemonRowView(pokemon: pokemon)
                             .onAppear {
                                 // Load more data when reaching the last few items

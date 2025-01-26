@@ -36,36 +36,29 @@ struct SearchBar: View {
     /// This binding allows the parent view to react to search mode changes.
     @Binding var searchMode: SearchMode
 
+    /// The current sort option that determines how Pokemon will be sorted
+    @Binding var sortOption: SortOption
+
+    /// Whether the sort order is ascending
+    @Binding var sortAscending: Bool
+
+    // Add this new state property
+    @State private var showSortControls = false
+
     // MARK: - Body
 
     var body: some View {
-        AppCard {
-            HStack {
-                AppIcon(systemName: "magnifyingglass")
-                    .padding(AppStyle.Padding.xxSmall)
+        VStack(spacing: AppStyle.Padding.xSmall) {
+            SearchInputView(
+                text: $text,
+                searchMode: $searchMode,
+                showSortControls: $showSortControls,
+                sortOption: $sortOption,
+                sortAscending: $sortAscending
+            )
 
-                TextField(searchMode.placeholder, text: $text)
-                    .textFieldStyle(.plain)
-
-                Menu {
-                    Button(action: { searchMode = .name }) {
-                        Label("Search by Name", systemImage: SearchMode.name.icon)
-                    }
-
-                    Button(action: { searchMode = .type }) {
-                        Label("Search by Type", systemImage: SearchMode.type.icon)
-                    }
-                } label: {
-                    AppIcon(systemName: "line.3.horizontal.decrease.circle")
-                        .padding(.trailing, AppStyle.Padding.xxSmall)
-                }
-
-                if !text.isEmpty {
-                    Button(action: { text = "" }) {
-                        AppIcon(systemName: "xmark.circle.fill")
-                    }
-                    .padding(.trailing, AppStyle.Padding.xSmall)
-                }
+            if showSortControls {
+                SearchSortingView(sortOption: $sortOption, sortAscending: $sortAscending)
             }
         }
     }
@@ -76,13 +69,25 @@ struct SearchBar: View {
 #Preview {
     @Previewable @State var searchText = ""
     @Previewable @State var searchMode = SearchMode.name
+    @Previewable @State var sortOption = SortOption.name
+    @Previewable @State var sortAscending = true
 
     VStack {
-        SearchBar(text: .constant(""), searchMode: .constant(.name))
-            .padding()
+        SearchBar(
+            text: .constant(""),
+            searchMode: .constant(.name),
+            sortOption: .constant(.name),
+            sortAscending: .constant(true)
+        )
+        .padding()
 
-        SearchBar(text: .constant("Pikachu"), searchMode: .constant(.name))
-            .padding()
+        SearchBar(
+            text: .constant("Pikachu"),
+            searchMode: .constant(.name),
+            sortOption: .constant(.attack),
+            sortAscending: .constant(false)
+        )
+        .padding()
     }
     .preferredColorScheme(.light)
 }
