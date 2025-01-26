@@ -19,13 +19,13 @@ enum AppTextStyle {
     var font: Font {
         switch self {
         case .title:
-            return .system(.title, design: .rounded, weight: .bold)
+            return .calibriBold(24)
         case .headline:
-            return .system(.headline, design: .rounded, weight: .semibold)
+            return .calibriBold(20)
         case .body:
-            return .system(.body, design: .rounded)
+            return .calibriRegular(16)
         case .caption:
-            return .system(.caption, design: .rounded)
+            return .calibriLight(14)
         }
     }
 
