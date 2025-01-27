@@ -21,21 +21,45 @@ enum SortOption: String, CaseIterable {
 
     /// Sort Pokemon by their base HP (Hit Points) stat
     case hp = "HP"
-    
+
     /// Sort Pokemon by their base Attack stat
     case attack = "Attack"
-    
+
     /// Sort Pokemon by their base Defense stat
     case defense = "Defense"
-    
+
     /// Sort Pokemon by their base Special Attack stat
     case specialAttack = "Special Attack"
-    
+
     /// Sort Pokemon by their base Special Defense stat
     case specialDefense = "Special Defense"
-    
+
     /// Sort Pokemon by their base Speed stat
     case speed = "Speed"
+
+    /// The category of the sort option
+    enum Category: CaseIterable {
+        case basic
+        case stats
+    }
+
+    /// Returns the category of the sort option
+    var category: Category {
+        switch self {
+        case .name, .type:
+            return .basic
+        case .hp, .attack, .defense, .specialAttack, .specialDefense, .speed:
+            return .stats
+        }
+    }
+
+    /// Returns all cases grouped by their category
+    static var groupedCases: [Category: [SortOption]] {
+        Dictionary(
+            grouping: Self.allCases,
+            by: { $0.category }
+        )
+    }
 
     /// Returns the corresponding stat name as used in the API
     ///

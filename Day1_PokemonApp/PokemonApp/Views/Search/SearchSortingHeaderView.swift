@@ -31,22 +31,28 @@ struct SearchSortingHeaderView: View {
         HStack {
             Text("Sort Options")
                 .font(.headline)
+
             Spacer()
 
             Menu {
-                ForEach(SortOption.allCases, id: \.self) { option in
-                    if !sortCriteria.contains(where: { $0.option == option }) {
-                        Button {
-                            addSortCriteria(option: option)
-                        } label: {
-                            Label(option.rawValue, systemImage: "plus")
+                ForEach(SortOption.Category.allCases, id: \.self) { category in
+                    if let options = SortOption.groupedCases[category] {
+                        Section(category == .basic ? "Basic" : "Stats") {
+                            ForEach(options, id: \.self) { option in
+                                if !sortCriteria.contains(where: { $0.option == option }) {
+                                    Button {
+                                        addSortCriteria(option: option)
+                                    } label: {
+                                        Label(option.rawValue, systemImage: "plus")
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             } label: {
                 AppIcon(systemName: "plus.circle")
             }
-            .disabled(sortCriteria.count >= 3)
         }
     }
 
@@ -60,16 +66,41 @@ struct SearchSortingHeaderView: View {
 // MARK: - Preview
 
 #Preview {
-    VStack {
-        SearchSortingHeaderView(sortCriteria: .constant([]))
+    VStack(spacing: 20) {
+        // Empty state
+        VStack(alignment: .leading) {
+            Text("Empty State")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            SearchSortingHeaderView(sortCriteria: .constant([]))
+        }
 
-        SearchSortingHeaderView(
-            sortCriteria: .constant([
-                SortCriteria(option: .name, ascending: true),
-                SortCriteria(option: .type, ascending: false),
-                SortCriteria(option: .hp, ascending: true)
-            ])
-        )
+        // With basic attributes
+        VStack(alignment: .leading) {
+            Text("With Basic Attributes")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            SearchSortingHeaderView(
+                sortCriteria: .constant([
+                    SortCriteria(option: .name, ascending: true),
+                    SortCriteria(option: .type, ascending: false)
+                ])
+            )
+        }
+
+        // With mixed criteria
+        VStack(alignment: .leading) {
+            Text("With Mixed Criteria (Max)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            SearchSortingHeaderView(
+                sortCriteria: .constant([
+                    SortCriteria(option: .name, ascending: true),
+                    SortCriteria(option: .hp, ascending: true),
+                    SortCriteria(option: .attack, ascending: false)
+                ])
+            )
+        }
     }
     .padding()
 }

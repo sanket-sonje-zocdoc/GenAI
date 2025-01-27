@@ -238,9 +238,3 @@ class PokemonViewModel: ObservableObject {
         }
     }
 }
-
-/// Represents a sort criteria with option and direction
-struct SortCriteria {
-    let option: SortOption
-    let ascending: Bool
-}
