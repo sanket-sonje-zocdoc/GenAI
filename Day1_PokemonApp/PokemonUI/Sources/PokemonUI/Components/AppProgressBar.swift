@@ -28,10 +28,14 @@ public struct AppProgressBar: View {
     private let maxValue: Double
     private let height: CGFloat
     private let cornerRadius: CGFloat
+    private let customForegroundColor: Color?
 
-    /// The color of the progress bar, determined by the current percentage.
-    /// Changes dynamically as the value changes relative to maxValue.
+    /// The color of the progress bar, determined by the current percentage or custom color if provided.
     var foregroundColor: Color {
+        if let customColor = customForegroundColor {
+            return customColor
+        }
+
         let percentage = (value / maxValue) * 100
         switch percentage {
         case 0...20:
@@ -55,16 +59,19 @@ public struct AppProgressBar: View {
     ///   - maxValue: The maximum possible value (used to calculate the fill percentage)
     ///   - height: The height of the progress bar (defaults to 8 points)
     ///   - cornerRadius: The corner radius of the progress bar (defaults to 4 points)
+    ///   - foregroundColor: Optional custom color for the progress bar. If nil, uses default color logic (defaults to nil)
     public init(
         value: Double,
         maxValue: Double,
         height: CGFloat = 8,
-        cornerRadius: CGFloat = 4
+        cornerRadius: CGFloat = 4,
+        foregroundColor: Color? = nil
     ) {
         self.value = min(max(value, 0), maxValue)
         self.maxValue = maxValue
         self.height = height
         self.cornerRadius = cornerRadius
+        self.customForegroundColor = foregroundColor
     }
 
     // MARK: - Body
@@ -72,6 +79,11 @@ public struct AppProgressBar: View {
     public var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
+                // Background rectangle for unfilled portion
+                Rectangle()
+                    .fill(AppStyle.Colors.shadow)
+
+                // Actual stat foreground color
                 Rectangle()
                     .fill(foregroundColor)
                     .frame(width: calculateProgressWidth(totalWidth: geometry.size.width))

@@ -24,20 +24,20 @@ import SwiftUI
 /// - Customizable content through ViewBuilder
 /// - Automatic shadow and corner radius application
 public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
-    
+
     // MARK: - Properties
-    
+
     /// The title displayed in the picker's menu button
     let title: String
-    
+
     /// The currently selected value, bound to the parent view
     @Binding var selection: SelectionValue
-    
+
     /// The content builder for the picker's options
     @ViewBuilder let content: () -> Content
-    
+
     // MARK: - Initialization
-    
+
     /// Creates a new AppPicker instance
     /// - Parameters:
     ///   - title: The title to display in the picker's menu button
@@ -52,9 +52,9 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
         self._selection = selection
         self.content = content
     }
-    
+
     // MARK: - Body
-    
+
     public var body: some View {
         Picker(title, selection: $selection) {
             content()
@@ -62,11 +62,11 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
         .pickerStyle(.menu)
         .font(AppTextStyle.caption.font)
         .padding(AppStyle.Padding.xSmall)
-        .background(AppStyle.Colors.primaryBackground)
+        .background(AppStyle.Colors.systemBackground)
         .cornerRadius(8)
         .shadow(radius: AppStyle.Radius.shadow)
     }
-    
+
     private var titleView: some View {
         AppText(title, style: .title)
     }
@@ -78,7 +78,7 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
     struct PreviewContainer: View {
         @State private var stringSelection = "Pikachu"
         @State private var optionalSelection: String? = nil
-        
+
         var body: some View {
             VStack(spacing: 20) {
                 AppPicker(
@@ -89,7 +89,7 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
                         AppText(pokemon, style: .body).tag(pokemon)
                     }
                 }
-                
+
                 AppPicker(
                     "Select Move",
                     selection: $optionalSelection
@@ -103,6 +103,6 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
             .padding()
         }
     }
-    
+
     return PreviewContainer()
 }
