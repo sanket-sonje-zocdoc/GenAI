@@ -61,6 +61,7 @@ struct PokemonSelectionView: View {
 
             if let pokemon = pokemon {
                 AppAvatar(url: URL(string: pokemon.sprites.frontDefault))
+                    .id(pokemon.name)
 
                 HStack {
                     ForEach(pokemon.types, id: \.type.name) { pokemonTypeEntry in
