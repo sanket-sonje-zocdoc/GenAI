@@ -7,7 +7,7 @@
 
 /// A model representing a Pokemon's type entry in the Pokemon data structure.
 /// Each Pokemon can have up to two types, represented by slot numbers (1 or 2).
-struct PokemonTypeEntry: Codable, Equatable {
+struct PokemonTypeEntry: Codable, Equatable, Hashable {
 
     /// The slot number of the type (1 for primary type, 2 for secondary type if present)
     let slot: Int

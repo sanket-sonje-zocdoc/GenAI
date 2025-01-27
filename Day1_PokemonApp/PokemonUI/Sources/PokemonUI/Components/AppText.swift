@@ -12,28 +12,28 @@ import SwiftUI
 /// ```
 @available(iOS 15.0, *)
 public struct AppText: View {
-
+    
     // MARK: - Properties
-
+    
     /// The text content to be displayed
     public let text: String
-
+    
     /// The style configuration for the text
     public let style: AppTextStyle
-
+    
     // MARK: - Initialization
-
+    
     /// Creates a new AppText instance
     /// - Parameters:
     ///   - text: The string content to be displayed
-    ///   - style: The text style to apply (defaults to .body if not specified)
-    public init(_ text: String, style: AppTextStyle = .body) {
+    ///   - style: The text style to apply
+    public init(_ text: String, style: AppTextStyle) {
         self.text = text
         self.style = style
     }
-
+    
     // MARK: - Body
-
+    
     public var body: some View {
         Text(text)
             .font(style.font)

@@ -1,5 +1,5 @@
 /// Represents a single Pokemon statistic
-struct Stat: Codable, Equatable {
+struct Stat: Codable, Equatable, Hashable {
 
     /// The base value of the stat
     let baseStat: Int

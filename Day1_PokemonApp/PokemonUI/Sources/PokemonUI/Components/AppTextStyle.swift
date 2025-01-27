@@ -17,7 +17,7 @@ public enum AppTextStyle {
     case caption
 
     /// The font configuration for each text style
-    var font: Font {
+    public var font: Font {
         switch self {
         case .title:
             return .calibriBold(24)
@@ -31,7 +31,7 @@ public enum AppTextStyle {
     }
 
     /// The text color for each style
-    var color: Color {
+    public var color: Color {
         switch self {
         case .title:
             return AppTheme.Colors.primaryText

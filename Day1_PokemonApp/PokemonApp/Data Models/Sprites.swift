@@ -8,7 +8,7 @@
 import Foundation
 
 /// Contains URLs for various Pokemon sprite images
-struct Sprites: Codable, Equatable {
+struct Sprites: Codable, Equatable, Hashable {
 
     /// URL for the default front-facing sprite
     let frontDefault: String

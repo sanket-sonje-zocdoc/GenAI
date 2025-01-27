@@ -111,3 +111,12 @@ extension Pokemon {
         )
     }
 }
+
+extension PokemonListItem {
+    static var mockPokemonListItem: PokemonListItem {
+        PokemonListItem(
+            name: "pikachu",
+            url: "https://pokeapi.co/api/v2/pokemon/25/"
+        )
+    }
+}

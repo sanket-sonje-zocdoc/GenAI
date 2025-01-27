@@ -8,7 +8,7 @@
 import Foundation
 
 /// Contains detailed information about a specific stat type
-struct StatInfo: Codable, Equatable {
+struct StatInfo: Codable, Equatable, Hashable {
 
     /// The name of the stat (e.g., "hp", "attack", "defense")
     let name: String

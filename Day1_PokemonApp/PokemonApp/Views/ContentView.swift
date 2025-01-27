@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import PokemonUI
+
 /// A view that displays a list of Pokemon and provides navigation to RGB color analysis.
 ///
 /// This view serves as the main screen of the application with three main components:
@@ -61,7 +63,7 @@ struct ContentView: View {
                         sortAscending: $viewModel.sortAscending
                     )
                     .padding(.horizontal)
-                    
+
                     List(
                         viewModel.sortPokemons(
                             viewModel.filterPokemons(
@@ -85,8 +87,17 @@ struct ContentView: View {
 
                     if viewModel.isLoadingMore {
                         ProgressView()
-                            .padding()
                     }
+
+                    NavigationLink(destination: PokemonCompareView(viewModel: viewModel)) {
+                        Label("Compare Pokemon", systemImage: "arrow.left.arrow.right")
+                            .padding()
+                            .background(AppStyle.Colors.accentBackground)
+                            .foregroundColor(AppTextStyle.caption.color)
+                            .cornerRadius(AppStyle.Radius.corner)
+                            .font(AppTextStyle.caption.font)
+                    }
+                    .padding(.bottom)
                 }
             }
             .navigationTitle("Pokemons")

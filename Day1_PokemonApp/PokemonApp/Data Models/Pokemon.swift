@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents detailed information about a specific Pokemon
-struct Pokemon: Codable, Equatable {
+struct Pokemon: Codable, Equatable, Hashable {
 
     /// ID of the Pokemon
     let id: Int

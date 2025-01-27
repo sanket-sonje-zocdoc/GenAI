@@ -6,7 +6,7 @@
 //
 
 /// A model representing a Pokémon's type (e.g., Fire, Water, Grass, etc.)
-struct PokemonType: Codable, Equatable {
+struct PokemonType: Codable, Equatable, Hashable {
 
     /// The name of the Pokémon type (e.g., "fire", "water", "grass")
     let name: String
