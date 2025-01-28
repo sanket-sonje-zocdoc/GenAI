@@ -46,11 +46,21 @@ struct PokemonDetailView: View {
                             size: 200
                         )
                         .padding(.vertical, AppStyle.Padding.normal)
-                        
+
                         AppDivider()
-                        
+
                         AppText(pokemon.name.capitalized, style: .title)
                             .padding(.vertical, AppStyle.Padding.xSmall)
+
+                        HStack(spacing: AppStyle.Padding.xSmall) {
+                            ForEach(pokemon.types, id: \.type.name) { pokemonTypeEntry in
+                                AppTag(
+                                    text: pokemonTypeEntry.type.name.capitalized,
+                                    color: Color.getColor(for: pokemonTypeEntry.type.name)
+                                )
+                            }
+                        }
+                        .padding(.bottom, AppStyle.Padding.xSmall)
                     }
                 }
                 .padding(.horizontal, AppStyle.Padding.normal)
@@ -59,23 +69,22 @@ struct PokemonDetailView: View {
                 VStack(spacing: AppStyle.Padding.xSmall) {
                     AppText("Base Stats", style: .headline)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     ForEach(pokemon.stats, id: \.stat.name) { stat in
                         AppCard(style: .flat) {
                             HStack {
                                 AppText(stat.stat.name.capitalized, style: .headline)
-                                
+
                                 Spacer()
-                                
-                                // Progress bar for visual representation
+
                                 AppProgressBar(
                                     value: Double(stat.baseStat),
                                     maxValue: 100
                                 )
                                 .frame(width: 100)
-                                
+
                                 AppText("\(stat.baseStat)", style: .body)
-                                    .frame(width: 40, alignment: .trailing)
+                                    .frame(width: 50, alignment: .trailing)
                             }
                             .padding(.vertical, AppStyle.Padding.xSmall)
                         }
