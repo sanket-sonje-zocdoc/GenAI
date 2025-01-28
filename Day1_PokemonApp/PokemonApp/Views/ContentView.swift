@@ -90,12 +90,14 @@ struct ContentView: View {
                     }
 
                     NavigationLink(destination: PokemonCompareView(viewModel: viewModel)) {
-                        Label("Compare Pokemon", systemImage: "arrow.left.arrow.right")
+                        AppLabel(
+                            "Compare Pokemon",
+                            style: .caption,
+                            systemImage: "arrow.left.arrow.right"
+                        )
                             .padding()
                             .background(AppStyle.Colors.accentBackground)
-                            .foregroundColor(AppTextStyle.caption.color)
                             .cornerRadius(AppStyle.Radius.corner)
-                            .font(AppTextStyle.caption.font)
                     }
                     .padding(.bottom)
                 }

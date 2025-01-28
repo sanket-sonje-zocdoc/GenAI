@@ -45,7 +45,7 @@ public struct AppIcon: View {
     public init(
         systemName: String,
         color: Color = .secondary,
-        size: CGFloat = 20,
+        size: CGFloat = 16,
         fontWeight: Font.Weight = .medium
     ) {
         self.systemName = systemName

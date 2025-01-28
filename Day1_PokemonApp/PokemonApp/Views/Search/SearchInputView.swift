@@ -47,11 +47,17 @@ struct SearchInputView: View {
                 // Search by name / type Button
                 Menu {
                     Button(action: { searchMode = .name }) {
-                        Label("Search by Name", systemImage: SearchMode.name.icon)
+                        AppLabel(
+                            "Search by Name",
+                            systemImage: SearchMode.name.icon
+                        )
                     }
 
                     Button(action: { searchMode = .type }) {
-                        Label("Search by Type", systemImage: SearchMode.type.icon)
+                        AppLabel(
+                            "Search by Type",
+                            systemImage: SearchMode.type.icon
+                        )
                     }
                 } label: {
                     AppIcon(systemName: "line.3.horizontal.decrease.circle")

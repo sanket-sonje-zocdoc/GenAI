@@ -15,6 +15,7 @@ public enum AppTextStyle {
     case headline
     case body
     case caption
+    case customRegular(fontSize: CGFloat, color: Color)
 
     /// The font configuration for each text style
     public var font: Font {
@@ -27,6 +28,8 @@ public enum AppTextStyle {
             return .calibriRegular(16)
         case .caption:
             return .calibriLight(14)
+        case .customRegular(let fontSize, _):
+            return .calibriRegular(fontSize)
         }
     }
 
@@ -41,6 +44,8 @@ public enum AppTextStyle {
             return AppTheme.Colors.primaryText
         case .caption:
             return .white
+        case .customRegular(_, let color):
+            return color
         }
     }
 }

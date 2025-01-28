@@ -31,9 +31,14 @@ struct SearchSortingListView: View {
 
     var body: some View {
         if sortCriteria.isEmpty {
-            Text("No sort criteria selected")
-                .foregroundColor(.secondary)
-                .padding(.vertical, AppStyle.Padding.xSmall)
+            AppText(
+                "No sort criteria selected",
+                style: .customRegular(
+                    fontSize: 14,
+                    color: .secondary
+                )
+            )
+            .padding(.vertical, AppStyle.Padding.xSmall)
         } else {
             ForEach(Array(sortCriteria.enumerated()), id: \.offset) { index, criteria in
                 SearchSortingRowView(

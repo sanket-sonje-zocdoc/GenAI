@@ -29,8 +29,7 @@ struct SearchSortingHeaderView: View {
 
     var body: some View {
         HStack {
-            Text("Sort Options")
-                .font(.headline)
+            AppText("Sort Options", style: .headline)
 
             Spacer()
 
@@ -43,7 +42,10 @@ struct SearchSortingHeaderView: View {
                                     Button {
                                         addSortCriteria(option: option)
                                     } label: {
-                                        Label(option.rawValue, systemImage: "plus")
+                                        AppLabel(
+                                            option.rawValue,
+                                            systemImage: "plus"
+                                        )
                                     }
                                 }
                             }
@@ -51,7 +53,10 @@ struct SearchSortingHeaderView: View {
                     }
                 }
             } label: {
-                AppIcon(systemName: "plus.circle")
+                AppIcon(
+                    systemName: "plus.circle",
+                    size: 20
+                )
             }
         }
     }
