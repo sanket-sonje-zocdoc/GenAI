@@ -1,3 +1,10 @@
+//
+//  AppPicker.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 29/01/25.
+//
+
 import SwiftUI
 
 /// A custom picker component that maintains consistent styling across the app
@@ -28,13 +35,13 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
     // MARK: - Properties
 
     /// The title displayed in the picker's menu button
-    let title: String
+    public let title: String
 
     /// The currently selected value, bound to the parent view
-    @Binding var selection: SelectionValue
+    @Binding public var selection: SelectionValue
 
     /// The content builder for the picker's options
-    @ViewBuilder let content: () -> Content
+    @ViewBuilder public let content: () -> Content
 
     // MARK: - Initialization
 

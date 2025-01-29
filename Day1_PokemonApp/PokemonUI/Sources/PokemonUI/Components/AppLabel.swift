@@ -1,20 +1,59 @@
+//
+//  AppLabel.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 29/01/25.
+//
+
 import SwiftUI
 
 /// A styled label component that combines an icon and text.
+///
+/// `AppLabel` provides a consistent way to display a label with an icon throughout the app.
+/// It automatically applies the app's styling guidelines and supports different text styles.
+///
+/// Example usage:
+/// ```
+/// AppLabel("Search", systemImage: "magnifyingglass")
+/// AppLabel("Important", style: .title, systemImage: "star.fill")
+/// ```
+///
+/// Features:
+/// - Consistent styling with the app's design system
+/// - Support for SF Symbols as icons
+/// - Customizable text styles
+/// - Automatic color coordination between text and icon
+///
+/// The component uses `AppText` for text rendering and `AppIcon` for the icon,
+/// ensuring consistency with other UI components.
 public struct AppLabel: View {
     // MARK: - Properties
 
-    private let title: String
-    private let systemImage: String
-    private let style: AppTextStyle
+    /// The text to display in the label
+    public let title: String
+    
+    /// The SF Symbol name to use as the icon
+    public let systemImage: String
+    
+    /// The text style that determines the appearance of the label
+    public let style: AppTextStyle
 
     // MARK: - Initialization
 
     /// Creates a new AppLabel with the specified title and system image.
     /// - Parameters:
     ///   - title: The text to display in the label
-    ///   - systemImage: The name of the SF Symbol to use as the icon
     ///   - style: The text style to apply to the label (default: .body)
+    ///   - systemImage: The name of the SF Symbol to use as the icon
+    ///
+    /// Example:
+    /// ```swift
+    /// AppLabel(
+    ///     "Search",
+    ///     style: .body,
+    ///     systemImage: "magnifyingglass"
+    /// )
+    /// ```
     public init(_ title: String, style: AppTextStyle = .body, systemImage: String) {
         self.title = title
         self.style = style
@@ -23,6 +62,7 @@ public struct AppLabel: View {
 
     // MARK: - Body
 
+    /// The view's body, combining an icon and text with consistent styling
     public var body: some View {
         Label {
             AppText(title, style: style)

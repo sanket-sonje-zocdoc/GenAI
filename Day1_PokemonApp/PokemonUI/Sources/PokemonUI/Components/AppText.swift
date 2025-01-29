@@ -1,3 +1,10 @@
+//
+//  AppText.swift
+//  PokemonApp
+//
+//  Created by Sanket Sonje on 25/01/25.
+//
+
 import SwiftUI
 
 /// A reusable text component that provides consistent styling across the application

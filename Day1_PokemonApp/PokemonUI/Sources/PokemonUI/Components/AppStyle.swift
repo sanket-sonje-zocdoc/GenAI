@@ -1,3 +1,10 @@
+//
+//  AppStyle.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 29/01/25.
+//
+
 import SwiftUI
 
 /// AppStyle serves as a centralized design system namespace for the Pokemon application.

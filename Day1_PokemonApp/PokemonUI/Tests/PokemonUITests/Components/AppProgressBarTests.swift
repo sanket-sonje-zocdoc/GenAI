@@ -11,7 +11,7 @@ import XCTest
 @testable import PokemonUI
 
 @MainActor
-final class AppProgressBarTests: XCTestCase {
+final class AppProgressBarTests: PokemonUIUnitTestCase {
 
     // MARK: - Tests
     

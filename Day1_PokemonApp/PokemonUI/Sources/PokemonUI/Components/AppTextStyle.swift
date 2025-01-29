@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Defines the available text styles in the application
 @available(iOS 15.0, *)
-public enum AppTextStyle {
+public enum AppTextStyle: Sendable {
 
     case title
     case headline

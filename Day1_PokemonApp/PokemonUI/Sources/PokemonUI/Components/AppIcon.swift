@@ -1,3 +1,10 @@
+//
+//  AppIcon.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 26/01/25.
+//
+
 import SwiftUI
 
 /// A reusable icon component that provides consistent styling across the application.

@@ -11,7 +11,7 @@ import XCTest
 @testable import PokemonUI
 
 @MainActor
-final class AppDividerTests: XCTestCase {
+final class AppDividerTests: PokemonUIUnitTestCase {
 
     // MARK: - Tests
 

@@ -1,3 +1,10 @@
+//
+//  AppTag.swift
+//  PokemonApp
+//
+//  Created by Sanket Sonje on 25/01/25.
+//
+
 import SwiftUI
 
 /// A reusable pill-shaped tag component that displays text with a colored background.

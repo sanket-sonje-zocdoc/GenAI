@@ -11,19 +11,42 @@ import XCTest
 @testable import PokemonUI
 
 @MainActor
-final class AppCardTests: XCTestCase {
+final class AppCardTests: PokemonUIUnitTestCase {
 
     // MARK: - Tests
     
-    func testContentInitialization() {
-        let testText = "Test Content"
+    func testDefaultInitialization() {
         let card = AppCard {
-            Text(testText)
+            Text("Test Content")
         }
         
-        // Verify content is initialized
+        // Test default values
         let mirror = Mirror(reflecting: card)
-        let contentProperty = mirror.children.first { $0.label == "content" }
-        XCTAssertNotNil(contentProperty)
+        let properties = Dictionary(uniqueKeysWithValues: mirror.children.map { ($0.label!, $0.value) })
+        
+        XCTAssertEqual(properties["style"] as? AppCardStyle, .flat)
+        XCTAssertEqual(properties["cornerRadius"] as? CGFloat, AppStyle.Radius.corner)
+        XCTAssertEqual(properties["padding"] as? CGFloat, AppStyle.Padding.xSmall)
+        XCTAssertEqual(properties["showBorder"] as? Bool, true)
+    }
+
+    func testCustomInitialization() {
+        let card = AppCard(
+            style: .elevated,
+            cornerRadius: 20,
+            padding: 24,
+            showBorder: false
+        ) {
+            Text("Test Content")
+        }
+        
+        // Test custom values
+        let mirror = Mirror(reflecting: card)
+        let properties = Dictionary(uniqueKeysWithValues: mirror.children.map { ($0.label!, $0.value) })
+        
+        XCTAssertEqual(properties["style"] as? AppCardStyle, .elevated)
+        XCTAssertEqual(properties["cornerRadius"] as? CGFloat, 20)
+        XCTAssertEqual(properties["padding"] as? CGFloat, 24)
+        XCTAssertEqual(properties["showBorder"] as? Bool, false)
     }
 } 

@@ -11,7 +11,7 @@ import XCTest
 @testable import PokemonUI
 
 @MainActor
-final class AppIconTests: XCTestCase {
+final class AppIconTests: PokemonUIUnitTestCase {
 
     // MARK: - Tests
     
@@ -20,8 +20,8 @@ final class AppIconTests: XCTestCase {
         let icon = AppIcon(systemName: systemName)
         
         XCTAssertEqual(icon.systemName, systemName)
-        XCTAssertEqual(icon.color, Color.secondary)
-        XCTAssertEqual(icon.size, 20)
+        XCTAssertEqual(icon.color, .secondary)
+        XCTAssertEqual(icon.size, 16)
         XCTAssertEqual(icon.fontWeight, .medium)
     }
     

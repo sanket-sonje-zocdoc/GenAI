@@ -11,7 +11,7 @@ import XCTest
 @testable import PokemonUI
 
 @MainActor
-final class AppTextStyleTests: XCTestCase {
+final class AppTextStyleTests: PokemonUIUnitTestCase {
 
     // MARK: - Tests
     

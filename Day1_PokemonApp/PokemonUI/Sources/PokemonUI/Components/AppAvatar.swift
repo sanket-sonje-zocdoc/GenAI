@@ -1,3 +1,10 @@
+//
+//  AppAvatar.swift
+//  PokemonUI
+//
+//  Created by Sanket Sonje on 26/01/25.
+//
+
 import SwiftUI
 import UIKit
 
