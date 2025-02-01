@@ -39,9 +39,9 @@ final class ImageLoaderTests: PokemonUIUnitTestCase {
 
     // MARK: - Tests
 
-    func testImageCaching() async {
+    func testImageCaching() async throws {
         // Create a test image
-        let testImage = UIImage(systemName: "star.fill")!
+        let testImage = try XCTUnwrap(UIImage(systemName: "star.fill"))
 
         // Cache the image
         imageLoader.imageCache.setObject(testImage, forKey: mockURL.absoluteString as AnyObject)
@@ -61,7 +61,7 @@ final class ImageLoaderTests: PokemonUIUnitTestCase {
 
     func testImageLoadingFailure() async throws {
         // Create invalid URL
-        let invalidURL = URL(string: "https://invalid-url.com/nonexistent.jpg")!
+        let invalidURL = try XCTUnwrap(URL(string: "https://invalid-url.com/nonexistent.jpg"))
 
         // Create expectation
         let expectation = XCTestExpectation(description: "Image loading should fail")
@@ -77,9 +77,9 @@ final class ImageLoaderTests: PokemonUIUnitTestCase {
         await wait(for: [expectation])
     }
 
-    func testConcurrentImageLoading() async {
+    func testConcurrentImageLoading() async throws {
         // Create multiple mock URLs
-        let urls = (1...3).map { URL(string: "https://example.com/image\($0).png")! }
+        let urls = try (1...3).map { try XCTUnwrap(URL(string: "https://example.com/image\($0).png")) }
 
         // Create expectations for each URL
         let expectations = urls.map {
