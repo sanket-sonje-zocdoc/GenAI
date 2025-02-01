@@ -26,7 +26,7 @@ import SwiftUI
 class PokemonUIUnitTestCase: XCTestCase {
 
     // MARK: - Helper Methods
-    
+
     /// Helper function to find specific view type in view hierarchy
     /// - Parameter mirror: Mirror instance of the view to search in
     /// - Returns: Optional value of requested type if found in view hierarchy
@@ -43,13 +43,36 @@ class PokemonUIUnitTestCase: XCTestCase {
             if let view = child.value as? T {
                 return view
             }
-            
+
             // Recursively check child views
             let childMirror = Mirror(reflecting: child.value)
             if let found: T = findView(in: childMirror) {
                 return found
             }
         }
+
         return nil
     }
-} 
+
+    /// Waits for the specified test expectations to be fulfilled
+    ///
+    /// This helper method provides a convenient way to wait for asynchronous operations
+    /// to complete during testing. It wraps XCTest's `fulfillment(of:timeout:)` method
+    /// with a default timeout value.
+    ///
+    /// - Parameters:
+    ///   - expectations: An array of `XCTestExpectation` objects to wait for
+    ///   - timeout: The maximum time to wait for expectations to be fulfilled (defaults to 10 seconds)
+    ///
+    /// Example:
+    /// ```
+    /// let expectation = XCTestExpectation(description: "Async operation")
+    /// someAsyncOperation {
+    ///     expectation.fulfill()
+    /// }
+    /// await wait(for: [expectation])
+    /// ```
+    func wait(for expectations: [XCTestExpectation], timeout: TimeInterval = 10) async {
+        await fulfillment(of: expectations, timeout: timeout)
+    }
+}
