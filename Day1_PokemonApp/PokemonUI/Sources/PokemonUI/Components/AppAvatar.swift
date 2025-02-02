@@ -8,11 +8,16 @@
 import SwiftUI
 import UIKit
 
+import PokemonUtils
+
 /// A reusable circular avatar component that displays images with a loading state.
 ///
 /// `AppAvatar` is designed to show circular images with a consistent style across the app.
 /// It handles loading states, displays a progress indicator while loading, and automatically
 /// formats the image into a circular shape with a border.
+///
+/// The component uses `ImageLoader` for efficient image loading and caching, ensuring optimal
+/// performance when displaying multiple avatars.
 ///
 /// Example usage:
 /// ```
@@ -31,14 +36,18 @@ import UIKit
 ///     backgroundColor: .white
 /// )
 ///
-/// // Placeholder without URL
+/// // Placeholder without URL (shows loading indicator)
 /// AppAvatar(size: 60)
 /// ```
 ///
-/// - Important: The component automatically handles image loading and caching through `ImageLoader`.
+/// - Important: The component requires iOS 15.0 or later.
 ///
-/// - Note: When no image URL is provided or while the image is loading, the component
-///         displays a progress indicator centered in the frame.
+/// - Note:
+///   - When no image URL is provided or while the image is loading, the component
+///     displays a progress indicator centered in the frame.
+///   - The component is accessibility-friendly with proper identifiers for VoiceOver support.
+///   - Images are automatically resized and cropped to fit the circular frame while maintaining
+///     their aspect ratio.
 @available(iOS 15.0, *)
 public struct AppAvatar: View {
 
@@ -46,6 +55,7 @@ public struct AppAvatar: View {
 
     /// The URL of the image to be loaded and displayed.
     /// If nil, the avatar will show a loading indicator indefinitely.
+    /// The URL should point to a valid image resource that can be loaded by `ImageLoader`.
     public let url: URL?
 
     /// The width and height of the avatar in points.
@@ -110,8 +120,10 @@ public struct AppAvatar: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .a11yID("Image")
             } else {
                 ProgressView()
+                    .a11yID("ProgressView")
             }
         }
         .frame(
@@ -126,7 +138,9 @@ public struct AppAvatar: View {
                     strokeColor,
                     lineWidth: lineWidth
                 )
+                .a11yID("Border")
         )
+        .a11yID("Container")
         .onAppear {
             if let url = url {
                 ImageLoader.shared.loadImage(from: url) { image in
@@ -136,6 +150,18 @@ public struct AppAvatar: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Accessibility Identifier
+
+extension View {
+
+    /// Adds an accessibility identifier with the given suffix, scoped to AppAvatar.
+    /// - Parameter suffix: The unique identifier suffix to append.
+    /// - Returns: A view with the applied accessibility identifier.
+    func a11yID(_ suffix: String) -> some View {
+        return a11yID(suffix, type: AppAvatar.self)
     }
 }
 
