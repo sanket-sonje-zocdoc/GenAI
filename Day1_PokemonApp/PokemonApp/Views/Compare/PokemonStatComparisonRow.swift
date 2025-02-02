@@ -60,11 +60,11 @@ struct PokemonStatComparisonRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            AppText("\(value1)", style: .caption)
+            AppText("\(value1)", style: .body)
                 .foregroundColor(isFirstPokemonStronger ? .green : .primary)
                 .frame(width: 25, alignment: .trailing)
 
-            AppText(statName, style: .caption)
+            AppText(statName, style: .body)
                 .padding(.horizontal, 4)
                 .background(AppStyle.Colors.systemBackground)
                 .frame(minWidth: 50, maxWidth: 100, alignment: .leading)
@@ -89,7 +89,7 @@ struct PokemonStatComparisonRow: View {
             }
             .frame(height: AppStyle.Padding.xSmall)
 
-            AppText("\(value2)", style: .caption)
+            AppText("\(value2)", style: .body)
                 .foregroundColor(isFirstPokemonStronger ? .primary : .green)
                 .frame(width: 25, alignment: .leading)
         }
