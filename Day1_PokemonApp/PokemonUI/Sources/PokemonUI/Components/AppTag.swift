@@ -64,6 +64,7 @@ public struct AppTag: View {
             .background(AppStyle.SharedStyles.typeTag(color: color))
             .foregroundColor(.white)
             .clipShape(Capsule())
+            .accessibilityIdentifier("\(text)_AppTag")
     }
 }
 

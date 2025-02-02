@@ -79,7 +79,8 @@ struct PokemonDetailView: View {
 
                                 AppProgressBar(
                                     value: Double(stat.baseStat),
-                                    maxValue: 100
+                                    maxValue: 100,
+                                    a11yID: "\(stat.stat.name.capitalized)ProgressBar"
                                 )
                                 .frame(width: 100)
 

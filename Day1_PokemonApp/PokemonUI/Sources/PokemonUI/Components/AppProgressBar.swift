@@ -8,18 +8,37 @@
 import SwiftUI
 
 /// A custom progress bar component that shows a visual representation of a value within a given range.
-/// The progress bar automatically changes color based on the percentage filled:
+/// The progress bar automatically changes color based on the percentage filled, unless a custom color is provided.
+///
+/// Color Ranges:
 /// - Red (0-20%): Indicates very low progress
 /// - Light Red (21-40%): Indicates low progress
 /// - Yellow (41-60%): Indicates moderate progress
 /// - Light Green (61-80%): Indicates good progress
 /// - Green (81-100%): Indicates excellent progress
 ///
-/// Example usage:
+/// Usage Examples:
 /// ```
-/// AppProgressBar(value: 75, maxValue: 100) // Creates a progress bar at 75%
-/// AppProgressBar(value: 50, maxValue: 100, height: 12, cornerRadius: 6) // Creates a customized progress bar
+/// // Basic usage with required parameters
+/// AppProgressBar(
+///     value: 75,
+///     maxValue: 100,
+///     a11yID: "healthBar"
+/// )
+///
+/// // Advanced usage with custom styling
+/// AppProgressBar(
+///     value: 50,
+///     maxValue: 100,
+///     height: 12,
+///     cornerRadius: 6,
+///     foregroundColor: .blue,
+///     a11yID: "customStyledBar"
+/// )
 /// ```
+///
+/// - Note: The value is automatically clamped between 0 and maxValue to prevent invalid states.
+/// - Important: The `a11yID` parameter is required for accessibility and UI testing purposes.
 public struct AppProgressBar: View {
 
     // MARK: - Properties
@@ -29,6 +48,7 @@ public struct AppProgressBar: View {
     private let height: CGFloat
     private let cornerRadius: CGFloat
     private let customForegroundColor: Color?
+    private let a11yID: String
 
     /// The color of the progress bar, determined by the current percentage or custom color if provided.
     var foregroundColor: Color {
@@ -65,13 +85,15 @@ public struct AppProgressBar: View {
         maxValue: Double,
         height: CGFloat = 8,
         cornerRadius: CGFloat = 4,
-        foregroundColor: Color? = nil
+        foregroundColor: Color? = nil,
+        a11yID: String
     ) {
         self.value = min(max(value, 0), maxValue)
         self.maxValue = maxValue
         self.height = height
         self.cornerRadius = cornerRadius
         self.customForegroundColor = foregroundColor
+        self.a11yID = a11yID
     }
 
     // MARK: - Body
@@ -87,6 +109,7 @@ public struct AppProgressBar: View {
                 Rectangle()
                     .fill(foregroundColor)
                     .frame(width: calculateProgressWidth(totalWidth: geometry.size.width))
+                    .accessibilityIdentifier(a11yID)
             }
         }
         .frame(height: height)
@@ -103,22 +126,24 @@ public struct AppProgressBar: View {
 
 #Preview {
     VStack(spacing: 20) {
-        AppProgressBar(value: 10, maxValue: 100)
-        AppProgressBar(value: 30, maxValue: 100)
-        AppProgressBar(value: 50, maxValue: 100)
-        AppProgressBar(value: 70, maxValue: 100)
-        AppProgressBar(value: 90, maxValue: 100)
+        AppProgressBar(value: 10, maxValue: 100, a11yID: "Test")
+        AppProgressBar(value: 30, maxValue: 100, a11yID: "Test")
+        AppProgressBar(value: 50, maxValue: 100, a11yID: "Test")
+        AppProgressBar(value: 70, maxValue: 100, a11yID: "Test")
+        AppProgressBar(value: 90, maxValue: 100, a11yID: "Test")
 
         AppProgressBar(
             value: 75,
             maxValue: 100,
             height: 12,
-            cornerRadius: 6
+            cornerRadius: 6,
+            a11yID: "Test"
         )
 
         AppProgressBar(
             value: 25,
-            maxValue: 100
+            maxValue: 100,
+            a11yID: "Test"
         )
     }
     .padding()
