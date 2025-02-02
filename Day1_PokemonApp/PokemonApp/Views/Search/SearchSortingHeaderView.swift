@@ -13,7 +13,6 @@ import SwiftUI
 /// This view provides:
 /// - A title indicating the sorting section
 /// - A menu button to add new sort criteria
-/// - Automatic disabling of the add button when maximum criteria (3) is reached
 ///
 /// Usage:
 /// ```
