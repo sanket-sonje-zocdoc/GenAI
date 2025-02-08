@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import PokemonUtils
+
 /// A custom card component that provides consistent styling across the app.
 /// Use this component to create either flat or elevated cards with customizable
 /// corner radius, padding, and border options.
@@ -62,6 +64,7 @@ public struct AppCard<Content: View>: View {
                         AppStyle.Colors.shadow,
                         lineWidth: showBorder ? 1.5 : 0
                     )
+                    .a11yID("RoundedRectangle", type: .appCard)
             )
             .shadow(
                 color: Color.black.opacity(style.shadowOpacity),
@@ -69,6 +72,7 @@ public struct AppCard<Content: View>: View {
                 x: 0,
                 y: 0
             )
+            .a11yID("Container", type: .appCard)
     }
 }
 

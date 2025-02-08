@@ -120,10 +120,10 @@ public struct AppAvatar: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .a11yID("Image")
+                    .a11yID("Image", type: .appAvatar)
             } else {
                 ProgressView()
-                    .a11yID("ProgressView")
+                    .a11yID("ProgressView", type: .appAvatar)
             }
         }
         .frame(
@@ -138,9 +138,9 @@ public struct AppAvatar: View {
                     strokeColor,
                     lineWidth: lineWidth
                 )
-                .a11yID("Border")
+                .a11yID("Border", type: .appAvatar)
         )
-        .a11yID("Container")
+        .a11yID("Container", type: .appAvatar)
         .onAppear {
             if let url = url {
                 ImageLoader.shared.loadImage(from: url) { image in
@@ -150,18 +150,6 @@ public struct AppAvatar: View {
                 }
             }
         }
-    }
-}
-
-// MARK: - Accessibility Identifier
-
-extension View {
-
-    /// Adds an accessibility identifier with the given suffix, scoped to AppAvatar.
-    /// - Parameter suffix: The unique identifier suffix to append.
-    /// - Returns: A view with the applied accessibility identifier.
-    func a11yID(_ suffix: String) -> some View {
-        return a11yID(suffix, type: AppAvatar.self)
     }
 }
 
