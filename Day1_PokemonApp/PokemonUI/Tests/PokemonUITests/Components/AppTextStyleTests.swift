@@ -1,5 +1,5 @@
 //
-//  AppTextStyleTests.swift
+//  AppStyle.TextTests.swift
 //  PokemonUI
 //
 //  Created by Sanket Sonje on 26/01/25.
@@ -11,27 +11,27 @@ import XCTest
 @testable import PokemonUI
 
 @MainActor
-final class AppTextStyleTests: PokemonUIUnitTestCase {
+final class AppStyleTextTests: PokemonUIUnitTestCase {
 
     // MARK: - Tests
     
     func testTitleStyle() {
-        let style = AppTextStyle.title
+        let style = AppStyle.Text.title
         XCTAssertEqual(style.color, AppTheme.Colors.primaryText)
     }
     
     func testHeadlineStyle() {
-        let style = AppTextStyle.headline
+        let style = AppStyle.Text.headline
         XCTAssertEqual(style.color, AppTheme.Colors.primaryText)
     }
     
     func testBodyStyle() {
-        let style = AppTextStyle.body
+        let style = AppStyle.Text.body
         XCTAssertEqual(style.color, AppTheme.Colors.primaryText)
     }
     
     func testCaptionStyle() {
-        let style = AppTextStyle.caption
+        let style = AppStyle.Text.caption
         XCTAssertEqual(style.color, .white)
     }
 } 

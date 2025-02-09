@@ -36,10 +36,10 @@ struct PokemonCompareView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: AppStyle.StackSpacing.normal) {
             AppText("Compare Pokemon", style: .title)
 
-            HStack(spacing: 20) {
+            HStack(spacing: AppStyle.StackSpacing.normal) {
                 PokemonSelectionView(
                     pokemon: $selectedPokemon1,
                     allPokemon: viewModel.pokemons,
@@ -61,7 +61,7 @@ struct PokemonCompareView: View {
                 AppText(
                     "Select two Pokemon to compare their stats",
                     style: .customRegular(
-                        fontSize: 14,
+                        fontSize: AppStyle.FontSize.normal,
                         color: .secondary
                     )
                 )

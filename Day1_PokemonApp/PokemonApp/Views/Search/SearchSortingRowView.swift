@@ -43,10 +43,9 @@ struct SearchSortingRowView: View {
                     systemName: "line.3.horizontal",
                     accessibilityID: "Horizontal Line"
                 )
-                    .foregroundColor(.secondary)
             }
 
-            Text(criteria.option.rawValue)
+            AppText(criteria.option.rawValue, style: .body)
 
             Spacer()
 
@@ -62,11 +61,10 @@ struct SearchSortingRowView: View {
                     systemName: "xmark.circle.fill",
                     accessibilityID: "Close"
                 )
-                    .foregroundColor(.red)
             }
         }
         .padding(AppStyle.Padding.xSmall)
-        .background(Color.secondary.opacity(0.1))
+        .background(AppStyle.Colors.secondaryBackground)
         .cornerRadius(AppStyle.Radius.corner)
     }
 }
@@ -74,7 +72,7 @@ struct SearchSortingRowView: View {
 // MARK: - Preview
 
 #Preview {
-    VStack(spacing: AppStyle.Padding.xSmall) {
+    VStack(spacing: AppStyle.StackSpacing.xSmall) {
         // Single criteria
         SearchSortingRowView(
             criteria: SortCriteria(option: .name, ascending: true),

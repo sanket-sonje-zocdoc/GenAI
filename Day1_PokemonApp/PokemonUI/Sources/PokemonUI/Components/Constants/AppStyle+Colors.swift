@@ -91,5 +91,16 @@ extension AppStyle {
         ///
         /// Specification: System background color (automatically adapts to light/dark mode)
         public static let systemBackground = Color(.systemBackground)
+
+        /// Secondary background color that adapts to the current theme
+        ///
+        /// Usage:
+        /// - System-level secondary backgrounds
+        /// - Theme-aware containers
+        /// - Modal presentations
+        ///
+        /// Specification: Secondary background color (automatically adapts to light/dark mode)
+        public static let secondaryBackground = Color.secondary.opacity(0.1)
+
     }
 }

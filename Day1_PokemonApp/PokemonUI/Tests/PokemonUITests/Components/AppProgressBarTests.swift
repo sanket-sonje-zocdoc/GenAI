@@ -24,15 +24,15 @@ final class AppProgressBarTests: PokemonUIUnitTestCase {
 
         XCTAssertEqual(properties["value"] as? Double, 50)
         XCTAssertEqual(properties["maxValue"] as? Double, 100)
-        XCTAssertEqual(properties["height"] as? CGFloat, 8)
-        XCTAssertEqual(properties["cornerRadius"] as? CGFloat, 4)
+        XCTAssertEqual(properties["frame"] as? CGSize, CGSize(width: 100, height: 8))
+        XCTAssertEqual(properties["cornerRadius"] as? CGFloat, 8)
     }
 
     func testCustomInitialization() {
         let progressBar = AppProgressBar(
             value: 75,
             maxValue: 100,
-            height: 12,
+            frame: CGSize(width: 100, height: 12),
             cornerRadius: 6,
             accessibilityID: "Test"
         )
@@ -43,7 +43,7 @@ final class AppProgressBarTests: PokemonUIUnitTestCase {
 
         XCTAssertEqual(properties["value"] as? Double, 75)
         XCTAssertEqual(properties["maxValue"] as? Double, 100)
-        XCTAssertEqual(properties["height"] as? CGFloat, 12)
+        XCTAssertEqual(properties["frame"] as? CGSize, CGSize(width: 100, height: 12))
         XCTAssertEqual(properties["cornerRadius"] as? CGFloat, 6)
     }
 

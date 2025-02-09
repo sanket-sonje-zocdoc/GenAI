@@ -18,17 +18,17 @@ final class AppTextTests: PokemonUIUnitTestCase {
 
     @Test(
         arguments: [
-            AppTextStyle.title,
-            AppTextStyle.headline,
-            AppTextStyle.body,
-            AppTextStyle.caption,
-            AppTextStyle.customRegular(
+            AppStyle.Text.title,
+            AppStyle.Text.headline,
+            AppStyle.Text.body,
+            AppStyle.Text.caption,
+            AppStyle.Text.customRegular(
                 fontSize: AppStyle.Padding.xSmall,
                 color: AppTheme.Colors.background
             )
         ]
     )
-    func testDefaultInitialization(style: AppTextStyle) {
+    func testDefaultInitialization(style: AppStyle.Text) {
         // Given
         let text = "Test Text"
         let appText = AppText(text, style: style)
@@ -42,7 +42,7 @@ final class AppTextTests: PokemonUIUnitTestCase {
     func testCustomStyleInitialization() {
         // Given
         let text = "Test Text"
-        let style = AppTextStyle.customRegular(fontSize: AppStyle.Padding.xSmall, color: AppTheme.Colors.background)
+        let style = AppStyle.Text.customRegular(fontSize: AppStyle.Padding.xSmall, color: AppTheme.Colors.background)
         let appText = AppText(text, style: style)
 
         // Then

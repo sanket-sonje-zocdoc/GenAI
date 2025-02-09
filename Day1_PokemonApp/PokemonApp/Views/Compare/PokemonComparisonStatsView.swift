@@ -36,7 +36,7 @@ struct PokemonComparisonStatsView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: AppStyle.StackSpacing.normal) {
             AppText("Stats Comparison", style: .headline)
                 .padding(.bottom)
 

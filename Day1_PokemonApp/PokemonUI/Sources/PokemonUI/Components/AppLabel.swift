@@ -36,7 +36,7 @@ public struct AppLabel: View {
     public let systemImage: String
 
     /// The text style that determines the appearance of the label
-    public let style: AppTextStyle
+    public let style: AppStyle.Text
 
     // MARK: - Initialization
 
@@ -45,18 +45,9 @@ public struct AppLabel: View {
     ///   - title: The text to display in the label
     ///   - style: The text style to apply to the label (default: .body)
     ///   - systemImage: The name of the SF Symbol to use as the icon
-    ///
-    /// Example:
-    /// ```
-    /// AppLabel(
-    ///     "Search",
-    ///     style: .body,
-    ///     systemImage: "magnifyingglass"
-    /// )
-    /// ```
     public init(
         _ title: String,
-        style: AppTextStyle = .body,
+        style: AppStyle.Text = .body,
         systemImage: String
     ) {
         self.title = title

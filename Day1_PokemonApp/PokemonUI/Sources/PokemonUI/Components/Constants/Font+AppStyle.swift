@@ -1,5 +1,5 @@
 //
-//  Font+AppTextStyle.swift
+//  Font+AppStyle.swift
 //  PokemonApp
 //
 //  Created by Sanket Sonje on 25/01/25.

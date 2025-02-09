@@ -37,7 +37,7 @@ struct PokemonDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: AppStyle.Padding.large) {
+            VStack(spacing: AppStyle.StackSpacing.large) {
                 // Pokemon Image Section
                 AppCard(style: .elevated) {
                     VStack {
@@ -53,7 +53,7 @@ struct PokemonDetailView: View {
                         AppText(pokemon.name.capitalized, style: .title)
                             .padding(.vertical, AppStyle.Padding.xSmall)
 
-                        HStack(spacing: AppStyle.Padding.xSmall) {
+                        HStack(spacing: AppStyle.StackSpacing.xSmall) {
                             ForEach(pokemon.types, id: \.type.name) { pokemonTypeEntry in
                                 AppTag(
                                     text: pokemonTypeEntry.type.name.capitalized,
@@ -67,7 +67,7 @@ struct PokemonDetailView: View {
                 .padding(.horizontal, AppStyle.Padding.normal)
 
                 // Stats Section
-                VStack(spacing: AppStyle.Padding.xSmall) {
+                VStack(spacing: AppStyle.StackSpacing.xSmall) {
                     AppText("Base Stats", style: .headline)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -80,13 +80,14 @@ struct PokemonDetailView: View {
 
                                 AppProgressBar(
                                     value: Double(stat.baseStat),
-                                    maxValue: 100,
                                     accessibilityID: "\(stat.stat.name.capitalized)"
                                 )
-                                .frame(width: 100)
 
                                 AppText("\(stat.baseStat)", style: .body)
-                                    .frame(width: 50, alignment: .trailing)
+                                    .frame(
+                                        width: AppStyle.Frame.large.width,
+                                        alignment: .trailing
+                                    )
                             }
                             .padding(.vertical, AppStyle.Padding.xSmall)
                         }

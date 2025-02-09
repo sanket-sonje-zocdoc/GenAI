@@ -24,7 +24,7 @@ struct SearchSortingView: View {
 
     var body: some View {
         AppCard {
-            VStack(spacing: AppStyle.Padding.xSmall) {
+            VStack(spacing: AppStyle.StackSpacing.xSmall) {
                 SearchSortingHeaderView(
                     sortCriteria: $sortCriteria
                 )

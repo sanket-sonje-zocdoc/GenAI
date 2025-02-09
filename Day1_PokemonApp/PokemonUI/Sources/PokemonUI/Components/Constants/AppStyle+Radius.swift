@@ -16,11 +16,11 @@ extension AppStyle {
 
         /// The standard corner radius used for UI elements like cards, buttons, and other components
         /// that require rounded corners.
-        public static let corner: CGFloat = 10
+        public static let corner: CGFloat = 8
 
         /// The standard shadow radius used for elevation effects in the app.
         /// This defines how far the shadow spreads from the UI element.
-        public static let shadow: CGFloat = 2
+        public static let shadow: CGFloat = 4
 
     }
 }

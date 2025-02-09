@@ -22,7 +22,7 @@ final class AppDividerTests: PokemonUIUnitTestCase {
         let mirror = Mirror(reflecting: divider)
         let properties = Dictionary(uniqueKeysWithValues: mirror.children.map { ($0.label!, $0.value) })
 
-        XCTAssertEqual(properties["color"] as? Color, .gray.opacity(0.3))
+        XCTAssertEqual(properties["color"] as? Color, .gray.opacity(0.2))
         XCTAssertEqual(properties["height"] as? CGFloat, 1)
     }
 

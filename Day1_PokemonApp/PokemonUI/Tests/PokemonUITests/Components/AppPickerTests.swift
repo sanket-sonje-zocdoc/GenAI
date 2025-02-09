@@ -53,7 +53,7 @@ final class AppPickerTests: PokemonUIUnitTestCase {
         
         let mirror = Mirror(reflecting: pickerView)
         let font = try XCTUnwrap(findView(in: mirror) as Font?)
-        XCTAssertEqual(font, AppTextStyle.caption.font)
+        XCTAssertEqual(font, AppStyle.Text.caption.font)
     }
     
     func testAppPickerWithOptionalSelection() {

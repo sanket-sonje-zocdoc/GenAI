@@ -59,20 +59,23 @@ struct PokemonStatComparisonRow: View {
     // MARK: - Body
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: AppStyle.StackSpacing.normal) {
             AppText("\(value1)", style: .body)
                 .foregroundColor(isFirstPokemonStronger ? .green : .primary)
-                .frame(width: 25, alignment: .trailing)
+                .frame(width: AppStyle.Frame.medium.width, alignment: .trailing)
 
             AppText(statName, style: .body)
-                .padding(.horizontal, 4)
+                .padding(.horizontal, AppStyle.Padding.xxSmall)
                 .background(AppStyle.Colors.systemBackground)
-                .frame(minWidth: 50, maxWidth: 100, alignment: .leading)
+                .frame(
+                    minWidth: AppStyle.Frame.large.width,
+                    maxWidth: AppStyle.Frame.xxLarge.width,
+                    alignment: .leading
+                )
 
             ZStack(alignment: .leading) {
                 AppProgressBar(
                     value: Double(maxValue),
-                    maxValue: 100,
                     foregroundColor: Color.getColor(
                         for: isFirstPokemonStronger ? type1 : type2
                     ),
@@ -82,18 +85,17 @@ struct PokemonStatComparisonRow: View {
 
                 AppProgressBar(
                     value: Double(lowerValue),
-                    maxValue: 100,
                     foregroundColor: Color.getColor(
                         for: isFirstPokemonStronger ? type2 : type1
                     ),
                     accessibilityID: "\(statName)"
                 )
             }
-            .frame(height: AppStyle.Padding.xSmall)
+            .frame(height: AppStyle.Frame.xSmall.height)
 
             AppText("\(value2)", style: .body)
                 .foregroundColor(isFirstPokemonStronger ? .primary : .green)
-                .frame(width: 25, alignment: .leading)
+                .frame(width: AppStyle.Frame.medium.width, alignment: .leading)
         }
         .padding(.horizontal)
     }
@@ -109,22 +111,18 @@ struct PokemonStatComparisonRow: View {
         type1: "fire",
         type2: "water"
     )
-}
 
-#Preview("Left Higher") {
     PokemonStatComparisonRow(
         statName: "Attack",
         value1: 100,
-        value2: 85,
+        value2: 850,
         type1: "dragon",
         type2: "fairy"
     )
-}
 
-#Preview("Right Higher") {
     PokemonStatComparisonRow(
         statName: "Defense",
-        value1: 70,
+        value1: 7,
         value2: 95,
         type1: "grass",
         type2: "steel"

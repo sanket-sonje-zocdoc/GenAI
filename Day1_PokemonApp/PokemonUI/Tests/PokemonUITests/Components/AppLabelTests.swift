@@ -19,7 +19,7 @@ final class AppLabelTests: PokemonUIUnitTestCase {
         // Given
         let title = "Test Label"
         let systemImage = "star"
-        let style: AppTextStyle = .title
+        let style: AppStyle.Text = .title
 
         // When
         let label = AppLabel(title, style: style, systemImage: systemImage)
@@ -40,15 +40,15 @@ final class AppLabelTests: PokemonUIUnitTestCase {
         let label = AppLabel(title, systemImage: systemImage)
 
         // Then
-        XCTAssertEqual(label.style.font, AppTextStyle.body.font)
-        XCTAssertEqual(label.style.color, AppTextStyle.body.color)
+        XCTAssertEqual(label.style.font, AppStyle.Text.body.font)
+        XCTAssertEqual(label.style.color, AppStyle.Text.body.color)
     }
 
     func testAppLabelBody() throws {
         // Given
         let title = "Test Label"
         let systemImage = "star"
-        let style: AppTextStyle = .title
+        let style: AppStyle.Text = .title
 
         // When
         let label = AppLabel(title, style: style, systemImage: systemImage)

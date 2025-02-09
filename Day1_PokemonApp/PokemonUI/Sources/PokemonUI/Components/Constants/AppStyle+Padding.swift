@@ -12,6 +12,7 @@ extension AppStyle {
 
     /// Defines standardized padding values used throughout the app
     public enum Padding {
+
         /// Extra-extra-extra small padding (2 points)
         public static let xxxSmall: CGFloat = 2
 

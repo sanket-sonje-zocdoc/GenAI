@@ -17,26 +17,6 @@ import SwiftUI
 /// - Light Green (61-80%): Indicates good progress
 /// - Green (81-100%): Indicates excellent progress
 ///
-/// Usage Examples:
-/// ```
-/// // Basic usage with required parameters
-/// AppProgressBar(
-///     value: 75,
-///     maxValue: 100,
-///     accessibilityID: "healthBar"
-/// )
-///
-/// // Advanced usage with custom styling
-/// AppProgressBar(
-///     value: 50,
-///     maxValue: 100,
-///     height: 12,
-///     cornerRadius: 6,
-///     foregroundColor: .blue,
-///     accessibilityID: "customStyledBar"
-/// )
-/// ```
-///
 /// - Note: The value is automatically clamped between 0 and maxValue to prevent invalid states.
 /// - Important: The `a11yID` parameter is required for accessibility and UI testing purposes.
 public struct AppProgressBar: View {
@@ -45,7 +25,7 @@ public struct AppProgressBar: View {
 
     private let value: Double
     private let maxValue: Double
-    private let height: CGFloat
+    private let frame: CGSize
     private let cornerRadius: CGFloat
     private let customForegroundColor: Color?
     private let accessibilityID: String
@@ -77,21 +57,21 @@ public struct AppProgressBar: View {
     /// - Parameters:
     ///   - value: The current value to display
     ///   - maxValue: The maximum possible value (used to calculate the fill percentage)
-    ///   - height: The height of the progress bar (defaults to 8 points)
+    ///   - frame: The height of the progress bar (defaults to 100x8 points)
     ///   - cornerRadius: The corner radius of the progress bar (defaults to 4 points)
     ///   - foregroundColor: Optional custom color for the progress bar
     ///   - accessibilityID: The accessibility identifier for the progress bar
     public init(
         value: Double,
-        maxValue: Double,
-        height: CGFloat = 8,
-        cornerRadius: CGFloat = 4,
+        maxValue: Double = 100,
+        frame: CGSize = AppStyle.Frame.progressBar,
+        cornerRadius: CGFloat = AppStyle.Radius.corner,
         foregroundColor: Color? = nil,
         accessibilityID: String
     ) {
         self.value = min(max(value, 0), maxValue)
         self.maxValue = maxValue
-        self.height = height
+        self.frame = frame
         self.cornerRadius = cornerRadius
         self.customForegroundColor = foregroundColor
         self.accessibilityID = accessibilityID
@@ -111,7 +91,7 @@ public struct AppProgressBar: View {
                     .a11yID(accessibilityID, view: .appProgressBar, component: .progressView)
             }
         }
-        .frame(height: height)
+        .frame(width: frame.width, height: frame.height)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
 
@@ -134,7 +114,7 @@ public struct AppProgressBar: View {
         AppProgressBar(
             value: 75,
             maxValue: 100,
-            height: 12,
+            frame: CGSize(width: 200,height: 20),
             cornerRadius: 6,
             accessibilityID: "Test"
         )

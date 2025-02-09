@@ -65,7 +65,7 @@ public struct AppTag: View {
             .padding(.horizontal, AppStyle.Padding.xSmall)
             .padding(.vertical, AppStyle.Padding.xxSmall)
             .background(AppStyle.SharedStyles.typeTag(color: color))
-            .foregroundColor(.white)
+            .foregroundColor(AppStyle.Colors.primaryText)
             .clipShape(Capsule())
             .a11yID(text, view: .appTag, component: .container)
     }

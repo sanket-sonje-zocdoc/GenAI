@@ -33,16 +33,16 @@ struct PokemonRowView: View {
     var body: some View {
         ZStack {
             AppCard {
-                HStack(spacing: AppStyle.Padding.xSmall * 1.5) {
+                HStack(spacing: AppStyle.StackSpacing.xSmall) {
                     AppAvatar(
                         url: URL(string: pokemon.sprites.frontDefault),
                         accessibilityID: pokemon.name
                     )
 
-                    VStack(alignment: .leading, spacing: AppStyle.Padding.xxSmall) {
+                    VStack(alignment: .leading, spacing: AppStyle.StackSpacing.xxSmall) {
                         AppText(pokemon.name.capitalized, style: .headline)
 
-                        HStack(spacing: AppStyle.Padding.xSmall) {
+                        HStack(spacing: AppStyle.StackSpacing.xSmall) {
                             ForEach(pokemon.types, id: \.slot) { pokemonTypeEntry in
                                 AppTag(
                                     text: pokemonTypeEntry.type.name.capitalized,

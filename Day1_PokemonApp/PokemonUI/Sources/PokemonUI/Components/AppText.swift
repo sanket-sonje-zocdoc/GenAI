@@ -26,7 +26,7 @@ public struct AppText: View {
     public let text: String
     
     /// The style configuration for the text
-    public let style: AppTextStyle
+    public let style: AppStyle.Text
     
     // MARK: - Initialization
     
@@ -36,7 +36,7 @@ public struct AppText: View {
     ///   - style: The text style to apply
     public init(
         _ text: String, 
-        style: AppTextStyle
+        style: AppStyle.Text
     ) {
         self.text = text
         self.style = style

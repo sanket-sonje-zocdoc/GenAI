@@ -48,7 +48,7 @@ struct SearchBar: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: AppStyle.Padding.xSmall) {
+        VStack(spacing: AppStyle.StackSpacing.xSmall) {
             SearchInputView(
                 text: $text,
                 searchMode: $searchMode,

@@ -34,7 +34,7 @@ struct SearchSortingListView: View {
             AppText(
                 "No sort criteria selected",
                 style: .customRegular(
-                    fontSize: 14,
+                    fontSize: AppStyle.FontSize.normal,
                     color: .secondary
                 )
             )

@@ -54,7 +54,7 @@ struct SearchSortingHeaderView: View {
             } label: {
                 AppIcon(
                     systemName: "plus.circle",
-                    size: 20,
+                    size: AppStyle.FontSize.large,
                     accessibilityID: "Add Sorting Option"
                 )
             }
@@ -71,7 +71,7 @@ struct SearchSortingHeaderView: View {
 // MARK: - Preview
 
 #Preview {
-    VStack(spacing: 20) {
+    VStack(spacing: AppStyle.StackSpacing.normal) {
         // Empty state
         VStack(alignment: .leading) {
             Text("Empty State")

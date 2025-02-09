@@ -62,7 +62,9 @@ public struct AppCard<Content: View>: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(
                         AppStyle.Colors.shadow,
-                        lineWidth: showBorder ? 1.5 : 0
+                        lineWidth: showBorder
+                            ? AppStyle.LineWidth.xxSmall
+                            : AppStyle.LineWidth.zero
                     )
             )
             .shadow(

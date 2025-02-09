@@ -94,7 +94,7 @@ public struct AppAvatar: View {
     ///     - Defaults to `AppStyle.Dimensions.avatarSize`
     ///   - lineWidth:
     ///     - The width of the border stroke around the avatar.
-    ///     - Defaults to 1 point.
+    ///     - Defaults to `AppStyle.LineWidth.xxxSmall` point.
     ///   - strokeColor:
     ///     - The color of the border stroke around the avatar.
     ///     - Defaults to `AppStyle.Colors.shadowColor`.
@@ -106,7 +106,7 @@ public struct AppAvatar: View {
     public init(
         url: URL? = nil,
         size: CGFloat = AppStyle.Dimensions.avatarSize,
-        lineWidth: CGFloat = 1,
+        lineWidth: CGFloat = AppStyle.LineWidth.xxxSmall,
         strokeColor: Color = AppStyle.Colors.shadow,
         backgroundColor: Color = AppStyle.Colors.surfaceBackground,
         accessibilityID: String
@@ -164,7 +164,10 @@ public struct AppAvatar: View {
 #Preview {
     VStack(spacing: 20) {
         AppAvatar(accessibilityID: "Bulbasaur")
-        AppAvatar(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"), accessibilityID: "Bulbasaur")
+        AppAvatar(
+            url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"),
+            accessibilityID: "Bulbasaur"
+        )
         AppAvatar(size: 100, accessibilityID: "Bulbasaur")
         AppAvatar(lineWidth: 5, accessibilityID: "Bulbasaur")
         AppAvatar(strokeColor: AppStyle.Colors.primaryBackground, accessibilityID: "Bulbasaur")
