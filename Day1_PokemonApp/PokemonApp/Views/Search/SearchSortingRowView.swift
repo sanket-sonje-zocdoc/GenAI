@@ -39,7 +39,10 @@ struct SearchSortingRowView: View {
     var body: some View {
         HStack {
             if showReorderHandle {
-                AppIcon(systemName: "line.3.horizontal")
+                AppIcon(
+                    systemName: "line.3.horizontal",
+                    accessibilityID: "Horizontal Line"
+                )
                     .foregroundColor(.secondary)
             }
 
@@ -48,11 +51,17 @@ struct SearchSortingRowView: View {
             Spacer()
 
             Button(action: onDirectionToggle) {
-                AppIcon(systemName: criteria.ascending ? "arrow.up" : "arrow.down")
+                AppIcon(
+                    systemName: criteria.ascending ? "arrow.up" : "arrow.down",
+                    accessibilityID: criteria.ascending ? "Arrow Up" : "Arrow Down"
+                )
             }
 
             Button(action: onRemove) {
-                AppIcon(systemName: "xmark.circle.fill")
+                AppIcon(
+                    systemName: "xmark.circle.fill",
+                    accessibilityID: "Close"
+                )
                     .foregroundColor(.red)
             }
         }

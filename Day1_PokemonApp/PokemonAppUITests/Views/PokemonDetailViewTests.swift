@@ -32,7 +32,7 @@ final class PokemonDetailViewTests: PokemonBaseViewTests {
         XCTAssertTrue(pokemonName.exists)
 
         // Verify type tags exist
-        XCTAssertTrue(app.staticTexts["Base Stats"].exists)
+        XCTAssertTrue(app.staticTexts["BaseStats_AppText_Text"].exists)
     }
 
     func testStatsDisplay() throws {
@@ -40,10 +40,10 @@ final class PokemonDetailViewTests: PokemonBaseViewTests {
         let expectedStats = ["Hp", "Attack", "Defense", "Special-Attack", "Special-Defense", "Speed"]
 
         for stat in expectedStats {
-            XCTAssertTrue(app.staticTexts[stat].exists, "\(stat) should be visible")
+            XCTAssertTrue(app.staticTexts["\(stat)_AppText_Text"].exists, "\(stat) should be visible")
 
             // Verify progress bars exist
-            let progressBar = app.otherElements["\(stat)ProgressBar"]
+            let progressBar = app.otherElements["\(stat)_AppProgressBar_ProgressView"]
             XCTAssertTrue(progressBar.exists)
         }
     }

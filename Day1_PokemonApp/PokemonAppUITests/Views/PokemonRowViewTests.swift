@@ -27,7 +27,7 @@ final class PokemonRowViewTests: PokemonBaseViewTests {
         XCTAssertTrue(firstRow.staticTexts.firstMatch.exists)
 
         // Verify chevron indicator exists
-        XCTAssertTrue(firstRow.images["chevron.right"].exists)
+        XCTAssertTrue(firstRow.images["RightIcon_AppIcon_Image"].exists)
     }
 
     func testRowNavigation() throws {

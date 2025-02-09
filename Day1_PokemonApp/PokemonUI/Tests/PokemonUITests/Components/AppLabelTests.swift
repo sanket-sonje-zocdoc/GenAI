@@ -56,18 +56,15 @@ final class AppLabelTests: PokemonUIUnitTestCase {
         // Then
         let labelView = label.body
         XCTAssertNotNil(labelView)
-        
+
         let mirror = Mirror(reflecting: labelView)
-        let labelContent = try XCTUnwrap(findView(in: mirror) as Label<AppText, AppIcon>?)
-        XCTAssertNotNil(labelContent)
-        
+
         // Verify the title matches
-        let labelMirror = Mirror(reflecting: labelContent)
-        XCTAssertTrue(labelMirror.children.contains { child in
-            if let appText = child.value as? AppText {
-                return appText.text == title
-            }
-            return false
-        })
+        let appText = try XCTUnwrap(findView(in: mirror) as AppText?)
+        XCTAssertEqual(appText.text, title)
+
+        // Verify the icon matches
+        let appIcon = try XCTUnwrap(findView(in: mirror) as AppIcon?)
+        XCTAssertEqual(appIcon.systemName, systemImage)
     }
 }

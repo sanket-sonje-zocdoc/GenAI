@@ -43,7 +43,8 @@ struct PokemonDetailView: View {
                     VStack {
                         AppAvatar(
                             url: URL(string: pokemon.sprites.frontDefault),
-                            size: 200
+                            size: 200,
+                            accessibilityID: pokemon.name
                         )
                         .padding(.vertical, AppStyle.Padding.normal)
 
@@ -80,7 +81,7 @@ struct PokemonDetailView: View {
                                 AppProgressBar(
                                     value: Double(stat.baseStat),
                                     maxValue: 100,
-                                    a11yID: "\(stat.stat.name.capitalized)ProgressBar"
+                                    accessibilityID: "\(stat.stat.name.capitalized)"
                                 )
                                 .frame(width: 100)
 

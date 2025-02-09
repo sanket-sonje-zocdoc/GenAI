@@ -76,7 +76,7 @@ struct PokemonStatComparisonRow: View {
                     foregroundColor: Color.getColor(
                         for: isFirstPokemonStronger ? type1 : type2
                     ),
-                    a11yID: "\(statName)ProgressBar"
+                    accessibilityID: "\(statName)"
                 )
                 .opacity(0.3)
 
@@ -86,7 +86,7 @@ struct PokemonStatComparisonRow: View {
                     foregroundColor: Color.getColor(
                         for: isFirstPokemonStronger ? type2 : type1
                     ),
-                    a11yID: "\(statName)ProgressBar"
+                    accessibilityID: "\(statName)"
                 )
             }
             .frame(height: AppStyle.Padding.xSmall)

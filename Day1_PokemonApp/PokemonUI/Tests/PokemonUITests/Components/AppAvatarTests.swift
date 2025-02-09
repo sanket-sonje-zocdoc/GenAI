@@ -16,7 +16,7 @@ final class AppAvatarTests: PokemonUIUnitTestCase {
     // MARK: - Tests
 
     func testDefaultInitialization() {
-        let avatar = AppAvatar()
+        let avatar = AppAvatar(accessibilityID: "Test")
 
         XCTAssertNil(avatar.url)
         XCTAssertEqual(avatar.size, AppStyle.Dimensions.avatarSize)
@@ -37,7 +37,8 @@ final class AppAvatarTests: PokemonUIUnitTestCase {
             size: size,
             lineWidth: lineWidth,
             strokeColor: strokeColor,
-            backgroundColor: backgroundColor
+            backgroundColor: backgroundColor,
+            accessibilityID: "Test"
         )
 
         XCTAssertEqual(avatar.url, url)

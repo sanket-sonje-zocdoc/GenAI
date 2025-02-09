@@ -34,7 +34,10 @@ struct PokemonRowView: View {
         ZStack {
             AppCard {
                 HStack(spacing: AppStyle.Padding.xSmall * 1.5) {
-                    AppAvatar(url: URL(string: pokemon.sprites.frontDefault))
+                    AppAvatar(
+                        url: URL(string: pokemon.sprites.frontDefault),
+                        accessibilityID: pokemon.name
+                    )
 
                     VStack(alignment: .leading, spacing: AppStyle.Padding.xxSmall) {
                         AppText(pokemon.name.capitalized, style: .headline)
@@ -51,7 +54,10 @@ struct PokemonRowView: View {
 
                     Spacer()
 
-                    AppIcon(systemName: "chevron.right")
+                    AppIcon(
+                        systemName: "chevron.right",
+                        accessibilityID: "Right Icon"
+                    )
                         .padding(.trailing, AppStyle.Padding.xSmall)
                         .padding(.leading, AppStyle.Padding.xxSmall)
                 }

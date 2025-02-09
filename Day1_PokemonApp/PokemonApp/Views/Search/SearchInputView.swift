@@ -37,30 +37,34 @@ struct SearchInputView: View {
         AppCard {
             HStack {
                 // Search Icon
-                AppIcon(systemName: "magnifyingglass")
+                AppIcon(systemName: "magnifyingglass", accessibilityID: "Magnifying Glass")
                     .padding(AppStyle.Padding.xxSmall)
 
                 // Search Field
                 TextField(searchMode.placeholder, text: $text)
                     .textFieldStyle(.plain)
+                    .a11yID(searchMode.placeholder, view: .notPresent, component: .textField)
 
                 // Search by name / type Button
                 Menu {
                     Button(action: { searchMode = .name }) {
                         AppLabel(
-                            "Search by Name",
+                            "Search By Name",
                             systemImage: SearchMode.name.icon
                         )
                     }
 
                     Button(action: { searchMode = .type }) {
                         AppLabel(
-                            "Search by Type",
+                            "Search By Type",
                             systemImage: SearchMode.type.icon
                         )
                     }
                 } label: {
-                    AppIcon(systemName: "line.3.horizontal.decrease.circle")
+                    AppIcon(
+                        systemName: "line.3.horizontal.decrease.circle",
+                        accessibilityID: "Sorting Options By Name Or Type"
+                    )
                         .padding(.trailing, AppStyle.Padding.xxSmall)
                 }
 
@@ -68,17 +72,24 @@ struct SearchInputView: View {
                 Button {
                     showSortControls.toggle()
                 } label: {
-                    AppIcon(systemName: "arrow.up.arrow.down")
+                    AppIcon(
+                        systemName: "arrow.up.arrow.down",
+                        accessibilityID: "Sorting Options"
+                    )
                         .padding(.trailing, AppStyle.Padding.xxSmall)
                         .overlay(alignment: .topTrailing) {
                             if !sortCriteria.isEmpty {
-                                Text("\(sortCriteria.count)")
-                                    .font(.caption2)
-                                    .padding(4)
-                                    .background(Color.accentColor)
-                                    .foregroundColor(.white)
-                                    .clipShape(Circle())
-                                    .offset(x: 7.5, y: -10)
+                                AppText(
+                                    "\(sortCriteria.count)",
+                                    style: .customRegular(
+                                        fontSize: 12,
+                                        color: AppStyle.Colors.primaryBackground
+                                    )
+                                )
+                                .padding(4)
+                                .background(Color.accentColor)
+                                .clipShape(Circle())
+                                .offset(x: 7.5, y: -10)
                             }
                         }
                 }
@@ -99,7 +110,10 @@ struct SearchInputView: View {
                             }
                         }
                     ) {
-                        AppIcon(systemName: "xmark.circle.fill")
+                        AppIcon(
+                            systemName: "xmark.circle.fill",
+                            accessibilityID: "Close"
+                        )
                     }
                     .padding(.trailing, AppStyle.Padding.xSmall)
                 }

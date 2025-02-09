@@ -64,6 +64,9 @@ public enum ViewType {
     /// Basic text component with standardized styling options
     case appText
 
+    /// Default case where the App component is not available
+    case notPresent
+
     /// Returns the string representation of the view type.
     /// This string is used as a prefix for accessibility identifiers.
     ///
@@ -85,6 +88,7 @@ public enum ViewType {
         case .appProgressBar: return "AppProgressBar"
         case .appTag: return "AppTag"
         case .appText: return "AppText"
+        case .notPresent: return ""
         }
     }
 }

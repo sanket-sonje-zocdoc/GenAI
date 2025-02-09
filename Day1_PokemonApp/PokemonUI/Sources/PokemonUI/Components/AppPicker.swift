@@ -73,10 +73,6 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
         .cornerRadius(8)
         .shadow(radius: AppStyle.Radius.shadow)
     }
-
-    private var titleView: some View {
-        AppText(title, style: .title)
-    }
 }
 
 // MARK: - Previews

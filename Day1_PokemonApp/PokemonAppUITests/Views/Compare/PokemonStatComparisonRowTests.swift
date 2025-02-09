@@ -16,7 +16,7 @@ final class PokemonStatComparisonRowTests: PokemonBaseViewTests {
 
         // Navigate to Compare Pokemon screen and select both Pokemon
         // TODO: Update this test when we are implementing the Tab View
-        app.buttons["Compare Pokemon"].tap()
+        app.buttons["ComparePokemon_AppLabel_Text"].tap()
     }
 
     // MARK: - Tests
@@ -29,7 +29,7 @@ final class PokemonStatComparisonRowTests: PokemonBaseViewTests {
         let statNames = ["Hp", "Attack", "Defense", "Special-Attack", "Special-Defense", "Speed"]
 
         for statName in statNames {
-            XCTAssertTrue(app.staticTexts[statName].exists, "\(statName) stat row should exist")
+            XCTAssertTrue(app.staticTexts["\(statName)_AppText_Text"].exists, "\(statName) stat row should exist")
         }
     }
 
@@ -48,8 +48,8 @@ final class PokemonStatComparisonRowTests: PokemonBaseViewTests {
         ]
 
         for (stat, value1, value2) in comparisons {
-            XCTAssertTrue(app.staticTexts[String(value1)].exists, "\(stat) value \(value1) should exist")
-            XCTAssertTrue(app.staticTexts[String(value2)].exists, "\(stat) value \(value2) should exist")
+            XCTAssertTrue(app.staticTexts["\(value1)_AppText_Text"].exists, "\(stat) value \(value1) should exist")
+            XCTAssertTrue(app.staticTexts["\(value2)_AppText_Text"].exists, "\(stat) value \(value2) should exist")
         }
     }
 
@@ -58,19 +58,19 @@ final class PokemonStatComparisonRowTests: PokemonBaseViewTests {
         selectDistinctPokemons()
 
         // Test Attack stat where Charmander (52) > Bulbasaur (49)
-        let attackStat = app.staticTexts["Attack"]
+        let attackStat = app.staticTexts["Attack_AppText_Text"]
         XCTAssertTrue(attackStat.exists)
 
         // Verify the higher value (52) is highlighted
-        let charmanderAttack = app.staticTexts["52"]
+        let charmanderAttack = app.staticTexts["52_AppText_Text"]
         XCTAssertTrue(charmanderAttack.exists)
 
         // Test Special-Defense where Bulbasaur (65) > Charmander (50)
-        let specialDefenseStat = app.staticTexts["Special-Defense"]
+        let specialDefenseStat = app.staticTexts["Special-Defense_AppText_Text"]
         XCTAssertTrue(specialDefenseStat.exists)
 
         // Verify the higher value (65) is highlighted
-        let bulbasaurSpecialDefense = app.staticTexts["65"]
+        let bulbasaurSpecialDefense = app.staticTexts["65_AppText_Text"]
         XCTAssertTrue(bulbasaurSpecialDefense.exists)
     }
 
@@ -82,7 +82,7 @@ final class PokemonStatComparisonRowTests: PokemonBaseViewTests {
         let statNames = ["Hp", "Attack", "Defense", "Special-Attack", "Special-Defense", "Speed"]
 
         for statName in statNames {
-            XCTAssertTrue(app.staticTexts[statName].exists, "Progress bar for \(statName) should be visible")
+            XCTAssertTrue(app.staticTexts["\(statName)_AppText_Text"].exists, "Progress bar for \(statName) should be visible")
         }
     }
 
@@ -102,12 +102,12 @@ final class PokemonStatComparisonRowTests: PokemonBaseViewTests {
         
         for (statValue, statName) in statsWithNames {
             // Verify stat name exists
-            let statNameText = app.staticTexts[statName]
+            let statNameText = app.staticTexts["\(statName)_AppText_Text"]
             XCTAssertTrue(statNameText.exists, "Stat name \(statName) should exist")
             
             // Verify both stat values exist (left and right)
             let statValueString = String(statValue)
-            let statValues = app.staticTexts.matching(identifier: statValueString)
+            let statValues = app.staticTexts.matching(identifier: "\(statValueString)_AppText_Text")
             XCTAssertEqual(statValues.count, 2, "Should find exactly two instances of value \(statValue) for \(statName)")
             
             // Optional: Verify the values are on either side of the stat name

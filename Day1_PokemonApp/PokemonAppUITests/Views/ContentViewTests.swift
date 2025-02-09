@@ -16,7 +16,7 @@ final class ContentViewTests: PokemonBaseViewTests {
         XCTAssertTrue(app.navigationBars["Pokemons"].exists)
 
         // Verify search bar exists
-        XCTAssertTrue(app.textFields["Search by name"].exists, "Search field should exist")
+        XCTAssertTrue(app.textFields["SearchByName_TextField"].exists, "Search field should exist")
 
         // Verify Compare Pokemon button exists
         XCTAssertTrue(app.buttons["Compare Pokemon"].exists)
@@ -39,7 +39,7 @@ final class ContentViewTests: PokemonBaseViewTests {
         XCTAssertTrue(progressView.waitForNonExistence(timeout: 5))
 
         // Enter search text
-        let searchField = app.textFields["Search by name"]
+        let searchField = app.textFields["SearchByName_TextField"]
         searchField.tap()
         searchField.typeText("bulba")
 

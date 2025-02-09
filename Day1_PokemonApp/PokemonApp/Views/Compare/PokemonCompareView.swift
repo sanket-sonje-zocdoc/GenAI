@@ -58,9 +58,15 @@ struct PokemonCompareView: View {
                let pokemon2 = selectedPokemon2 {
                 PokemonComparisonStatsView(pokemon1: pokemon1, pokemon2: pokemon2)
             } else {
-                AppText("Select two Pokemon to compare their stats", style: .caption)
-                    .foregroundColor(.gray)
-                    .padding()
+                AppText(
+                    "Select two Pokemon to compare their stats",
+                    style: .customRegular(
+                        fontSize: 14,
+                        color: .secondary
+                    )
+                )
+                .foregroundColor(.gray)
+                .padding()
             }
 
             Spacer()

@@ -16,91 +16,79 @@ final class PokemonSelectionViewTests: PokemonBaseViewTests {
 
         // Navigate to Compare Pokemon screen and select both Pokemon
         // TODO: Update this test when we are implementing the Tab View
-        app.buttons["Compare Pokemon"].tap()
+        app.buttons["ComparePokemon_AppLabel_Text"].tap()
     }
 
     // MARK: - Tests
 
     func testInitialState() throws {
         // Verify first Pokemon selector exists with correct initial state
-        let firstPokemonButton = app.buttons["Select First Pokemon, Select Pokemon"]
+        let firstPokemonButton = app.buttons.matching(identifier: "SelectPokemon_AppText_Text").element(boundBy: 0)
         XCTAssertTrue(firstPokemonButton.exists, "First Pokemon selector should exist")
 
         // Verify second Pokemon selector exists with correct initial state
-        let secondPokemonButton = app.buttons["Select Second Pokemon, Select Pokemon"]
+        let secondPokemonButton = app.buttons.matching(identifier: "SelectPokemon_AppText_Text").element(boundBy: 1)
         XCTAssertTrue(secondPokemonButton.exists, "Second Pokemon selector should exist")
 
         // Verify no Pokemon types are visible initially
-        XCTAssertFalse(app.staticTexts["Grass"].exists, "Pokemon types should not be visible initially")
-        XCTAssertFalse(app.staticTexts["Fire"].exists, "Pokemon types should not be visible initially")
+        XCTAssertFalse(app.staticTexts["Grass_AppTag_Container"].exists, "Pokemon types should not be visible initially")
+        XCTAssertFalse(app.staticTexts["Fire_AppTag_Container"].exists, "Pokemon types should not be visible initially")
     }
 
     func testPokemonSelection() throws {
         // Select first Pokemon
-        selectPokemon(
-            initialName: "Select First Pokemon, Select Pokemon",
-            updatedName: "Bulbasaur"
+        defaultSelectionsOfPokemon(
+            updatedID: "Bulbasaur"
         )
 
         // Verify Pokemon name and types are displayed
-        XCTAssertTrue(app.buttons["Select First Pokemon, Bulbasaur"].exists)
-        XCTAssertTrue(app.staticTexts["Grass"].exists)
-        XCTAssertTrue(app.staticTexts["Poison"].exists)
+        XCTAssertTrue(app.buttons["Bulbasaur_AppText_Text"].exists)
+        XCTAssertTrue(app.staticTexts["Grass_AppTag_Container"].exists)
+        XCTAssertTrue(app.staticTexts["Poison_AppTag_Container"].exists)
 
         // Select second Pokemon
-        selectPokemon(
-            initialName: "Select Second Pokemon, Select Pokemon",
-            updatedName: "Charmander"
+        defaultSelectionsOfPokemon(
+            updatedID: "Charmander"
         )
 
         // Verify second Pokemon name and type are displayed
-        XCTAssertTrue(app.buttons["Select Second Pokemon, Charmander"].exists)
-        XCTAssertTrue(app.staticTexts["Fire"].exists)
+        XCTAssertTrue(app.buttons["Charmander_AppText_Text"].exists)
+        XCTAssertTrue(app.staticTexts["Fire_AppTag_Container"].exists)
     }
 
     func testPokemonReSelection() throws {
         // Initial selection
-        selectPokemon(
-            initialName: "Select First Pokemon, Select Pokemon",
-            updatedName: "Bulbasaur"
+        defaultSelectionsOfPokemon(
+            updatedID: "Bulbasaur"
         )
 
         // Verify initial selection
-        XCTAssertTrue(app.buttons["Select First Pokemon, Bulbasaur"].exists)
-        XCTAssertTrue(app.staticTexts["Grass"].exists)
-        XCTAssertTrue(app.staticTexts["Poison"].exists)
+        XCTAssertTrue(app.buttons["Bulbasaur_AppText_Text"].exists)
+        XCTAssertTrue(app.staticTexts["Grass_AppTag_Container"].exists)
+        XCTAssertTrue(app.staticTexts["Poison_AppTag_Container"].exists)
 
         // Change selection
         selectPokemon(
-            initialName: "Select First Pokemon, Bulbasaur",
-            updatedName: "Charmander"
+            initialID: "Bulbasaur_AppText_Text",
+            updatedID: "Charmander_AppText_Text"
         )
 
         // Verify updated selection
-        XCTAssertTrue(app.buttons["Select First Pokemon, Charmander"].exists)
-        XCTAssertTrue(app.staticTexts["Fire"].exists)
-        XCTAssertFalse(app.staticTexts["Grass"].exists, "Previous Pokemon's types should not be visible")
+        XCTAssertTrue(app.buttons["Charmander_AppText_Text"].exists)
+        XCTAssertTrue(app.staticTexts["Fire_AppTag_Container"].exists)
+        XCTAssertFalse(app.staticTexts["Grass_AppTag_Container"].exists, "Previous Pokemon's types should not be visible")
     }
 
     func testBothSelectionIndependence() throws {
-        // Select first Pokemon
-        selectPokemon(
-            initialName: "Select First Pokemon, Select Pokemon",
-            updatedName: "Bulbasaur"
-        )
-
-        // Select second Pokemon
-        selectPokemon(
-            initialName: "Select Second Pokemon, Select Pokemon",
-            updatedName: "Charmander"
-        )
+        // Select two different pokemons Pokemon
+        selectDistinctPokemons()
 
         // Verify both selections maintain their state
-        XCTAssertTrue(app.buttons["Select First Pokemon, Bulbasaur"].exists)
-        XCTAssertTrue(app.buttons["Select Second Pokemon, Charmander"].exists)
-        XCTAssertTrue(app.staticTexts["Grass"].exists)
-        XCTAssertTrue(app.staticTexts["Poison"].exists)
-        XCTAssertTrue(app.staticTexts["Fire"].exists)
+        XCTAssertTrue(app.buttons["Bulbasaur_AppText_Text"].exists)
+        XCTAssertTrue(app.buttons["Charmander_AppText_Text"].exists)
+        XCTAssertTrue(app.staticTexts["Grass_AppTag_Container"].exists)
+        XCTAssertTrue(app.staticTexts["Poison_AppTag_Container"].exists)
+        XCTAssertTrue(app.staticTexts["Fire_AppTag_Container"].exists)
     }
 
     func testPokemonSpriteVisibility() throws {
@@ -108,12 +96,11 @@ final class PokemonSelectionViewTests: PokemonBaseViewTests {
         XCTAssertEqual(app.images.count, 0, "No sprites should be visible initially")
 
         // Select a Pokemon
-        selectPokemon(
-            initialName: "Select First Pokemon, Select Pokemon",
-            updatedName: "Bulbasaur"
+        defaultSelectionsOfPokemon(
+            updatedID: "Bulbasaur"
         )
 
         // Verify sprite appears
-        XCTAssertGreaterThan(app.images.count, 0, "Pokemon sprite should be visible after selection")
+        XCTAssertEqual(app.images.count, 1, "Pokemon sprite should be visible after selection")
     }
 }

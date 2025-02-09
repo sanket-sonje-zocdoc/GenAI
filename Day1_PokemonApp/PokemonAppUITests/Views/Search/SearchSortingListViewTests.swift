@@ -13,26 +13,26 @@ final class SearchSortingListViewTests: PokemonBaseViewTests {
 
     override func setUp() {
         super.setUp()
-        app.buttons["arrow.up.arrow.down"].tap()
+        app.buttons["SortingOptions_AppIcon_Image"].tap()
     }
 
     // MARK: - Tests
 
     func testEmptyState() throws {
-        XCTAssertTrue(app.staticTexts["No sort criteria selected"].exists, "Empty state message should be visible")
+        XCTAssertTrue(app.staticTexts["NoSortCriteriaSelected_AppText_Text"].exists, "Empty state message should be visible")
     }
 
     func testMultipleCriteria() throws {
         // Add first criteria
-        app.images["plus.circle"].tap()
+        app.images["AddSortingOption_AppIcon_Image"].tap()
         app.buttons["Name"].tap()
 
         // Add second criteria
-        app.images["plus.circle"].tap()
+        app.images["AddSortingOption_AppIcon_Image"].tap()
         app.buttons["HP"].tap()
 
         // Verify reorder handles appear
-        let reorderHandles = app.images.matching(identifier: "line.3.horizontal")
+        let reorderHandles = app.images.matching(identifier: "HorizontalLine_AppIcon_Image")
         XCTAssertEqual(reorderHandles.count, 2, "Reorder handles should appear for multiple criteria")
 
         // Verify both criteria exist
@@ -42,15 +42,15 @@ final class SearchSortingListViewTests: PokemonBaseViewTests {
 
     func testRemovingCriteria() throws {
         // Add criteria
-        app.images["plus.circle"].tap()
+        app.images["AddSortingOption_AppIcon_Image"].tap()
         app.buttons["Name"].tap()
 
         // Remove criteria
-        let closeButtons = app.buttons.matching(identifier: "xmark.circle.fill")
+        let closeButtons = app.buttons.matching(identifier: "Close_AppIcon_Image")
         let sortingCloseButton = closeButtons.element(boundBy: 1)
         sortingCloseButton.tap()
 
         // Verify empty state returns
-        XCTAssertTrue(app.staticTexts["No sort criteria selected"].exists, "Empty state should return")
+        XCTAssertTrue(app.staticTexts["NoSortCriteriaSelected_AppText_Text"].exists, "Empty state should return")
     }
 }

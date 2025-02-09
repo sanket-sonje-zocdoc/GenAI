@@ -17,8 +17,8 @@ final class AppIconTests: PokemonUIUnitTestCase {
     
     func testDefaultInitialization() {
         let systemName = "star.fill"
-        let icon = AppIcon(systemName: systemName)
-        
+        let icon = AppIcon(systemName: systemName, accessibilityID: "Test")
+
         XCTAssertEqual(icon.systemName, systemName)
         XCTAssertEqual(icon.color, .secondary)
         XCTAssertEqual(icon.size, 16)
@@ -35,7 +35,8 @@ final class AppIconTests: PokemonUIUnitTestCase {
             systemName: systemName,
             color: color,
             size: size,
-            fontWeight: fontWeight
+            fontWeight: fontWeight,
+            accessibilityID: "Test"
         )
         
         XCTAssertEqual(icon.systemName, systemName)

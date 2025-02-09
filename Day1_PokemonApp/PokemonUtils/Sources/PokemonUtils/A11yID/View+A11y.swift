@@ -16,9 +16,9 @@ import SwiftUI
 ///
 /// Usage Examples:
 /// ```
-/// // Component-based identifier
-/// AppText("Pokemon Name")
-///     .a11yID("Label", type: .appText)  // Results in "AppText_Label"
+/// // In a UI component
+/// Image(uiImage: image)
+///     .a11yID("Pikachu", view: .image, component: .image)  // Results in "Pikachu_AppAvatar_Image"
 /// ```
 ///
 /// Best Practices:
@@ -28,25 +28,19 @@ import SwiftUI
 /// - Use `customA11yID(_:)` only for special cases
 public extension View {
 
-    /// Adds an accessibility identifier to the view using a predefined component type.
-    ///
-    /// This method is the preferred way to add accessibility identifiers to views
-    /// that are part of the Pokemon application's design system. It ensures consistent
-    /// naming across the application by combining the component type with a suffix.
+    /// Adds an accessibility identifier to the view using a predefined component type and view type.
     ///
     /// - Parameters:
-    ///   - suffix: A unique identifier within the component's context (e.g., "Container", "Label", "Icon")
-    ///   - type: The type of UI component, defined in `ViewType` (e.g., .appAvatar, .appCard)
-    /// - Returns: A view with the accessibility identifier in format "ComponentType_suffix"
-    ///
-    /// Example Usage:
-    /// ```
-    /// // In an avatar component
-    /// Circle()
-    ///     .a11yID("Border", type: .appAvatar)  // Results in "AppAvatar_Border"
-    /// ```
-    func a11yID(_ suffix: String, type: ViewType) -> some View {
-        accessibilityIdentifier("\(type.type)_\(suffix)")
+    ///   - id: The custom identifier prefix
+    ///   - component: The type of SwiftUI component
+    ///   - type: The type of UI component from ViewType
+    /// - Returns: A view with the accessibility identifier in format "id_ViewType_ComponentType"
+    func a11yID(_ id: String, view: ViewType, component: ComponentType) -> some View {
+        let modifiedID = id.capitalized.replacingOccurrences(of: " ", with: "")
+        let viewType = view.type
+        let componentType = component.type
+        let a11yID = "\(modifiedID.isEmpty ? "" : "\(modifiedID)")\(viewType.isEmpty ? "" : "_\(viewType)")\(componentType.isEmpty ? "" : "_\(componentType)")"
+        return accessibilityIdentifier(a11yID)
     }
 
     /// Adds a custom accessibility identifier to the view.
@@ -62,15 +56,6 @@ public extension View {
     /// // For unique, one-off elements
     /// Button("Start")
     ///     .customA11yID("welcomeScreen_startButton")
-    ///
-    /// // For complex composite views
-    /// HStack { ... }
-    ///     .customA11yID("pokemonList_headerContainer")
-    ///
-    /// // For dynamic identifiers
-    /// Text(pokemon.name)
-    ///     .customA11yID("pokemon_\(pokemon.id)_nameLabel")
-    /// ```
     ///
     /// - Note: Consider using `a11yID(_:type:)` before resorting to custom identifiers
     ///   to maintain consistency across the application.

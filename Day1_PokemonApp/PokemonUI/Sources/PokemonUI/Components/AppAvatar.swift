@@ -74,6 +74,9 @@ public struct AppAvatar: View {
     /// Defaults to `AppStyle.Colors.surfaceBackground`.
     public let backgroundColor: Color
 
+    /// The accessibility identifier prefix for this avatar
+    public let accessibilityID: String
+
     /// The loaded image to be displayed.
     /// This is managed internally and updated when the image loads successfully.
     @State private var image: UIImage?
@@ -98,18 +101,22 @@ public struct AppAvatar: View {
     ///   - backgroundColor:
     ///     - The background color shown behind the image or loading indicator.
     ///     - Defaults to `AppStyle.Colors.surfaceBackground`.
+    ///   - accessibilityID:
+    ///     - The accessibility identifier prefix for this avatar.
     public init(
         url: URL? = nil,
         size: CGFloat = AppStyle.Dimensions.avatarSize,
         lineWidth: CGFloat = 1,
         strokeColor: Color = AppStyle.Colors.shadow,
-        backgroundColor: Color = AppStyle.Colors.surfaceBackground
+        backgroundColor: Color = AppStyle.Colors.surfaceBackground,
+        accessibilityID: String
     ) {
         self.size = size
         self.url = url
         self.lineWidth = lineWidth
         self.strokeColor = strokeColor
         self.backgroundColor = backgroundColor
+        self.accessibilityID = accessibilityID
     }
 
     // MARK: - Body
@@ -120,10 +127,10 @@ public struct AppAvatar: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .a11yID("Image", type: .appAvatar)
+                    .a11yID(accessibilityID, view: .appAvatar, component: .image)
             } else {
                 ProgressView()
-                    .a11yID("ProgressView", type: .appAvatar)
+                    .a11yID(accessibilityID, view: .appAvatar, component: .progressView)
             }
         }
         .frame(
@@ -138,9 +145,7 @@ public struct AppAvatar: View {
                     strokeColor,
                     lineWidth: lineWidth
                 )
-                .a11yID("Border", type: .appAvatar)
         )
-        .a11yID("Container", type: .appAvatar)
         .onAppear {
             if let url = url {
                 ImageLoader.shared.loadImage(from: url) { image in
@@ -158,12 +163,12 @@ public struct AppAvatar: View {
 @available(iOS 15.0, *)
 #Preview {
     VStack(spacing: 20) {
-        AppAvatar()
-        AppAvatar(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"))
-        AppAvatar(size: 100)
-        AppAvatar(lineWidth: 5)
-        AppAvatar(strokeColor: AppStyle.Colors.primaryBackground)
-        AppAvatar(backgroundColor: AppStyle.Colors.primaryBackground)
+        AppAvatar(accessibilityID: "Bulbasaur")
+        AppAvatar(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"), accessibilityID: "Bulbasaur")
+        AppAvatar(size: 100, accessibilityID: "Bulbasaur")
+        AppAvatar(lineWidth: 5, accessibilityID: "Bulbasaur")
+        AppAvatar(strokeColor: AppStyle.Colors.primaryBackground, accessibilityID: "Bulbasaur")
+        AppAvatar(backgroundColor: AppStyle.Colors.primaryBackground, accessibilityID: "Bulbasaur")
     }
     .padding()
 }

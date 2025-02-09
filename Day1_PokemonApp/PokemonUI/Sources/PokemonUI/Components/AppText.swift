@@ -34,7 +34,10 @@ public struct AppText: View {
     /// - Parameters:
     ///   - text: The string content to be displayed
     ///   - style: The text style to apply
-    public init(_ text: String, style: AppTextStyle) {
+    public init(
+        _ text: String, 
+        style: AppTextStyle
+    ) {
         self.text = text
         self.style = style
     }
@@ -45,6 +48,7 @@ public struct AppText: View {
         Text(text)
             .font(style.font)
             .foregroundColor(style.color)
+            .a11yID(text, view: .appText, component: .text)
     }
 }
 

@@ -31,10 +31,10 @@ public struct AppLabel: View {
 
     /// The text to display in the label
     public let title: String
-    
+
     /// The SF Symbol name to use as the icon
     public let systemImage: String
-    
+
     /// The text style that determines the appearance of the label
     public let style: AppTextStyle
 
@@ -47,14 +47,18 @@ public struct AppLabel: View {
     ///   - systemImage: The name of the SF Symbol to use as the icon
     ///
     /// Example:
-    /// ```swift
+    /// ```
     /// AppLabel(
     ///     "Search",
     ///     style: .body,
     ///     systemImage: "magnifyingglass"
     /// )
     /// ```
-    public init(_ title: String, style: AppTextStyle = .body, systemImage: String) {
+    public init(
+        _ title: String,
+        style: AppTextStyle = .body,
+        systemImage: String
+    ) {
         self.title = title
         self.style = style
         self.systemImage = systemImage
@@ -66,10 +70,12 @@ public struct AppLabel: View {
     public var body: some View {
         Label {
             AppText(title, style: style)
+                .a11yID(title, view: .appLabel, component: .text)
         } icon: {
             AppIcon(
                 systemName: systemImage,
-                color: style.color
+                color: style.color,
+                accessibilityID: title
             )
         }
         .font(style.font)

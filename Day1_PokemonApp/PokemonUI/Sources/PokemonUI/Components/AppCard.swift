@@ -64,7 +64,6 @@ public struct AppCard<Content: View>: View {
                         AppStyle.Colors.shadow,
                         lineWidth: showBorder ? 1.5 : 0
                     )
-                    .a11yID("RoundedRectangle", type: .appCard)
             )
             .shadow(
                 color: Color.black.opacity(style.shadowOpacity),
@@ -72,7 +71,6 @@ public struct AppCard<Content: View>: View {
                 x: 0,
                 y: 0
             )
-            .a11yID("Container", type: .appCard)
     }
 }
 

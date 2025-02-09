@@ -41,6 +41,9 @@ public struct AppIcon: View {
     /// The font weight of the icon. Defaults to .medium
     public let fontWeight: Font.Weight
 
+    /// The accessibility identifier prefix for this avatar
+    public let accessibilityID: String
+
     // MARK: - Initialization
 
     /// Creates a new icon with the specified configuration
@@ -49,16 +52,19 @@ public struct AppIcon: View {
     ///   - color: The color of the icon. Defaults to AppStyle.Colors.textSecondary
     ///   - size: The size of the icon in points. Defaults to AppStyle.Dimensions.iconSize
     ///   - fontWeight: The font weight of the icon. Defaults to .medium
+    ///   - accessibilityID: The accessibility identifier prefix for this avatar.
     public init(
         systemName: String,
         color: Color = .secondary,
         size: CGFloat = 16,
-        fontWeight: Font.Weight = .medium
+        fontWeight: Font.Weight = .medium,
+        accessibilityID: String
     ) {
         self.systemName = systemName
         self.color = color
         self.size = size
         self.fontWeight = fontWeight
+        self.accessibilityID = accessibilityID
     }
 
     // MARK: - Body
@@ -67,6 +73,7 @@ public struct AppIcon: View {
         Image(systemName: systemName)
             .foregroundColor(color)
             .font(.system(size: size, weight: fontWeight))
+            .a11yID(accessibilityID, view: .appIcon, component: .image)
     }
 }
 
@@ -76,15 +83,15 @@ public struct AppIcon: View {
 #Preview {
     VStack(spacing: 20) {
         HStack(spacing: 20) {
-            AppIcon(systemName: "star.fill")
-            AppIcon(systemName: "heart.fill", color: .red)
-            AppIcon(systemName: "bell.fill", size: 24)
+            AppIcon(systemName: "star.fill", accessibilityID: "Star")
+            AppIcon(systemName: "heart.fill", color: .red, accessibilityID: "Heart")
+            AppIcon(systemName: "bell.fill", size: 24, accessibilityID: "Bell")
         }
         
         HStack(spacing: 20) {
-            AppIcon(systemName: "person.fill", color: .blue, size: 32)
-            AppIcon(systemName: "gear", color: .gray)
-            AppIcon(systemName: "bookmark.fill", fontWeight: .bold)
+            AppIcon(systemName: "person.fill", color: .blue, size: 32, accessibilityID: "Person")
+            AppIcon(systemName: "gear", color: .gray, accessibilityID: "Gear")
+            AppIcon(systemName: "bookmark.fill", fontWeight: .bold, accessibilityID: "Bookmark")
         }
     }
     .padding()

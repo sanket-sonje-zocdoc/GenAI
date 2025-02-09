@@ -35,6 +35,7 @@ public struct AppDivider: View {
         Rectangle()
             .fill(color)
             .frame(height: height)
+            .a11yID("Container", view: .appDivider, component: .rectangle)
     }
 }
 

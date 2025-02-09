@@ -49,8 +49,11 @@ public struct AppTag: View {
     /// Creates a new tag with the specified text and background color
     /// - Parameters:
     ///   - text: The string to be displayed inside the tag
-    ///   - color: The background color of the tag (uses SwiftUI Color)
-    public init(text: String, color: Color) {
+    ///   - color: The background color of the tag
+    public init(
+        text: String, 
+        color: Color
+    ) {
         self.text = text
         self.color = color
     }
@@ -64,7 +67,7 @@ public struct AppTag: View {
             .background(AppStyle.SharedStyles.typeTag(color: color))
             .foregroundColor(.white)
             .clipShape(Capsule())
-            .accessibilityIdentifier("\(text)_AppTag")
+            .a11yID(text, view: .appTag, component: .container)
     }
 }
 

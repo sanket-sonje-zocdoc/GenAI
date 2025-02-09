@@ -60,7 +60,10 @@ struct PokemonSelectionView: View {
             }
 
             if let pokemon = pokemon {
-                AppAvatar(url: URL(string: pokemon.sprites.frontDefault))
+                AppAvatar(
+                    url: URL(string: pokemon.sprites.frontDefault),
+                    accessibilityID: pokemon.name
+                )
                     .id(pokemon.name)
 
                 HStack {

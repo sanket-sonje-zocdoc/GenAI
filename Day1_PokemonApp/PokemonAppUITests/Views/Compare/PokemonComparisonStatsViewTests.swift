@@ -16,7 +16,7 @@ final class PokemonComparisonStatsViewTests: PokemonBaseViewTests {
 
         // Navigate to Compare Pokemon screen and select both Pokemon
         // TODO: Update this test when we are implementing the Tab View
-        app.buttons["Compare Pokemon"].tap()
+        app.buttons["ComparePokemon_AppLabel_Text"].tap()
         selectDistinctPokemons()
     }
 
@@ -24,7 +24,7 @@ final class PokemonComparisonStatsViewTests: PokemonBaseViewTests {
 
     func testStatsComparisonViewExists() throws {
         // Verify the stats comparison title exists
-        let statsComparisonTitle = app.staticTexts["Stats Comparison"]
+        let statsComparisonTitle = app.staticTexts["StatsComparison_AppText_Text"]
         XCTAssertTrue(statsComparisonTitle.exists, "Stats Comparison title should exist")
     }
 
@@ -33,7 +33,7 @@ final class PokemonComparisonStatsViewTests: PokemonBaseViewTests {
         let expectedStats = ["Hp", "Attack", "Defense", "Special-Attack", "Special-Defense", "Speed"]
 
         for statName in expectedStats {
-            let statText = app.staticTexts[statName]
+            let statText = app.staticTexts["\(statName)_AppText_Text"]
             XCTAssertTrue(statText.exists, "\(statName) stat should be displayed")
         }
     }
@@ -50,7 +50,7 @@ final class PokemonComparisonStatsViewTests: PokemonBaseViewTests {
 
         // Verify each stat value exists
         for value in bulbasaurStats + charmanderStats {
-            let statValue = app.staticTexts[String(value)]
+            let statValue = app.staticTexts["\(value)_AppText_Text"]
             XCTAssertTrue(statValue.exists, "Stat value \(value) should be displayed")
         }
     }
@@ -58,21 +58,20 @@ final class PokemonComparisonStatsViewTests: PokemonBaseViewTests {
     func testStatComparisonVisibility() throws {
         // Verify that the comparison view becomes visible only after selecting both Pokemon
         selectPokemon(
-            initialName: "Select First Pokemon, Bulbasaur",
-            updatedName: "Select Pokemon"
+            initialID: "Bulbasaur_AppText_Text",
+            updatedID: "SelectPokemon_AppText_Text"
         )
 
         // Stats comparison should not be visible with only one Pokemon selected
-        XCTAssertFalse(app.staticTexts["Stats Comparison"].exists)
+        XCTAssertFalse(app.staticTexts["StatsComparison_AppText_Text"].exists)
 
         // Complete the selection
         // Select first Pokemon (Bulbasaur)
-        selectPokemon(
-            initialName: "Select First Pokemon, Select Pokemon",
-            updatedName: "Bulbasaur"
+        defaultSelectionsOfPokemon(
+            updatedID: "Bulbasaur"
         )
 
         // Stats comparison should now be visible
-        XCTAssertTrue(app.staticTexts["Stats Comparison"].exists)
+        XCTAssertTrue(app.staticTexts["StatsComparison_AppText_Text"].exists)
     }
 }

@@ -16,7 +16,7 @@ final class AppProgressBarTests: PokemonUIUnitTestCase {
     // MARK: - Tests
     
     func testDefaultInitialization() {
-        let progressBar = AppProgressBar(value: 50, maxValue: 100, a11yID: "Test")
+        let progressBar = AppProgressBar(value: 50, maxValue: 100, accessibilityID: "Test")
 
         // Test default values
         let mirror = Mirror(reflecting: progressBar)
@@ -34,7 +34,7 @@ final class AppProgressBarTests: PokemonUIUnitTestCase {
             maxValue: 100,
             height: 12,
             cornerRadius: 6,
-            a11yID: "Test"
+            accessibilityID: "Test"
         )
 
         // Test custom values
@@ -49,11 +49,11 @@ final class AppProgressBarTests: PokemonUIUnitTestCase {
 
     func testValueClamping() {
         // Test value below 0
-        let belowZero = AppProgressBar(value: -10, maxValue: 100, a11yID: "Test")
+        let belowZero = AppProgressBar(value: -10, maxValue: 100, accessibilityID: "Test")
         XCTAssertEqual(Mirror(reflecting: belowZero).children.first { $0.label == "value" }?.value as? Double, 0)
 
         // Test value above maxValue
-        let aboveMax = AppProgressBar(value: 150, maxValue: 100, a11yID: "Test")
+        let aboveMax = AppProgressBar(value: 150, maxValue: 100, accessibilityID: "Test")
         XCTAssertEqual(Mirror(reflecting: aboveMax).children.first { $0.label == "value" }?.value as? Double, 100)
     }
 
@@ -68,7 +68,7 @@ final class AppProgressBarTests: PokemonUIUnitTestCase {
         ]
 
         for testCase in testCases {
-            let progressBar = AppProgressBar(value: testCase.value, maxValue: testCase.maxValue, a11yID: "Test")
+            let progressBar = AppProgressBar(value: testCase.value, maxValue: testCase.maxValue, accessibilityID: "Test")
             let foregroundColor = progressBar.foregroundColor
             XCTAssertEqual(foregroundColor, testCase.expectedColor, "Color mismatch for value: \(testCase.value)")
         }

@@ -19,8 +19,8 @@ enum SearchMode {
     /// The placeholder text to display in the search field
     var placeholder: String {
         switch self {
-            case .name: return "Search by name"
-            case .type: return "Search by type"
+            case .name: return "Search By Name"
+            case .type: return "Search By Type"
         }
     }
 
