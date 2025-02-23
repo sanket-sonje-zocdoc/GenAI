@@ -1,0 +1,257 @@
+---
+description: Persona to use while adding tests in swift code
+globs: 
+---
+ # Swift Testing Guidelines for Pokemon App
+
+## Test Types
+
+### Unit Tests (`PokemonAppTests`)
+Unit tests focus on testing individual components in isolation using XCTest framework.
+
+1. Basic Setup:
+   ```
+   import XCTest
+   @testable import PokemonApp
+   
+   class MyTests: XCTestCase {
+       // Properties for mocks/dependencies
+       private var mockViewModel: MyViewModel!
+       private var mockService: MockService!
+   
+       override func setUp() {
+           super.setUp()
+           // Initialize mocks and dependencies
+           mockService = MockService()
+           mockViewModel = MyViewModel(service: mockService)
+       }
+   
+       override func tearDown() {
+           // Clean up resources
+           mockViewModel = nil
+           mockService = nil
+           super.tearDown()
+       }
+   }
+   ```
+
+2. Test Structure:
+   - Use descriptive test names that explain the scenario
+   - Follow the "Given-When-Then" pattern in comments
+   - Group related tests using `// MARK: -` comments
+   - Test both success and failure scenarios
+   ```
+   // MARK: - Fetch Data Tests
+   
+   func test_fetchData_success() async {
+       // Given
+       let mockData = [MockItem(id: 1, name: "Test")]
+       mockService.setMockResponse(mockData)
+   
+       // When
+       await viewModel.fetchData()
+   
+       // Then
+       XCTAssertEqual(viewModel.items.count, 1)
+       XCTAssertNil(viewModel.error)
+   }
+   ```
+
+3. Assertions:
+   ```
+   // Basic assertions
+   XCTAssertEqual(actual, expected)
+   XCTAssertTrue(condition)
+   XCTAssertFalse(condition)
+   XCTAssertNil(optional)
+   XCTAssertNotNil(optional)
+   
+   // Array assertions
+   XCTAssertEqual(array.count, expectedCount)
+   XCTAssertTrue(array.isEmpty)
+   
+   // Error handling
+   XCTAssertThrowsError(try function())
+   ```
+
+### UI Tests (`PokemonAppUITests`)
+UI tests verify the app's user interface and interactions using XCUITest framework.
+
+1. Base Test Setup (If not present):
+   ```
+   import XCTest
+   
+   class PokemonBaseViewTests: XCTestCase {
+       // Shared app instance
+       var app: XCUIApplication!
+   
+       override func setUp() {
+           super.setUp()
+           app = XCUIApplication()
+           app.launch()
+       }
+   
+       override func tearDown() {
+           app = nil
+           super.tearDown()
+       }
+   }
+   ```
+
+2. Feature-Specific Test Classes:
+   Extend the base test class for specific features:
+   ```
+   final class PokemonDetailViewTests: PokemonBaseViewTests {
+       override func setUp() {
+           super.setUp()
+           // Navigate to the specific view being tested
+           app.collectionViews.cells.firstMatch.tap()
+       }
+   
+       // Feature-specific tests...
+   }
+   ```
+
+3. UI Element Access and Verification:
+   ```
+   // Navigation elements
+   XCTAssertTrue(app.navigationBars["Pokemon Details"].exists)
+   
+   // Images
+   XCTAssertTrue(app.images.firstMatch.exists)
+   
+   // Text elements with identifiers
+   XCTAssertTrue(app.staticTexts["BaseStats_AppText_Text"].exists)
+   
+   // Custom UI components
+   let progressBar = app.otherElements["Speed_AppProgressBar_ProgressView"]
+   XCTAssertTrue(progressBar.exists)
+   
+   // Collection views and cells
+   app.collectionViews.cells.firstMatch.tap()
+   ```
+
+4. Test Organization:
+   ```
+   final class FeatureViewTests: PokemonBaseViewTests {
+       // MARK: - Test Lifecycle
+       
+       override func setUp() {
+           super.setUp()
+           // Feature-specific setup
+       }
+       
+       // MARK: - Tests
+       
+       func testViewElements() {
+           // Test UI element existence and properties
+       }
+       
+       func testUserInteractions() {
+           // Test user interaction flows
+       }
+   }
+   ``` 
+
+## Best Practices
+
+1. Test Organization:
+   - Group tests by feature/component
+   - Use clear file naming: `{Feature}Tests.swift`
+   - Organize test methods using MARK comments
+   - Keep test files focused and manageable
+
+2. Mocking:
+   - Create mock objects for external dependencies
+   - Place mocks in a dedicated `Mocks` directory
+   - Implement mock responses for both success and failure cases
+   ```
+   class MockPokemonService: PokemonServiceProtocol {
+       var mockResponse: Any?
+       var mockError: Error?
+   
+       func setMockResponse<T>(_ response: T, for type: T.Type) {
+           mockResponse = response
+       }
+   }
+   ```
+
+3. Async Testing:
+   - Use `@MainActor` for view model tests
+   - Handle async operations properly:
+   ```
+   func test_asyncOperation() async throws {
+       // Given
+       mockService.setMockResponse(expectedData)
+   
+       // When
+       try await viewModel.fetchData()
+   
+       // Then
+       XCTAssertEqual(viewModel.data, expectedData)
+   }
+   ```
+
+4. Error Testing:
+   - Test both success and error paths
+   - Verify error states and messages
+   - Use appropriate error types:
+   ```
+   func test_errorHandling() async {
+       // Given
+       mockService.mockError = NetworkError.invalidStatusCode(404)
+   
+       // When
+       await viewModel.fetchData()
+   
+       // Then
+       XCTAssertNotNil(viewModel.error)
+       XCTAssertTrue(viewModel.items.isEmpty)
+   }
+   ```
+
+5. UI Test Best Practices:
+   - Create base test classes for common functionality
+   - Use meaningful element identifiers
+   - Handle asynchronous UI updates
+   - Test user flows rather than individual elements
+   - Document complex UI test scenarios
+
+## Test Data Management
+
+1. Mock Data:
+   - Place mock data in a dedicated `MockData` directory
+   - Use realistic test data
+   - Create helper functions for generating test data:
+   ```
+   func createMockPokemon(
+       name: String,
+       types: [String]
+   ) -> Pokemon {
+       // Return mock Pokemon instance
+   }
+   ```
+
+2. Test Constants:
+   - Define test constants in a separate file
+   - Use meaningful names for test data
+   - Share test data across related tests when appropriate
+
+## Documentation
+
+1. Test Documentation:
+   - Document test class purpose
+   - Explain complex test scenarios
+   - Document helper methods and utilities
+   ```
+   /// Test suite for Pokemon view model functionality.
+   /// Covers Pokemon list fetching, filtering, and sorting operations.
+   class PokemonViewModelTests: XCTestCase {
+       // Tests...
+   }
+   ```
+
+2. Test Coverage:
+   - Aim for comprehensive test coverage
+   - Focus on critical paths and edge cases
+   - Document untested scenarios or limitations

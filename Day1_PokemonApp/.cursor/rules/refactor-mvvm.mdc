@@ -1,0 +1,10 @@
+---
+description: Prefer MVVM architecture when refactoring
+globs: 
+---
+
+When refactoring code, always prefer an MVVM architecture.
+
+Do not assume helper functions are already defined.
+
+Ensure that code you write is well tested and considers edge cases.

@@ -1,0 +1,11 @@
+---
+description: Adding documentation to swift code
+globs: 
+---
+Enhance the readability and maintainability of the following Swift code by adding clear, concise, and professional comments and docstrings. Ensure that:
+
+- Each function includes a Swift-style docstring explaining its purpose, parameters, and return value (if any).
+- Complex or non-trivial logic is explained with inline comments.
+- Class and struct definitions include a high-level overview of their role and usage.
+- The comments follow Apple’s Swift documentation style guidelines and best practices.
+- The documentation should not be chatty. Do not over document the code.
