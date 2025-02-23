@@ -49,13 +49,13 @@ public struct AppIcon: View {
     /// Creates a new icon with the specified configuration
     /// - Parameters:
     ///   - systemName: The name of the SF Symbol to display
-    ///   - color: The color of the icon. Defaults to AppStyle.Colors.textSecondary
+    ///   - color: The color of the icon. Defaults to AppStyle.TextColors.secondary
     ///   - size: The size of the icon in points. Defaults to AppStyle.Frame.normal.height
     ///   - fontWeight: The font weight of the icon. Defaults to .medium
     ///   - accessibilityID: The accessibility identifier prefix for this avatar.
     public init(
         systemName: String,
-        color: Color = AppStyle.Colors.secondaryText,
+        color: Color = AppStyle.TextColors.secondary,
         size: CGFloat = AppStyle.Frame.normal.height,
         fontWeight: Font.Weight = .medium,
         accessibilityID: String

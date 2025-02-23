@@ -61,7 +61,7 @@ public struct AppCard<Content: View>: View {
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(
-                        AppStyle.Colors.shadow,
+                        AppStyle.ShadowColors.primary,
                         lineWidth: showBorder
                             ? AppStyle.LineWidth.xxSmall
                             : AppStyle.LineWidth.zero

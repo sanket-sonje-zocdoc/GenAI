@@ -96,7 +96,7 @@ struct ContentView: View {
                             systemImage: "arrow.left.arrow.right"
                         )
                             .padding()
-                            .background(AppStyle.Colors.accentBackground)
+                            .background(AppStyle.BackgroundColors.accent)
                             .cornerRadius(AppStyle.Radius.corner)
                     }
                     .padding(.bottom)

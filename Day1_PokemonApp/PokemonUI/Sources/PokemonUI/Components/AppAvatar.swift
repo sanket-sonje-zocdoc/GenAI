@@ -67,11 +67,11 @@ public struct AppAvatar: View {
     public let lineWidth: CGFloat
 
     /// The color of the border stroke around the avatar.
-    /// Defaults to `AppStyle.Colors.shadowColor`.
+    /// Defaults to `AppStyle.ShadowColors.primary`.
     public let strokeColor: Color
 
     /// The background color shown behind the image or loading indicator.
-    /// Defaults to `AppStyle.Colors.surfaceBackground`.
+    /// Defaults to `AppStyle.BackgroundColors.surface`.
     public let backgroundColor: Color
 
     /// The accessibility identifier prefix for this avatar
@@ -97,18 +97,18 @@ public struct AppAvatar: View {
     ///     - Defaults to `AppStyle.LineWidth.xxxSmall` point.
     ///   - strokeColor:
     ///     - The color of the border stroke around the avatar.
-    ///     - Defaults to `AppStyle.Colors.shadowColor`.
+    ///     - Defaults to `AppStyle.ShadowColors.primary`.
     ///   - backgroundColor:
     ///     - The background color shown behind the image or loading indicator.
-    ///     - Defaults to `AppStyle.Colors.surfaceBackground`.
+    ///     - Defaults to `AppStyle.BackgroundColors.surface`.
     ///   - accessibilityID:
     ///     - The accessibility identifier prefix for this avatar.
     public init(
         url: URL? = nil,
         size: CGFloat = AppStyle.Dimensions.avatarSize,
         lineWidth: CGFloat = AppStyle.LineWidth.xxxSmall,
-        strokeColor: Color = AppStyle.Colors.shadow,
-        backgroundColor: Color = AppStyle.Colors.surfaceBackground,
+        strokeColor: Color = AppStyle.ShadowColors.primary,
+        backgroundColor: Color = AppStyle.BackgroundColors.surface,
         accessibilityID: String
     ) {
         self.size = size
@@ -170,8 +170,8 @@ public struct AppAvatar: View {
         )
         AppAvatar(size: 100, accessibilityID: "Bulbasaur")
         AppAvatar(lineWidth: 5, accessibilityID: "Bulbasaur")
-        AppAvatar(strokeColor: AppStyle.Colors.primaryBackground, accessibilityID: "Bulbasaur")
-        AppAvatar(backgroundColor: AppStyle.Colors.primaryBackground, accessibilityID: "Bulbasaur")
+        AppAvatar(strokeColor: AppStyle.BackgroundColors.primary, accessibilityID: "Bulbasaur")
+        AppAvatar(backgroundColor: AppStyle.BackgroundColors.primary, accessibilityID: "Bulbasaur")
     }
     .padding()
 }

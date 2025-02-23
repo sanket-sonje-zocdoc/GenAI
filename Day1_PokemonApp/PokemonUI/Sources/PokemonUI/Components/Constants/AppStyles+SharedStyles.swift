@@ -19,7 +19,7 @@ extension AppStyle {
             RoundedRectangle(cornerRadius: Radius.corner)
                 .fill(AppTheme.Colors.background)
                 .shadow(
-                    color: Colors.shadow,
+                    color: AppStyle.ShadowColors.primary,
                     radius: Radius.shadow,
                     x: 0,
                     y: 1

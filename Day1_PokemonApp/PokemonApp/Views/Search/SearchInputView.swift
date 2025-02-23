@@ -83,7 +83,7 @@ struct SearchInputView: View {
                                     "\(sortCriteria.count)",
                                     style: .customRegular(
                                         fontSize: AppStyle.FontSize.normal,
-                                        color: AppStyle.Colors.primaryBackground
+                                        color: AppStyle.BackgroundColors.primary
                                     )
                                 )
                                 .padding(4)

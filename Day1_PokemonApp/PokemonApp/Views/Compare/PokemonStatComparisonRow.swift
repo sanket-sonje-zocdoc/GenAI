@@ -66,7 +66,7 @@ struct PokemonStatComparisonRow: View {
 
             AppText(statName, style: .body)
                 .padding(.horizontal, AppStyle.Padding.xxSmall)
-                .background(AppStyle.Colors.systemBackground)
+                .background(AppStyle.BackgroundColors.system)
                 .frame(
                     minWidth: AppStyle.Frame.large.width,
                     maxWidth: AppStyle.Frame.xxLarge.width,

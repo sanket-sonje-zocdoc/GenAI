@@ -64,7 +64,7 @@ struct SearchSortingRowView: View {
             }
         }
         .padding(AppStyle.Padding.xSmall)
-        .background(AppStyle.Colors.secondaryBackground)
+        .background(AppStyle.BackgroundColors.secondary)
         .cornerRadius(AppStyle.Radius.corner)
     }
 }

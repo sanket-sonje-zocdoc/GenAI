@@ -21,8 +21,8 @@ final class AppAvatarTests: PokemonUIUnitTestCase {
         XCTAssertNil(avatar.url)
         XCTAssertEqual(avatar.size, AppStyle.Dimensions.avatarSize)
         XCTAssertEqual(avatar.lineWidth, 1)
-        XCTAssertEqual(avatar.strokeColor, AppStyle.Colors.shadow)
-        XCTAssertEqual(avatar.backgroundColor, AppStyle.Colors.surfaceBackground)
+        XCTAssertEqual(avatar.strokeColor, AppStyle.ShadowColors.primary)
+        XCTAssertEqual(avatar.backgroundColor, AppStyle.BackgroundColors.surface)
     }
 
     func testCustomInitialization() {

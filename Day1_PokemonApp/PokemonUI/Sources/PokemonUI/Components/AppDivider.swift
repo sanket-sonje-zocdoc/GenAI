@@ -22,7 +22,7 @@ public struct AppDivider: View {
     ///   - color: The color of the divider (defaults to gray)
     ///   - height: The height/thickness of the divider (defaults to 1 point)
     public init(
-        color: Color = AppStyle.Colors.shadow,
+        color: Color = AppStyle.ShadowColors.primary,
         height: CGFloat = AppStyle.Frame.xxxSmall.height
     ) {
         self.color = color

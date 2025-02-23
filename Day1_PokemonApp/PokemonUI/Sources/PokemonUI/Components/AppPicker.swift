@@ -69,7 +69,7 @@ public struct AppPicker<SelectionValue: Hashable, Content: View>: View {
         .pickerStyle(.menu)
         .font(AppStyle.Text.caption.font)
         .padding(AppStyle.Padding.xSmall)
-        .background(AppStyle.Colors.systemBackground)
+        .background(AppStyle.BackgroundColors.system)
         .cornerRadius(AppStyle.Radius.corner)
         .shadow(radius: AppStyle.Radius.shadow)
     }

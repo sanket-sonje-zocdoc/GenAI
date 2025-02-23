@@ -20,7 +20,7 @@ final class AppIconTests: PokemonUIUnitTestCase {
         let icon = AppIcon(systemName: systemName, accessibilityID: "Test")
 
         XCTAssertEqual(icon.systemName, systemName)
-        XCTAssertEqual(icon.color, AppStyle.Colors.secondaryText)
+        XCTAssertEqual(icon.color, AppStyle.TextColors.secondary)
         XCTAssertEqual(icon.size, 16)
         XCTAssertEqual(icon.fontWeight, .medium)
     }

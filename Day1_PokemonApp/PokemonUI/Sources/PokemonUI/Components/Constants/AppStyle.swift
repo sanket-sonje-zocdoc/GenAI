@@ -14,8 +14,8 @@ import SwiftUI
 /// Usage:
 /// ```
 /// Text("Hello")
-///     .foregroundColor(AppStyle.Colors.primaryText)
-///     .background(AppStyle.Colors.surfaceBackground)
+///     .foregroundColor(AppStyle.TextColors.primary)
+///     .background(AppStyle.BackgroundColors.surface)
 /// ```
 ///
 /// The design system is organized into different categories:

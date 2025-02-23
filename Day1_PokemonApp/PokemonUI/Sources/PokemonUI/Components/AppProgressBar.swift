@@ -83,7 +83,7 @@ public struct AppProgressBar: View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .fill(AppStyle.Colors.shadow)
+                    .fill(AppStyle.ShadowColors.primary)
 
                 Rectangle()
                     .fill(foregroundColor)
