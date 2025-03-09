@@ -64,7 +64,7 @@ public struct AppLabel: View {
                 .a11yID(title, view: .appLabel, component: .text)
         } icon: {
             AppIcon(
-                systemName: image,
+                imageName: image,
                 color: style.color,
                 accessibilityID: title
             )

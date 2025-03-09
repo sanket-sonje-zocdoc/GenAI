@@ -55,7 +55,7 @@ struct PokemonRowView: View {
                     Spacer()
 
                     AppIcon(
-                        systemName: "chevron.right",
+                        imageName: "chevron.right",
                         accessibilityID: "Right Icon"
                     )
                         .padding(.trailing, AppStyle.Padding.xSmall)

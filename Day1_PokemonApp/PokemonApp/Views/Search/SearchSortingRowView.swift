@@ -40,7 +40,7 @@ struct SearchSortingRowView: View {
         HStack {
             if showReorderHandle {
                 AppIcon(
-                    systemName: "line.3.horizontal",
+                    imageName: "line.3.horizontal",
                     accessibilityID: "Horizontal Line"
                 )
             }
@@ -51,14 +51,14 @@ struct SearchSortingRowView: View {
 
             Button(action: onDirectionToggle) {
                 AppIcon(
-                    systemName: criteria.ascending ? "arrow.up" : "arrow.down",
+                    imageName: criteria.ascending ? "arrow.up" : "arrow.down",
                     accessibilityID: criteria.ascending ? "Arrow Up" : "Arrow Down"
                 )
             }
 
             Button(action: onRemove) {
                 AppIcon(
-                    systemName: "xmark.circle.fill",
+                    imageName: "xmark.circle.fill",
                     accessibilityID: "Close"
                 )
             }

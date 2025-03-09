@@ -37,7 +37,7 @@ struct SearchInputView: View {
         AppCard {
             HStack {
                 // Search Icon
-                AppIcon(systemName: "magnifyingglass", accessibilityID: "Magnifying Glass")
+                AppIcon(imageName: "magnifyingglass", accessibilityID: "Magnifying Glass")
                     .padding(AppStyle.Padding.xxSmall)
 
                 // Search Field
@@ -62,7 +62,7 @@ struct SearchInputView: View {
                     }
                 } label: {
                     AppIcon(
-                        systemName: "line.3.horizontal.decrease.circle",
+                        imageName: "line.3.horizontal.decrease.circle",
                         accessibilityID: "Sorting Options By Name Or Type"
                     )
                         .padding(.trailing, AppStyle.Padding.xxSmall)
@@ -73,7 +73,7 @@ struct SearchInputView: View {
                     showSortControls.toggle()
                 } label: {
                     AppIcon(
-                        systemName: "arrow.up.arrow.down",
+                        imageName: "arrow.up.arrow.down",
                         accessibilityID: "Sorting Options"
                     )
                         .padding(.trailing, AppStyle.Padding.xxSmall)
@@ -111,7 +111,7 @@ struct SearchInputView: View {
                         }
                     ) {
                         AppIcon(
-                            systemName: "xmark.circle.fill",
+                            imageName: "xmark.circle.fill",
                             accessibilityID: "Close"
                         )
                     }

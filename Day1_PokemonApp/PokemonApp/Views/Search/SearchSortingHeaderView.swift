@@ -53,7 +53,7 @@ struct SearchSortingHeaderView: View {
                 }
             } label: {
                 AppIcon(
-                    systemName: "plus.circle",
+                    imageName: "plus.circle",
                     size: AppStyle.FontSize.large,
                     accessibilityID: "Add Sorting Option"
                 )

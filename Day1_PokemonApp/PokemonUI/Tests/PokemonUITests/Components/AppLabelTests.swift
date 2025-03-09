@@ -65,6 +65,6 @@ final class AppLabelTests: PokemonUIUnitTestCase {
 
         // Verify the icon matches
         let appIcon = try XCTUnwrap(findView(in: mirror) as AppIcon?)
-        XCTAssertEqual(appIcon.systemName, image)
+        XCTAssertEqual(appIcon.imageName, image)
     }
 }
