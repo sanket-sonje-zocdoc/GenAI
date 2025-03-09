@@ -36,40 +36,39 @@ struct PokemonCompareView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: AppStyle.StackSpacing.normal) {
-            AppText("Compare Pokemon", style: .title)
+        AppCard(padding: AppStyle.Padding.normal) {
+            VStack(spacing: AppStyle.StackSpacing.normal) {
+                AppText("Compare Pokemon", style: .title)
 
-            HStack(spacing: AppStyle.StackSpacing.normal) {
-                PokemonSelectionView(
-                    pokemon: $selectedPokemon1,
-                    allPokemon: viewModel.pokemons,
-                    title: "First Pokemon"
-                )
-
-                PokemonSelectionView(
-                    pokemon: $selectedPokemon2,
-                    allPokemon: viewModel.pokemons,
-                    title: "Second Pokemon"
-                )
-            }
-            .padding()
-
-            if let pokemon1 = selectedPokemon1,
-               let pokemon2 = selectedPokemon2 {
-                PokemonComparisonStatsView(pokemon1: pokemon1, pokemon2: pokemon2)
-            } else {
-                AppText(
-                    "Select two Pokemon to compare their stats",
-                    style: .customRegular(
-                        fontSize: AppStyle.FontSize.normal,
-                        color: .secondary
+                HStack(spacing: AppStyle.StackSpacing.normal) {
+                    PokemonSelectionView(
+                        pokemon: $selectedPokemon1,
+                        allPokemon: viewModel.pokemons,
+                        title: "First Pokemon"
                     )
-                )
-                .foregroundColor(.gray)
-                .padding()
-            }
 
-            Spacer()
+                    PokemonSelectionView(
+                        pokemon: $selectedPokemon2,
+                        allPokemon: viewModel.pokemons,
+                        title: "Second Pokemon"
+                    )
+                }
+
+                if let pokemon1 = selectedPokemon1,
+                   let pokemon2 = selectedPokemon2 {
+                    PokemonComparisonStatsView(pokemon1: pokemon1, pokemon2: pokemon2)
+                } else {
+                    AppText(
+                        "Select two Pokemon to compare their stats",
+                        style: .customRegular(
+                            fontSize: AppStyle.FontSize.normal,
+                            color: .secondary
+                        )
+                    )
+                    .foregroundColor(.gray)
+                    .padding()
+                }
+            }
         }
     }
 }

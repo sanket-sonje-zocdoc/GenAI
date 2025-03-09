@@ -59,45 +59,48 @@ struct PokemonStatComparisonRow: View {
     // MARK: - Body
 
     var body: some View {
-        HStack(spacing: AppStyle.StackSpacing.normal) {
-            AppText("\(value1)", style: .body)
-                .foregroundColor(isFirstPokemonStronger ? .green : .primary)
-                .frame(width: AppStyle.Frame.medium.width, alignment: .trailing)
+        AppCard {
+            HStack(spacing: AppStyle.StackSpacing.normal) {
+                AppText("\(value1)", style: .body)
+                    .foregroundColor(isFirstPokemonStronger ? .green : .primary)
+                    .frame(width: AppStyle.Frame.medium.width, alignment: .trailing)
 
-            AppText(statName, style: .body)
-                .padding(.horizontal, AppStyle.Padding.xxSmall)
-                .background(AppStyle.BackgroundColors.system)
-                .frame(
-                    minWidth: AppStyle.Frame.large.width,
-                    maxWidth: AppStyle.Frame.xxLarge.width,
-                    alignment: .leading
-                )
+                AppText(statName, style: .body)
+                    .padding(.horizontal, AppStyle.Padding.xxSmall)
+                    .background(AppStyle.BackgroundColors.system)
+                    .frame(
+                        minWidth: AppStyle.Frame.large.width,
+                        maxWidth: AppStyle.Frame.xxLarge.width,
+                        alignment: .leading
+                    )
 
-            ZStack(alignment: .leading) {
-                AppProgressBar(
-                    value: Double(maxValue),
-                    foregroundColor: Color.getColor(
-                        for: isFirstPokemonStronger ? type1 : type2
-                    ),
-                    accessibilityID: "\(statName)"
-                )
-                .opacity(0.3)
+                ZStack(alignment: .leading) {
+                    AppProgressBar(
+                        value: Double(maxValue),
+                        foregroundColor: Color.getColor(
+                            for: isFirstPokemonStronger ? type1 : type2
+                        ),
+                        accessibilityID: "\(statName)"
+                    )
+                    .opacity(0.3)
 
-                AppProgressBar(
-                    value: Double(lowerValue),
-                    foregroundColor: Color.getColor(
-                        for: isFirstPokemonStronger ? type2 : type1
-                    ),
-                    accessibilityID: "\(statName)"
-                )
+                    AppProgressBar(
+                        value: Double(lowerValue),
+                        foregroundColor: Color.getColor(
+                            for: isFirstPokemonStronger ? type2 : type1
+                        ),
+                        accessibilityID: "\(statName)"
+                    )
+                }
+                .frame(height: AppStyle.Frame.xSmall.height)
+
+                AppText("\(value2)", style: .body)
+                    .foregroundColor(isFirstPokemonStronger ? .primary : .green)
+                    .frame(width: AppStyle.Frame.medium.width, alignment: .leading)
             }
-            .frame(height: AppStyle.Frame.xSmall.height)
+            .padding(.horizontal)
 
-            AppText("\(value2)", style: .body)
-                .foregroundColor(isFirstPokemonStronger ? .primary : .green)
-                .frame(width: AppStyle.Frame.medium.width, alignment: .leading)
         }
-        .padding(.horizontal)
     }
 }
 

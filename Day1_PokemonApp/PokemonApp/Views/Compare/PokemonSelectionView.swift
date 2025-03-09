@@ -45,36 +45,38 @@ struct PokemonSelectionView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack {
-            AppText(title, style: .headline)
-
-            AppPicker(
-                "Select \(title)",
-                selection: $pokemon
-            ) {
-                AppText("Select Pokemon", style: .title).tag(nil as Pokemon?)
-
-                ForEach(allPokemon, id: \.name) { pokemon in
-                    AppText(pokemon.name.capitalized, style: .caption).tag(pokemon as Pokemon?)
-                }
-            }
-
-            if let pokemon = pokemon {
-                AppAvatar(
-                    url: URL(string: pokemon.sprites.frontDefault),
-                    accessibilityID: pokemon.name
-                )
-                    .id(pokemon.name)
-
-                HStack {
-                    ForEach(pokemon.types, id: \.type.name) { pokemonTypeEntry in
-                        AppTag(
-                            text: pokemonTypeEntry.type.name.capitalized,
-                            color: Color.getColor(for: pokemonTypeEntry.type.name)
-                        )
+        AppCard {
+            VStack {
+                AppText(title, style: .headline)
+                
+                AppPicker(
+                    "Select \(title)",
+                    selection: $pokemon
+                ) {
+                    AppText("Select Pokemon", style: .title).tag(nil as Pokemon?)
+                    
+                    ForEach(allPokemon, id: \.name) { pokemon in
+                        AppText(pokemon.name.capitalized, style: .caption).tag(pokemon as Pokemon?)
                     }
                 }
-                .padding(.top, AppStyle.Padding.xxSmall)
+                
+                if let pokemon = pokemon {
+                    AppAvatar(
+                        url: URL(string: pokemon.sprites.frontDefault),
+                        accessibilityID: pokemon.name
+                    )
+                    .id(pokemon.name)
+                    
+                    HStack {
+                        ForEach(pokemon.types, id: \.type.name) { pokemonTypeEntry in
+                            AppTag(
+                                text: pokemonTypeEntry.type.name.capitalized,
+                                color: Color.getColor(for: pokemonTypeEntry.type.name)
+                            )
+                        }
+                    }
+                    .padding(.top, AppStyle.Padding.xxSmall)
+                }
             }
         }
     }

@@ -36,21 +36,22 @@ struct PokemonComparisonStatsView: View {
     // MARK: - Body
 
     var body: some View {
-        VStack(spacing: AppStyle.StackSpacing.normal) {
-            AppText("Stats Comparison", style: .headline)
-                .padding(.bottom)
+        AppCard {
+            VStack(spacing: AppStyle.StackSpacing.normal) {
+                AppText("Stats Comparison", style: .headline)
+                    .padding(.bottom)
 
-            ForEach(Array(zip(pokemon1.stats, pokemon2.stats)), id: \.0.stat.name) { stat1, stat2 in
-                PokemonStatComparisonRow(
-                    statName: stat1.stat.name.capitalized,
-                    value1: stat1.baseStat,
-                    value2: stat2.baseStat,
-                    type1: pokemon1.types.first?.type.name ?? "",
-                    type2: pokemon2.types.first?.type.name ?? ""
-                )
+                ForEach(Array(zip(pokemon1.stats, pokemon2.stats)), id: \.0.stat.name) { stat1, stat2 in
+                    PokemonStatComparisonRow(
+                        statName: stat1.stat.name.capitalized,
+                        value1: stat1.baseStat,
+                        value2: stat2.baseStat,
+                        type1: pokemon1.types.first?.type.name ?? "",
+                        type2: pokemon2.types.first?.type.name ?? ""
+                    )
+                }
             }
         }
-        .padding()
     }
 }
 
