@@ -41,7 +41,7 @@ final class ImageLoaderTests: PokemonUIUnitTestCase {
 
     func testImageCaching() async throws {
         // Create a test image
-        let testImage = try XCTUnwrap(UIImage(imageName: "star.fill"))
+        let testImage = try XCTUnwrap(UIImage(systemName: "star.fill"))
 
         // Cache the image
         imageLoader.imageCache.setObject(testImage, forKey: mockURL.absoluteString as AnyObject)
