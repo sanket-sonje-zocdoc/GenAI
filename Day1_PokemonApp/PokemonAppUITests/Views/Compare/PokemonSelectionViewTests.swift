@@ -14,9 +14,8 @@ final class PokemonSelectionViewTests: PokemonBaseViewTests {
     override func setUp() {
         super.setUp()
 
-        // Navigate to Compare Pokemon screen and select both Pokemon
-        // TODO: Update this test when we are implementing the Tab View
-        app.buttons["ComparePokemon_AppLabel_Text"].tap()
+        // Navigate to Compare tab
+        app.tabBars.buttons["Compare"].tap()
     }
 
     // MARK: - Tests
@@ -93,7 +92,10 @@ final class PokemonSelectionViewTests: PokemonBaseViewTests {
 
     func testPokemonSpriteVisibility() throws {
         // Initially no sprites should be visible
-        XCTAssertEqual(app.images.count, 0, "No sprites should be visible initially")
+        // Default two images -
+        // 1. Pokemon Tab Image
+        // 2. Compare Tab Image
+        XCTAssertEqual(app.images.count, 2, "No sprites should be visible initially")
 
         // Select a Pokemon
         defaultSelectionsOfPokemon(
@@ -101,6 +103,10 @@ final class PokemonSelectionViewTests: PokemonBaseViewTests {
         )
 
         // Verify sprite appears
-        XCTAssertEqual(app.images.count, 1, "Pokemon sprite should be visible after selection")
+        // After pokemon selection, total images are -
+        // 1. Pokemon Tab Image
+        // 2. Compare Tab Image
+        // 3. Selected Pokemon Image
+        XCTAssertEqual(app.images.count, 3, "Pokemon sprite should be visible after selection")
     }
 }

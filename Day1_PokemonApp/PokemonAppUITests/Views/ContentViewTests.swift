@@ -17,9 +17,6 @@ final class ContentViewTests: PokemonBaseViewTests {
 
         // Verify search bar exists
         XCTAssertTrue(app.textFields["SearchByName_TextField"].exists, "Search field should exist")
-
-        // Verify Compare Pokemon button exists
-        XCTAssertTrue(app.buttons["Compare Pokemon"].exists)
     }
 
     func testPokemonListLoading() throws {

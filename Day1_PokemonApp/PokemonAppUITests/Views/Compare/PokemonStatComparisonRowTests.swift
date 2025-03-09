@@ -14,9 +14,8 @@ final class PokemonStatComparisonRowTests: PokemonBaseViewTests {
     override func setUp() {
         super.setUp()
 
-        // Navigate to Compare Pokemon screen and select both Pokemon
-        // TODO: Update this test when we are implementing the Tab View
-        app.buttons["ComparePokemon_AppLabel_Text"].tap()
+        // Navigate to Compare tab
+        app.tabBars.buttons["Compare"].tap()
     }
 
     // MARK: - Tests

@@ -14,27 +14,25 @@ final class PokemonCompareViewTests: PokemonBaseViewTests {
     override func setUp() {
         super.setUp()
 
-        // Navigate to Compare Pokemon screen and select both Pokemon
-        // TODO: Update this test when we are implementing the Tab View
-        app.buttons["ComparePokemon_AppLabel_Text"].tap()
+        // Navigate to Compare tab
+        app.tabBars.buttons["Compare"].tap()
     }
 
     // MARK: - Tests
 
     func testInitialState() throws {
-        // Wait for the view to be fully loaded
-        let compareText = app.staticTexts["ComparePokemon_AppText_Text"]
-        XCTAssertTrue(compareText.waitForExistence(timeout: 5), "Compare Pokemon text should exist")
+        // Verify navigation title
+        XCTAssertTrue(app.navigationBars["Compare Pokemon"].exists)
 
-        // Check for first Pokemon selector (it's a button)
+        // Verify first Pokemon selector exists with correct initial state
         let firstPokemonButton = app.buttons.matching(identifier: "SelectPokemon_AppText_Text").element(boundBy: 0)
         XCTAssertTrue(firstPokemonButton.exists, "First Pokemon selector should exist")
 
-        // Check for second Pokemon selector (it's a button)
+        // Verify second Pokemon selector exists with correct initial state
         let secondPokemonButton = app.buttons.matching(identifier: "SelectPokemon_AppText_Text").element(boundBy: 1)
         XCTAssertTrue(secondPokemonButton.exists, "Second Pokemon selector should exist")
 
-        // Check for initial message
+        // Verify initial message
         XCTAssertTrue(app.staticTexts["SelectTwoPokemonToCompareTheirStats_AppText_Text"].exists)
     }
 

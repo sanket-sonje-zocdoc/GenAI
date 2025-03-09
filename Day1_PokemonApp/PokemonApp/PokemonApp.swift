@@ -34,7 +34,7 @@ struct PokemonApp: App {
     /// Defines the root view hierarchy of the application.
     var body: some Scene {
         WindowGroup {
-            ContentView(session: session)
+            TabBarView(session: session)
         }
     }
 }

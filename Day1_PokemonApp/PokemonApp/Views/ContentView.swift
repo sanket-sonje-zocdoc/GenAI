@@ -34,18 +34,14 @@ struct ContentView: View {
 
     // MARK: - Properties
 
-    @StateObject private var viewModel: PokemonViewModel
+    @ObservedObject var viewModel: PokemonViewModel
     @State private var searchText = ""
     @State private var searchMode = SearchMode.name
 
     // MARK: - Initialization
 
-    init(session: URLSession) {
-        _viewModel = StateObject(
-            wrappedValue: PokemonViewModel(
-                pokemonService: PokemonServiceAPIImpl(session: session)
-            )
-        )
+    init(viewModel: PokemonViewModel) {
+        self.viewModel = viewModel
     }
 
     // MARK: - Body
@@ -88,18 +84,6 @@ struct ContentView: View {
                     if viewModel.isLoadingMore {
                         AppProgressView()
                     }
-
-                    NavigationLink(destination: PokemonCompareView(viewModel: viewModel)) {
-                        AppLabel(
-                            "Compare Pokemon",
-                            style: .caption,
-                            systemImage: "arrow.left.arrow.right"
-                        )
-                            .padding()
-                            .background(AppStyle.BackgroundColors.accent)
-                            .cornerRadius(AppStyle.Radius.corner)
-                    }
-                    .padding(.bottom)
                 }
             }
             .navigationTitle("Pokemons")
@@ -124,5 +108,5 @@ struct ContentView: View {
 // MARK: - Previews
 
 #Preview {
-    ContentView(session: URLSession.shared)
+    ContentView(viewModel: PokemonViewModel(pokemonService: PokemonServiceAPIImpl(session: URLSession.shared)))
 }
