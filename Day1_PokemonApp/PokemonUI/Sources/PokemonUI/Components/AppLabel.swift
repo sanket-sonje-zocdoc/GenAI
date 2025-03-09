@@ -38,6 +38,9 @@ public struct AppLabel: View {
     /// The text style that determines the appearance of the label
     public let style: AppStyle.Text
 
+    /// The size of the icon in points
+    public let imageSize: CGFloat
+
     // MARK: - Initialization
 
     /// Creates a new AppLabel with the specified title and system image.
@@ -45,14 +48,17 @@ public struct AppLabel: View {
     ///   - title: The text to display in the label
     ///   - style: The text style to apply to the label (default: .body)
     ///   - image: The name of the SF Symbol to use as the icon
+    ///   - imageSize: The size for the icon (default: AppStyle.Frame.normal.height)
     public init(
         _ title: String,
         style: AppStyle.Text = .body,
-        image: String
+        image: String,
+        imageSize: CGFloat = AppStyle.Frame.normal.height
     ) {
         self.title = title
         self.style = style
         self.image = image
+        self.imageSize = imageSize
     }
 
     // MARK: - Body
@@ -66,6 +72,7 @@ public struct AppLabel: View {
             AppIcon(
                 imageName: image,
                 color: style.color,
+                size: imageSize,
                 accessibilityID: title
             )
         }
@@ -79,8 +86,8 @@ public struct AppLabel: View {
 #Preview {
     VStack(spacing: 20) {
         AppLabel("Search by Name", image: "magnifyingglass")
-        AppLabel("Filter Results", image: "line.3.horizontal.decrease.circle")
-        AppLabel("Sort Items", image: "arrow.up.arrow.down")
+        AppLabel("Filter Results", image: "line.3.horizontal.decrease.circle", imageSize: 24)
+        AppLabel("Sort Items", image: "arrow.up.arrow.down", imageSize: 32)
     }
     .padding()
 }
