@@ -54,7 +54,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if viewModel.pokemonListItems.isEmpty {
-                    ProgressView()
+                    AppProgressView()
                 } else {
                     SearchBar(
                         text: $searchText,
@@ -86,7 +86,7 @@ struct ContentView: View {
                     .listStyle(.plain)
 
                     if viewModel.isLoadingMore {
-                        ProgressView()
+                        AppProgressView()
                     }
 
                     NavigationLink(destination: PokemonCompareView(viewModel: viewModel)) {

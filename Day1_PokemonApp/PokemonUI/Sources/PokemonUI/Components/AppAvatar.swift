@@ -129,8 +129,7 @@ public struct AppAvatar: View {
                     .aspectRatio(contentMode: .fit)
                     .a11yID(accessibilityID, view: .appAvatar, component: .image)
             } else {
-                ProgressView()
-                    .a11yID(accessibilityID, view: .appAvatar, component: .progressView)
+                AppProgressView()
             }
         }
         .frame(

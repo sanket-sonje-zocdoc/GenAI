@@ -58,6 +58,9 @@ public enum ViewType {
     /// Progress indicator component for showing loading or completion status
     case appProgressBar
 
+    /// Progress indicator spinner component for showing loading or completion status
+    case appProgressView
+
     /// Label component specifically designed for displaying tags or badges
     case appTag
 
@@ -86,6 +89,7 @@ public enum ViewType {
         case .appLabel: return "AppLabel"
         case .appPicker: return "AppPicker"
         case .appProgressBar: return "AppProgressBar"
+        case .appProgressView: return "AppProgressView"
         case .appTag: return "AppTag"
         case .appText: return "AppText"
         case .notPresent: return ""
