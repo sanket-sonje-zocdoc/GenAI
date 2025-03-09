@@ -14,8 +14,8 @@ import SwiftUI
 ///
 /// Example usage:
 /// ```
-/// AppLabel("Search", systemImage: "magnifyingglass")
-/// AppLabel("Important", style: .title, systemImage: "star.fill")
+/// AppLabel("Search", image: "magnifyingglass")
+/// AppLabel("Important", style: .title, image: "star.fill")
 /// ```
 ///
 /// Features:
@@ -33,7 +33,7 @@ public struct AppLabel: View {
     public let title: String
 
     /// The SF Symbol name to use as the icon
-    public let systemImage: String
+    public let image: String
 
     /// The text style that determines the appearance of the label
     public let style: AppStyle.Text
@@ -44,15 +44,15 @@ public struct AppLabel: View {
     /// - Parameters:
     ///   - title: The text to display in the label
     ///   - style: The text style to apply to the label (default: .body)
-    ///   - systemImage: The name of the SF Symbol to use as the icon
+    ///   - image: The name of the SF Symbol to use as the icon
     public init(
         _ title: String,
         style: AppStyle.Text = .body,
-        systemImage: String
+        image: String
     ) {
         self.title = title
         self.style = style
-        self.systemImage = systemImage
+        self.image = image
     }
 
     // MARK: - Body
@@ -64,7 +64,7 @@ public struct AppLabel: View {
                 .a11yID(title, view: .appLabel, component: .text)
         } icon: {
             AppIcon(
-                systemName: systemImage,
+                systemName: image,
                 color: style.color,
                 accessibilityID: title
             )
@@ -78,9 +78,9 @@ public struct AppLabel: View {
 
 #Preview {
     VStack(spacing: 20) {
-        AppLabel("Search by Name", systemImage: "magnifyingglass")
-        AppLabel("Filter Results", systemImage: "line.3.horizontal.decrease.circle")
-        AppLabel("Sort Items", systemImage: "arrow.up.arrow.down")
+        AppLabel("Search by Name", image: "magnifyingglass")
+        AppLabel("Filter Results", image: "line.3.horizontal.decrease.circle")
+        AppLabel("Sort Items", image: "arrow.up.arrow.down")
     }
     .padding()
 }

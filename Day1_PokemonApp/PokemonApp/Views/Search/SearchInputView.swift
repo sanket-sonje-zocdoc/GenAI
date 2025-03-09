@@ -50,14 +50,14 @@ struct SearchInputView: View {
                     Button(action: { searchMode = .name }) {
                         AppLabel(
                             "Search By Name",
-                            systemImage: SearchMode.name.icon
+                            image: SearchMode.name.icon
                         )
                     }
 
                     Button(action: { searchMode = .type }) {
                         AppLabel(
                             "Search By Type",
-                            systemImage: SearchMode.type.icon
+                            image: SearchMode.type.icon
                         )
                     }
                 } label: {

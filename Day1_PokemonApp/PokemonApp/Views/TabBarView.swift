@@ -38,7 +38,7 @@ struct TabBarView: View {
                     AppLabel(
                         "Pokemon",
                         style: .caption,
-                        systemImage: "list.bullet"
+                        image: "list.bullet"
                     )
                 }
 
@@ -47,7 +47,7 @@ struct TabBarView: View {
                     AppLabel(
                         "Compare",
                         style: .caption,
-                        systemImage: "arrow.left.arrow.right"
+                        image: "arrow.left.arrow.right"
                     )
                 }
         }

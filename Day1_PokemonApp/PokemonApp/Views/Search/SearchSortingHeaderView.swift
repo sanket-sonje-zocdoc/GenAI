@@ -43,7 +43,7 @@ struct SearchSortingHeaderView: View {
                                     } label: {
                                         AppLabel(
                                             option.rawValue,
-                                            systemImage: "plus"
+                                            image: "plus"
                                         )
                                     }
                                 }
