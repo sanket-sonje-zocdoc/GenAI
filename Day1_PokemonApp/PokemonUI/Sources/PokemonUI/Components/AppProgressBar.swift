@@ -56,7 +56,7 @@ public struct AppProgressBar: View {
     /// Creates a new AppProgressBar instance
     /// - Parameters:
     ///   - value: The current value to display
-    ///   - maxValue: The maximum possible value (used to calculate the fill percentage)
+    ///   - maxValue: The maximum possible value (will be capped at 100)
     ///   - frame: The height of the progress bar (defaults to 100x8 points)
     ///   - cornerRadius: The corner radius of the progress bar (defaults to 4 points)
     ///   - foregroundColor: Optional custom color for the progress bar
@@ -69,8 +69,9 @@ public struct AppProgressBar: View {
         foregroundColor: Color? = nil,
         accessibilityID: String
     ) {
-        self.value = min(max(value, 0), maxValue)
-        self.maxValue = maxValue
+        let cappedMaxValue = min(maxValue, 100)
+        self.value = min(max(value, 0), cappedMaxValue)
+        self.maxValue = cappedMaxValue
         self.frame = frame
         self.cornerRadius = cornerRadius
         self.customForegroundColor = foregroundColor
