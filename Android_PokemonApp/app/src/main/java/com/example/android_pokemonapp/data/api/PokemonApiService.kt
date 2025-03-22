@@ -1,7 +1,9 @@
 package com.example.android_pokemonapp.data.api
 
 import com.example.android_pokemonapp.data.model.PaginatedResponse
+import com.example.android_pokemonapp.data.model.Pokemon
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PokemonApiService {
@@ -11,4 +13,7 @@ interface PokemonApiService {
 		@Query("offset") offset: Int = 0,
 		@Query("limit") limit: Int = 100
 	): PaginatedResponse
+
+	@GET("pokemon/{id}")
+	suspend fun getPokemonById(@Path("id") id: Int): Pokemon
 }
