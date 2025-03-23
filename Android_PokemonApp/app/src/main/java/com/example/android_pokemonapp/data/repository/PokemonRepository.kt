@@ -5,6 +5,7 @@ import com.example.android_pokemonapp.data.model.PaginatedResponse
 import com.example.android_pokemonapp.data.model.Pokemon
 import com.example.android_pokemonapp.data.util.NetworkException
 import com.example.android_pokemonapp.data.util.Result
+import com.example.android_pokemonapp.utils.Constants
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -28,10 +29,19 @@ class PokemonRepository @Inject constructor(
 	 * @param limit The maximum number of items to return [default: 100]
 	 * @return [Result] containing either a successful [PaginatedResponse] or an error
 	 */
-	suspend fun getPokemonList(offset: Int = 0, limit: Int = 100): Result<PaginatedResponse> {
+	suspend fun getPokemonList(
+		offset: Int = 0,
+		limit: Int = Constants.POKEMON_API_LIMIT
+	): Result<PaginatedResponse> {
 		return try {
 			val response = apiService.getPokemonList(offset, limit)
-			Result.success(response)
+			if (response.isSuccessful) {
+				response.body()?.let {
+					Result.success(it)
+				} ?: Result.error(NetworkException.UnknownError("Response body is null"))
+			} else {
+				Result.error(NetworkException.ApiError("API call failed", response.code()))
+			}
 		} catch (e: IOException) {
 			Result.error(NetworkException.NoInternetConnection())
 		} catch (e: HttpException) {
@@ -50,7 +60,13 @@ class PokemonRepository @Inject constructor(
 	suspend fun getPokemonById(id: Int): Result<Pokemon> {
 		return try {
 			val response = apiService.getPokemonById(id)
-			Result.success(response)
+			if (response.isSuccessful) {
+				response.body()?.let {
+					Result.success(it)
+				} ?: Result.error(NetworkException.UnknownError("Response body is null"))
+			} else {
+				Result.error(NetworkException.ApiError("API call failed", response.code()))
+			}
 		} catch (e: IOException) {
 			Result.error(NetworkException.NoInternetConnection())
 		} catch (e: HttpException) {
