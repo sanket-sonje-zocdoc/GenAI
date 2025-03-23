@@ -1,5 +1,6 @@
 package com.example.android_pokemonapp.data.repository
 
+import android.util.Log
 import com.example.android_pokemonapp.data.api.PokemonApiService
 import com.example.android_pokemonapp.data.model.PaginatedResponse
 import com.example.android_pokemonapp.data.model.Pokemon
@@ -22,6 +23,10 @@ import javax.inject.Inject
 class PokemonRepository @Inject constructor(
 	private val apiService: PokemonApiService
 ) {
+	companion object {
+		private const val TAG = "PokemonRepository"
+	}
+
 	/**
 	 * Retrieves a paginated list of Pokemon.
 	 *
@@ -33,20 +38,29 @@ class PokemonRepository @Inject constructor(
 		offset: Int = 0,
 		limit: Int = Constants.POKEMON_API_LIMIT
 	): Result<PaginatedResponse> {
+		Log.d(TAG, "Fetching Pokemon list with offset: $offset, limit: $limit")
 		return try {
 			val response = apiService.getPokemonList(offset, limit)
 			if (response.isSuccessful) {
 				response.body()?.let {
+					Log.d(TAG, "Successfully fetched Pokemon list. Total count: ${it.count}")
 					Result.success(it)
-				} ?: Result.error(NetworkException.UnknownError("Response body is null"))
+				} ?: run {
+					Log.e(TAG, "Pokemon list response body is null")
+					Result.error(NetworkException.UnknownError("Response body is null"))
+				}
 			} else {
+				Log.e(TAG, "Failed to fetch Pokemon list. HTTP Code: ${response.code()}")
 				Result.error(NetworkException.ApiError("API call failed", response.code()))
 			}
 		} catch (e: IOException) {
+			Log.e(TAG, "Network error while fetching Pokemon list", e)
 			Result.error(NetworkException.NoInternetConnection())
 		} catch (e: HttpException) {
+			Log.e(TAG, "HTTP error while fetching Pokemon list. Code: ${e.code()}", e)
 			Result.error(NetworkException.ApiError(e.message(), e.code()))
 		} catch (e: Exception) {
+			Log.e(TAG, "Unexpected error while fetching Pokemon list", e)
 			Result.error(NetworkException.UnknownError(e.message ?: "Unknown error occurred"))
 		}
 	}
@@ -58,20 +72,29 @@ class PokemonRepository @Inject constructor(
 	 * @return [Result] containing either a successful [Pokemon] response or an error
 	 */
 	suspend fun getPokemonById(id: Int): Result<Pokemon> {
+		Log.d(TAG, "Fetching Pokemon details for ID: $id")
 		return try {
 			val response = apiService.getPokemonById(id)
 			if (response.isSuccessful) {
 				response.body()?.let {
+					Log.d(TAG, "Successfully fetched Pokemon details for ${it.name} (ID: $id)")
 					Result.success(it)
-				} ?: Result.error(NetworkException.UnknownError("Response body is null"))
+				} ?: run {
+					Log.e(TAG, "Pokemon details response body is null for ID: $id")
+					Result.error(NetworkException.UnknownError("Response body is null"))
+				}
 			} else {
+				Log.e(TAG, "Failed to fetch Pokemon details for ID: $id. HTTP Code: ${response.code()}")
 				Result.error(NetworkException.ApiError("API call failed", response.code()))
 			}
 		} catch (e: IOException) {
+			Log.e(TAG, "Network error while fetching Pokemon details for ID: $id", e)
 			Result.error(NetworkException.NoInternetConnection())
 		} catch (e: HttpException) {
+			Log.e(TAG, "HTTP error while fetching Pokemon details for ID: $id. Code: ${e.code()}", e)
 			Result.error(NetworkException.ApiError(e.message(), e.code()))
 		} catch (e: Exception) {
+			Log.e(TAG, "Unexpected error while fetching Pokemon details for ID: $id", e)
 			Result.error(NetworkException.UnknownError(e.message ?: "Unknown error occurred"))
 		}
 	}

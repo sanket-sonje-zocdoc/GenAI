@@ -20,7 +20,7 @@ object NetworkModule {
 	 * Lazily initialized Retrofit instance configured for the Pokemon API.
 	 *
 	 * Uses Gson for JSON serialization/deserialization and is configured
-	 * with the Pokemon API base URL.
+	 * with the Pokemon API base URL and logging-enabled OkHttpClient.
 	 */
 	private val retrofit: Retrofit by lazy {
 		Retrofit.Builder()

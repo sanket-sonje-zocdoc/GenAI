@@ -1,5 +1,6 @@
 package com.example.android_pokemonapp.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android_pokemonapp.data.repository.PokemonRepository
@@ -24,6 +25,9 @@ import javax.inject.Inject
 class PokemonListViewModel @Inject constructor(
 	private val repository: PokemonRepository
 ) : ViewModel() {
+	companion object {
+		private const val TAG = "PokemonListViewModel"
+	}
 
 	private val _uiState = MutableStateFlow<PokemonListUiState>(PokemonListUiState.Loading)
 
@@ -42,6 +46,7 @@ class PokemonListViewModel @Inject constructor(
 	private val pageSize = 20
 
 	init {
+		Log.d(TAG, "ViewModel initialized, loading initial Pokemon list")
 		loadPokemonList()
 	}
 
@@ -52,10 +57,17 @@ class PokemonListViewModel @Inject constructor(
 	 * Uses [currentOffset] and [pageSize] for pagination.
 	 */
 	fun loadPokemonList() {
+		Log.d(TAG, "Loading Pokemon list with offset: $currentOffset, pageSize: $pageSize")
 		viewModelScope.launch {
 			_uiState.value = PokemonListUiState.Loading
+			Log.d(TAG, "State changed to Loading")
+
 			when (val result = repository.getPokemonList(currentOffset, pageSize)) {
 				is Result.Success -> {
+					Log.d(
+						TAG,
+						"Successfully loaded Pokemon list. Count: ${result.data.count}, " + "Next: ${result.data.next != null}, Previous: ${result.data.previous != null}"
+					)
 					_uiState.value = PokemonListUiState.Success(
 						pokemons = result.data.results,
 						isNextPageAvailable = result.data.next != null,
@@ -65,6 +77,7 @@ class PokemonListViewModel @Inject constructor(
 				}
 
 				is Result.Error -> {
+					Log.e(TAG, "Failed to load Pokemon list", result.exception)
 					_uiState.value = PokemonListUiState.Error(result.exception)
 				}
 			}
@@ -78,11 +91,16 @@ class PokemonListViewModel @Inject constructor(
 	 * if there are more items available.
 	 */
 	fun loadNextPage() {
-		if (currentOffset + pageSize < ((_uiState.value as? PokemonListUiState.Success)?.totalCount
-				?: 0)
-		) {
+		val totalCount = (_uiState.value as? PokemonListUiState.Success)?.totalCount ?: 0
+		if (currentOffset + pageSize < totalCount) {
+			Log.d(
+				TAG,
+				"Loading next page. Current offset: $currentOffset -> ${currentOffset + pageSize}"
+			)
 			currentOffset += pageSize
 			loadPokemonList()
+		} else {
+			Log.d(TAG, "Cannot load next page - reached end of list (total: $totalCount)")
 		}
 	}
 
@@ -94,8 +112,14 @@ class PokemonListViewModel @Inject constructor(
 	 */
 	fun loadPreviousPage() {
 		if (currentOffset - pageSize >= 0) {
+			Log.d(
+				TAG,
+				"Loading previous page. Current offset: $currentOffset -> ${currentOffset - pageSize}"
+			)
 			currentOffset -= pageSize
 			loadPokemonList()
+		} else {
+			Log.d(TAG, "Cannot load previous page - at beginning of list")
 		}
 	}
 
@@ -106,7 +130,13 @@ class PokemonListViewModel @Inject constructor(
 	 * useful for pull-to-refresh functionality or manual refresh requests.
 	 */
 	fun refresh() {
+		Log.d(TAG, "Refreshing Pokemon list - resetting to first page")
 		currentOffset = 0
 		loadPokemonList()
+	}
+
+	override fun onCleared() {
+		super.onCleared()
+		Log.d(TAG, "ViewModel cleared")
 	}
 }
