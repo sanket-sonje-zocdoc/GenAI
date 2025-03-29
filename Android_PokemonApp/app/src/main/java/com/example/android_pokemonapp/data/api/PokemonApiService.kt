@@ -5,7 +5,6 @@ import com.example.android_pokemonapp.data.model.Pokemon
 import com.example.android_pokemonapp.utils.Constants
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
@@ -23,14 +22,14 @@ interface PokemonApiService {
 	/**
 	 * Retrieves a paginated list of Pokemon.
 	 *
-	 * @property offset Number of items to skip before starting to collect the result set [0-∞]
-	 * @property limit Maximum number of items to return in a single page [1-100]
+	 * @property offset Number of items to skip before starting to collect the result set
+	 * @property limit Maximum number of items to return in a single page
 	 * @return [Response] containing [PaginatedResponse]
 	 */
 	@GET("pokemon")
 	suspend fun getPokemonList(
-		@Query("offset") offset: Int = 0,
-		@Query("limit") limit: Int = Constants.POKEMON_API_LIMIT
+		@Query("offset") offset: Int,
+		@Query("limit") limit: Int
 	): Response<PaginatedResponse>
 
 	/**

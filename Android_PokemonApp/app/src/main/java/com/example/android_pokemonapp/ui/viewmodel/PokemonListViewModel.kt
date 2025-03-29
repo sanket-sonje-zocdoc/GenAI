@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.android_pokemonapp.data.repository.PokemonRepository
 import com.example.android_pokemonapp.data.util.Result
 import com.example.android_pokemonapp.ui.state.PokemonListUiState
+import com.example.android_pokemonapp.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +38,6 @@ class PokemonListViewModel @Inject constructor(
 	val uiState: StateFlow<PokemonListUiState> = _uiState.asStateFlow()
 
 	private var currentOffset = 0
-	private val pageSize = 20
 	private var isLoadingMore = false
 	private var hasMoreItems = true
 
@@ -61,14 +61,14 @@ class PokemonListViewModel @Inject constructor(
 			_uiState.value = PokemonListUiState.Loading
 			Log.d(TAG, "State changed to Loading")
 
-			when (val result = repository.getPokemonList(0, pageSize)) {
+			when (val result = repository.getPokemonList(0, Constants.POKEMON_API_PAGE_SIZE)) {
 				is Result.Success -> {
 					Log.d(
 						TAG,
 						"Successfully loaded initial Pokemon list. Count: ${result.data.count}"
 					)
 
-					currentOffset = pageSize
+					currentOffset = Constants.POKEMON_API_PAGE_SIZE
 					hasMoreItems = result.data.next != null
 					_uiState.value = PokemonListUiState.Success(
 						pokemons = result.data.results,
@@ -102,9 +102,9 @@ class PokemonListViewModel @Inject constructor(
 			isLoadingMore = true
 			_uiState.value = currentState.copy(isLoadingMore = true)
 
-			when (val result = repository.getPokemonList(currentOffset, pageSize)) {
+			when (val result = repository.getPokemonList(currentOffset, Constants.POKEMON_API_PAGE_SIZE)) {
 				is Result.Success -> {
-					currentOffset += pageSize
+					currentOffset += Constants.POKEMON_API_PAGE_SIZE
 					hasMoreItems = result.data.next != null
 
 					_uiState.value = PokemonListUiState.Success(

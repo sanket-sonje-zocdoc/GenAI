@@ -38,7 +38,7 @@ class PokemonRepository @Inject constructor(
 	 */
 	suspend fun getPokemonList(
 		offset: Int = 0,
-		limit: Int = Constants.POKEMON_API_LIMIT
+		limit: Int = Constants.POKEMON_API_PAGE_SIZE
 	): Result<PaginatedResponse> {
 		Log.d(TAG, "Fetching Pokemon list with offset: $offset, limit: $limit")
 		return try {
