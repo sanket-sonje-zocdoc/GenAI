@@ -10,6 +10,7 @@ import com.example.android_pokemonapp.utils.Constants
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Repository for managing Pokemon data operations.
@@ -20,6 +21,7 @@ import javax.inject.Inject
  *
  * @property apiService The Pokemon API service for making network requests
  */
+@Singleton
 class PokemonRepository @Inject constructor(
 	private val apiService: PokemonApiService
 ) {
@@ -66,35 +68,35 @@ class PokemonRepository @Inject constructor(
 	}
 
 	/**
-	 * Retrieves detailed information about a specific Pokemon by its ID.
+	 * Retrieves detailed information about a specific Pokemon by its URL.
 	 *
-	 * @param id The unique identifier of the Pokemon
+	 * @param url The full URL to fetch Pokemon details
 	 * @return [Result] containing either a successful [Pokemon] response or an error
 	 */
-	suspend fun getPokemonById(id: Int): Result<Pokemon> {
-		Log.d(TAG, "Fetching Pokemon details for ID: $id")
+	suspend fun getPokemonByUrl(url: String): Result<Pokemon> {
+		Log.d(TAG, "Fetching Pokemon details for URL: $url")
 		return try {
-			val response = apiService.getPokemonById(id)
+			val response = apiService.getPokemonByUrl(url)
 			if (response.isSuccessful) {
 				response.body()?.let {
-					Log.d(TAG, "Successfully fetched Pokemon details for ${it.name} (ID: $id)")
+					Log.d(TAG, "Successfully fetched Pokemon details for ${it.name}")
 					Result.success(it)
 				} ?: run {
-					Log.e(TAG, "Pokemon details response body is null for ID: $id")
+					Log.e(TAG, "Pokemon details response body is null for URL: $url")
 					Result.error(NetworkException.UnknownError("Response body is null"))
 				}
 			} else {
-				Log.e(TAG, "Failed to fetch Pokemon details for ID: $id. HTTP Code: ${response.code()}")
+				Log.e(TAG, "Failed to fetch Pokemon details for URL: $url. HTTP Code: ${response.code()}")
 				Result.error(NetworkException.ApiError("API call failed", response.code()))
 			}
 		} catch (e: IOException) {
-			Log.e(TAG, "Network error while fetching Pokemon details for ID: $id", e)
+			Log.e(TAG, "Network error while fetching Pokemon details for URL: $url", e)
 			Result.error(NetworkException.NoInternetConnection())
 		} catch (e: HttpException) {
-			Log.e(TAG, "HTTP error while fetching Pokemon details for ID: $id. Code: ${e.code()}", e)
+			Log.e(TAG, "HTTP error while fetching Pokemon details for URL: $url. Code: ${e.code()}", e)
 			Result.error(NetworkException.ApiError(e.message(), e.code()))
 		} catch (e: Exception) {
-			Log.e(TAG, "Unexpected error while fetching Pokemon details for ID: $id", e)
+			Log.e(TAG, "Unexpected error while fetching Pokemon details for URL: $url", e)
 			Result.error(NetworkException.UnknownError(e.message ?: "Unknown error occurred"))
 		}
 	}

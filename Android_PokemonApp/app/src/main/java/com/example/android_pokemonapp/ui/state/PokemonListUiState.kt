@@ -21,12 +21,14 @@ sealed interface PokemonListUiState {
 	 * @property isNextPageAvailable Whether there are more Pokemon items available to load
 	 * @property isPreviousPageAvailable Whether there are previous Pokemon items available to load
 	 * @property totalCount Total number of Pokemon available in the API
+	 * @property isLoadingMore Whether the list is currently loading more items
 	 */
 	data class Success(
 		val pokemons: List<PokemonListItem>,
 		val isNextPageAvailable: Boolean,
 		val isPreviousPageAvailable: Boolean,
-		val totalCount: Int
+		val totalCount: Int,
+		val isLoadingMore: Boolean = false
 	) : PokemonListUiState
 
 	/**
@@ -34,5 +36,5 @@ sealed interface PokemonListUiState {
 	 *
 	 * @property error The exception that caused the error
 	 */
-	data class Error(val error: Exception) : PokemonListUiState
+	data class Error(val error: Throwable) : PokemonListUiState
 }

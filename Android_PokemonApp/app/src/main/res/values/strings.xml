@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Android_PokemonApp</string>
+    <string name="app_name">Android PokemonApp</string>
+    <string name="pokemon_image">Pokemon Image</string>
+    <string name="error_loading_details">Error loading details</string>
+    <string name="pokemons">Pokemons</string>
 </resources>

@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 /**
  * REST API service interface for interacting with the Pokemon API.
@@ -33,11 +34,11 @@ interface PokemonApiService {
 	): Response<PaginatedResponse>
 
 	/**
-	 * Retrieves detailed information about a specific Pokemon by its ID.
+	 * Retrieves detailed information about a specific Pokemon by its URL.
 	 *
-	 * @property id Unique identifier of the Pokemon [1-∞]
+	 * @property url Full URL to fetch Pokemon details
 	 * @return [Response] containing [Pokemon]
 	 */
-	@GET("pokemon/{id}")
-	suspend fun getPokemonById(@Path("id") id: Int): Response<Pokemon>
+	@GET
+	suspend fun getPokemonByUrl(@Url url: String): Response<Pokemon>
 }

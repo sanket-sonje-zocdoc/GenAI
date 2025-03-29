@@ -46,20 +46,25 @@ class PokemonDetailViewModel @Inject constructor(
 		Log.d(TAG, "ViewModel initialized")
 	}
 
+	override fun onCleared() {
+		super.onCleared()
+		Log.d(TAG, "ViewModel cleared")
+	}
+
 	/**
 	 * Loads detailed information about a specific Pokemon.
 	 *
 	 * Updates the UI state to reflect the loading status and result of the operation.
 	 *
-	 * @param pokemonId The unique identifier of the Pokemon to load
+	 * @param pokemonURL The URL to fetch Pokemon details
 	 */
-	fun loadPokemonDetail(pokemonId: Int) {
-		Log.d(TAG, "Loading Pokemon details for ID: $pokemonId")
+	fun loadPokemonDetail(pokemonURL: String) {
+		Log.d(TAG, "Loading Pokemon details for URL: $pokemonURL")
 		viewModelScope.launch {
 			_uiState.value = PokemonDetailUiState.Loading
 			Log.d(TAG, "State changed to Loading")
 
-			when (val result = repository.getPokemonById(pokemonId)) {
+			when (val result = repository.getPokemonByUrl(pokemonURL)) {
 				is Result.Success -> {
 					Log.d(
 						TAG,
@@ -74,23 +79,5 @@ class PokemonDetailViewModel @Inject constructor(
 				}
 			}
 		}
-	}
-
-	/**
-	 * Refreshes the currently displayed Pokemon details.
-	 *
-	 * Reloads the Pokemon details from the repository, useful for pull-to-refresh
-	 * functionality or manual refresh requests.
-	 *
-	 * @param pokemonId The unique identifier of the Pokemon to refresh
-	 */
-	fun refresh(pokemonId: Int) {
-		Log.d(TAG, "Refreshing Pokemon details for ID: $pokemonId")
-		loadPokemonDetail(pokemonId)
-	}
-
-	override fun onCleared() {
-		super.onCleared()
-		Log.d(TAG, "ViewModel cleared")
 	}
 }

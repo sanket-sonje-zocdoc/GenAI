@@ -1,8 +1,13 @@
 package com.example.android_pokemonapp.di
 
 import com.example.android_pokemonapp.data.api.PokemonApiService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 /**
  * Singleton object responsible for providing network-related dependencies.
@@ -11,6 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory
  * for making network requests to the Pokemon API. It uses lazy initialization
  * to ensure the dependencies are created only when needed.
  */
+@Module
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
 	/** Base URL for the Pokemon API */
@@ -22,8 +29,10 @@ object NetworkModule {
 	 * Uses Gson for JSON serialization/deserialization and is configured
 	 * with the Pokemon API base URL and logging-enabled OkHttpClient.
 	 */
-	private val retrofit: Retrofit by lazy {
-		Retrofit.Builder()
+	@Provides
+	@Singleton
+	fun provideRetrofit(): Retrofit {
+		return Retrofit.Builder()
 			.baseUrl(BASE_URL)
 			.addConverterFactory(GsonConverterFactory.create())
 			.build()
@@ -35,7 +44,9 @@ object NetworkModule {
 	 * Creates and caches a Retrofit implementation of the [PokemonApiService]
 	 * interface for making API calls.
 	 */
-	val pokemonApiService: PokemonApiService by lazy {
-		retrofit.create(PokemonApiService::class.java)
+	@Provides
+	@Singleton
+	fun providePokemonApiService(retrofit: Retrofit): PokemonApiService {
+		return retrofit.create(PokemonApiService::class.java)
 	}
 }

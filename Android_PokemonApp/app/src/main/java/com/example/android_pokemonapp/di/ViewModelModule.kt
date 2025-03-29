@@ -5,8 +5,8 @@ import com.example.android_pokemonapp.data.repository.PokemonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 /**
  * Dagger Hilt module for providing ViewModel-scoped dependencies.
@@ -17,7 +17,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
  * ViewModel is cleared.
  */
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object ViewModelModule {
 
 	/**
@@ -30,7 +30,7 @@ object ViewModelModule {
 	 * @return A new instance of [PokemonRepository]
 	 */
 	@Provides
-	@ViewModelScoped
+	@Singleton
 	fun providePokemonRepository(apiService: PokemonApiService): PokemonRepository {
 		return PokemonRepository(apiService)
 	}
