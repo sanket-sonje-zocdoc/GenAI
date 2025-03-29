@@ -46,7 +46,6 @@ class PokemonListViewModel @Inject constructor(
 	}
 
 	init {
-		Log.d(TAG, "ViewModel initialized, loading initial Pokemon list")
 		loadInitialPokemonList()
 	}
 
@@ -56,7 +55,6 @@ class PokemonListViewModel @Inject constructor(
 	}
 
 	private fun loadInitialPokemonList() {
-		Log.d(TAG, "Loading initial Pokemon list")
 		viewModelScope.launch {
 			_uiState.value = PokemonListUiState.Loading
 			Log.d(TAG, "State changed to Loading")
@@ -64,8 +62,7 @@ class PokemonListViewModel @Inject constructor(
 			when (val result = repository.getPokemonList(0, Constants.POKEMON_API_PAGE_SIZE)) {
 				is Result.Success -> {
 					Log.d(
-						TAG,
-						"Successfully loaded initial Pokemon list. Count: ${result.data.count}"
+						TAG, "Successfully loaded initial Pokemon list."
 					)
 
 					currentOffset = Constants.POKEMON_API_PAGE_SIZE
@@ -95,15 +92,18 @@ class PokemonListViewModel @Inject constructor(
 	 */
 	fun loadNextPage() {
 		if (isLoadingMore || !hasMoreItems) return
-
 		val currentState = _uiState.value as? PokemonListUiState.Success ?: return
 
 		viewModelScope.launch {
 			isLoadingMore = true
 			_uiState.value = currentState.copy(isLoadingMore = true)
+			Log.d(TAG, "State changed to Loading")
 
-			when (val result = repository.getPokemonList(currentOffset, Constants.POKEMON_API_PAGE_SIZE)) {
+			when (val result =
+				repository.getPokemonList(currentOffset, Constants.POKEMON_API_PAGE_SIZE)) {
 				is Result.Success -> {
+					Log.d(TAG, "Successfully loaded next Pokemon list.")
+
 					currentOffset += Constants.POKEMON_API_PAGE_SIZE
 					hasMoreItems = result.data.next != null
 

@@ -42,10 +42,6 @@ class PokemonDetailViewModel @Inject constructor(
 	 */
 	val uiState: StateFlow<PokemonDetailUiState> = _uiState.asStateFlow()
 
-	init {
-		Log.d(TAG, "ViewModel initialized")
-	}
-
 	override fun onCleared() {
 		super.onCleared()
 		Log.d(TAG, "ViewModel cleared")
@@ -59,17 +55,13 @@ class PokemonDetailViewModel @Inject constructor(
 	 * @param pokemonURL The URL to fetch Pokemon details
 	 */
 	fun loadPokemonDetail(pokemonURL: String) {
-		Log.d(TAG, "Loading Pokemon details for URL: $pokemonURL")
 		viewModelScope.launch {
 			_uiState.value = PokemonDetailUiState.Loading
 			Log.d(TAG, "State changed to Loading")
 
 			when (val result = repository.getPokemonByUrl(pokemonURL)) {
 				is Result.Success -> {
-					Log.d(
-						TAG,
-						"Successfully loaded Pokemon: ${result.data.name} (ID: ${result.data.id})"
-					)
+					Log.d(TAG, "Successfully loaded Pokemon: ${result.data.name} (ID: ${result.data.id})")
 					_uiState.value = PokemonDetailUiState.Success(result.data)
 				}
 

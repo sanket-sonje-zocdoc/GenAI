@@ -13,6 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Setup content view
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Start PokemonListActivity
+        // Start Pokemon List Activity
         startPokemonListActivity()
     }
 

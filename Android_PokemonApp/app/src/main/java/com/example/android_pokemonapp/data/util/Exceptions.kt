@@ -20,15 +20,6 @@ sealed class NetworkException(message: String) : Exception(message) {
 	) : NetworkException(message)
 
 	/**
-	 * Indicates that the server encountered an error while processing the request.
-	 *
-	 * @property message The error message [default: "Server error occurred"]
-	 */
-	data class ServerError(
-		override val message: String = "Server error occurred"
-	) : NetworkException(message)
-
-	/**
 	 * Represents an error returned by the API with a specific error code.
 	 *
 	 * @property message The error message from the API

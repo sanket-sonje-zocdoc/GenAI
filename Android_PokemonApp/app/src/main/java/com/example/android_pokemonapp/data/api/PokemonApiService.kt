@@ -2,7 +2,6 @@ package com.example.android_pokemonapp.data.api
 
 import com.example.android_pokemonapp.data.model.PaginatedResponse
 import com.example.android_pokemonapp.data.model.Pokemon
-import com.example.android_pokemonapp.utils.Constants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

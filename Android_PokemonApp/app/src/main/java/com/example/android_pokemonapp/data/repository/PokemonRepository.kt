@@ -6,7 +6,6 @@ import com.example.android_pokemonapp.data.model.PaginatedResponse
 import com.example.android_pokemonapp.data.model.Pokemon
 import com.example.android_pokemonapp.data.util.NetworkException
 import com.example.android_pokemonapp.data.util.Result
-import com.example.android_pokemonapp.utils.Constants
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -32,15 +31,14 @@ class PokemonRepository @Inject constructor(
 	/**
 	 * Retrieves a paginated list of Pokemon.
 	 *
-	 * @param offset The number of items to skip before starting to collect the result set [default: 0]
-	 * @param limit The maximum number of items to return [default: 100]
+	 * @param offset The number of items to skip before starting to collect the result set
+	 * @param limit The maximum number of items to return
 	 * @return [Result] containing either a successful [PaginatedResponse] or an error
 	 */
 	suspend fun getPokemonList(
-		offset: Int = 0,
-		limit: Int = Constants.POKEMON_API_PAGE_SIZE
+		offset: Int,
+		limit: Int
 	): Result<PaginatedResponse> {
-		Log.d(TAG, "Fetching Pokemon list with offset: $offset, limit: $limit")
 		return try {
 			val response = apiService.getPokemonList(offset, limit)
 			if (response.isSuccessful) {
